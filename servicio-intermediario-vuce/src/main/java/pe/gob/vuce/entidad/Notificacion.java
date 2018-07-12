@@ -1,22 +1,21 @@
 package pe.gob.vuce.entidad;
 
-public class Transaccion {
-
-	private int idTransmision;
+public class Notificacion {
+	
+	private String numeroNotificacion;
 	private String tipoMensaje;
 	private String tipoDocumento;
 	private String numeroDocumento;
 	
-	public Transaccion() {
-		super();
+	public Notificacion() {
 	}
 
-	public int getIdTransmision() {
-		return idTransmision;
+	public String getNumeroNotificacion() {
+		return numeroNotificacion;
 	}
 
-	public void setIdTransmision(int idTransmision) {
-		this.idTransmision = idTransmision;
+	public void setNumeroNotificacion(String numeroNotificacion) {
+		this.numeroNotificacion = numeroNotificacion;
 	}
 
 	public String getTipoMensaje() {

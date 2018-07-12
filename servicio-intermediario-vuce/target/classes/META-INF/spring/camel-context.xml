@@ -41,7 +41,7 @@
         </cxf:properties>
     </cxf:cxfEndpoint>
     <camelContext id="Servicio_Intermediario_VUCE" xmlns="http://camel.apache.org/schema/spring">
-            <route id="Servicio_Intermediario_VUCE_Route" streamCache="true">
+        <route id="Servicio_Intermediario_VUCE_Route" streamCache="true">
             <from id="_from1" uri="cxf:bean:vuce-ws-consumer"/>
             <process id="inputProcessor" ref="inputProcessor"/>
             <to id="_to1" uri="cxf:bean:vuce-ws-producer"/>

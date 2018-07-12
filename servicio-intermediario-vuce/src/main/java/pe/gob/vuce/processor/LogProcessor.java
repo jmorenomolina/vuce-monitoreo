@@ -72,7 +72,6 @@ public class LogProcessor implements Processor {
 							transaccion.setTipoDocumento(tx.getDocumento().getTipo());
 							transaccion.setNumeroDocumento(tx.getDocumento().getNumero());
 							transaccion.setTipoMensaje(tx.getTipoMensaje());
-							transaccion.setMensajeXML(transaccionXML);
 
 							System.out.println("id transmision: " + tx.getIdTransmision());
 
@@ -85,9 +84,8 @@ public class LogProcessor implements Processor {
 					if (entryName.equals(MENSAJE_EBXML)) {
 
 						String ebXML = extraerXML(zis); // Leer el ebXML
-						transaccion.setEbXML(ebXML);
-
 						System.out.println("EBXML: " + ebXML);
+						
 					}
 
 					zis.closeEntry();

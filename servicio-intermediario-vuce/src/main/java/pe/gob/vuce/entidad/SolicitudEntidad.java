@@ -2,7 +2,6 @@ package pe.gob.vuce.entidad;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import javax.xml.stream.events.XMLEvent;
 public class SolicitudEntidad {
 
 	private static final String USERNAME = "Username";
+	private static final String XMLNOTIFICACION = "xmlNotificacion";
 	private String descripcionFalla = "No hay falla";
 	private Date fechaHoraRespuesta;
 	private Date fechaHoraSolicitud;
@@ -26,6 +26,7 @@ public class SolicitudEntidad {
 	private String nombreOperacion;
 	private String nombreUsuario;
 	private List<Transaccion> transacciones;
+	private Notificacion notificacion;
 
 	private String version = "1.0";
 
@@ -61,8 +62,12 @@ public class SolicitudEntidad {
 					if (data.length() >= 1)
 						if (qName.equals(USERNAME)) {
 							nombreUsuario = data;
-							break;
 						}
+					if (qName.equals(XMLNOTIFICACION)) {
+						String xmlNotificacion = data;
+						javax.activation.DataHandler dataHandler =
+							    new javax.activation.DataHandler(data, "text/plain; charset=UTF-8");
+					}
 				}
 			}
 
@@ -140,5 +145,13 @@ public class SolicitudEntidad {
 
 	public void setTransacciones(List<Transaccion> transacciones) {
 		this.transacciones = transacciones;
+	}
+
+	public Notificacion getNotificacion() {
+		return notificacion;
+	}
+
+	public void setNotificacion(Notificacion notificacion) {
+		this.notificacion = notificacion;
 	}
 }

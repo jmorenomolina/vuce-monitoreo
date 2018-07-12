@@ -9,6 +9,9 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
 import junit.framework.TestCase;
+import ws.crossnet.apn.vuce.mediador.esquema.notificacion.DocumentoType;
+import ws.crossnet.apn.vuce.mediador.esquema.notificacion.NotificacionType;
+import ws.crossnet.apn.vuce.mediador.router.ClienteServicioVUCE;
 import ws.crossnet.apn.vuce.mediador.router.ProcesadorMensajesVUCEException;
 import ws.crossnet.apn.vuce.mediador.router.RouterVUCE;
 import ws.crossnet.apn.vuce.mediador.router.RouterVUCEHelper;
@@ -55,4 +58,29 @@ public class TestingMediador extends TestCase {
 
 	}
 
+	public void testEnviarN2() {
+
+		NotificacionType notificacion = new NotificacionType();
+		notificacion.setNumeroNotificacion(123);
+		notificacion.setTipoMensaje("N2");
+		notificacion.setEntidad(75);
+		DocumentoType documento = new DocumentoType();
+		documento.setTipo("O");
+		documento.setNumero("2018006130");
+		documento.setTasa(55);
+
+		notificacion.setDocumento(documento);
+
+		try {
+
+			String notificacionString = RouterVUCEHelper.convertirNotificacionXML(notificacion);
+			System.out.println(notificacionString);
+			ClienteServicioVUCE servicio = new ClienteServicioVUCE();
+			servicio.enviarNotificacion(notificacion);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }
