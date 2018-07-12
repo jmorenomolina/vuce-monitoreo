@@ -1,0 +1,5 @@
+pe\gob\vuce\processor\FaultProcessor.class
+pe\gob\vuce\processor\OutputProcessor.class
+pe\gob\vuce\processor\LogProcessor.class
+pe\gob\vuce\processor\InputProcessor.class
+pe\gob\vuce\entidad\Transaccion.class

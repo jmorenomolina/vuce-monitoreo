@@ -1,0 +1,6 @@
+pe\gob\vuce\monitoreo\component\JmsConsumer.class
+pe\gob\vuce\monitoreo\repository\TransaccionRepository.class
+pe\gob\vuce\monitoreo\component\TransaccionLog.class
+pe\gob\vuce\monitoreo\component\TransaccionComponent.class
+pe\gob\vuce\monitoreo\entity\Transaccion.class
+pe\gob\vuce\monitoreo\Application.class
