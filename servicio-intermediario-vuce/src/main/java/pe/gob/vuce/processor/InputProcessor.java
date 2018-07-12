@@ -1,10 +1,5 @@
 package pe.gob.vuce.processor;
 
-import java.util.Map;
-import java.util.Set;
-
-import javax.activation.DataHandler;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
@@ -12,7 +7,6 @@ import pe.gob.vuce.entidad.SolicitudEntidad;
 
 public class InputProcessor implements Processor {
 
-	private static final String URN_ENVIAR_NOTIFICACIONES = "urn:enviarNotificaciones";
 	private static final String SOAP_ACTION = "SOAPAction";
 	private static final String OPERACION = "operacion";
 	private static final String USUARIO = "usuario";
@@ -30,9 +24,6 @@ public class InputProcessor implements Processor {
 		exchange.setProperty(SOLICITUD, solicitud);
 		exchange.setProperty(USUARIO, solicitud.getNombreUsuario());
 		exchange.setProperty(OPERACION, operacion);
-		if (in.getHeader(SOAP_ACTION).equals(URN_ENVIAR_NOTIFICACIONES)) {
-			System.out.println(payload);
-		}
 		
 	}
 

@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "Transaccion-1.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package pe.gob.vuce.esquemas;
+package pe.gob.vuce.esquema.transaccion;

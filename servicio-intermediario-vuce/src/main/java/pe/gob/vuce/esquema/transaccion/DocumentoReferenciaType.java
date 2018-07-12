@@ -6,7 +6,7 @@
 //
 
 
-package pe.gob.vuce.esquemas;
+package pe.gob.vuce.esquema.transaccion;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

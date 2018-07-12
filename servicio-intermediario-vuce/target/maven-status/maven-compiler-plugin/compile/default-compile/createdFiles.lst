@@ -1,14 +1,8 @@
 pe\gob\vuce\entidad\SolicitudEntidad.class
-pe\gob\vuce\esquemas\DocumentoReferenciaType.class
 pe\gob\vuce\processor\FaultProcessor.class
-pe\gob\vuce\esquemas\package-info.class
 pe\gob\vuce\processor\ProcesadorMensajesVUCEException.class
-pe\gob\vuce\esquemas\DocumentoType.class
 pe\gob\vuce\processor\OutputProcessor.class
-pe\gob\vuce\esquemas\NotificacionesResueltasType.class
 pe\gob\vuce\processor\FinalProcessor.class
 pe\gob\vuce\processor\LogProcessor.class
 pe\gob\vuce\processor\InputProcessor.class
 pe\gob\vuce\entidad\Transaccion.class
-pe\gob\vuce\esquemas\ObjectFactory.class
-pe\gob\vuce\esquemas\TransaccionType.class

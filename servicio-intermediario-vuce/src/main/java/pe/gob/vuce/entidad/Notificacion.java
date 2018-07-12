@@ -2,19 +2,28 @@ package pe.gob.vuce.entidad;
 
 public class Notificacion {
 	
-	private String numeroNotificacion;
+	private int numeroNotificacion;
 	private String tipoMensaje;
 	private String tipoDocumento;
 	private String numeroDocumento;
+	private int entidad;
 	
 	public Notificacion() {
 	}
 
-	public String getNumeroNotificacion() {
+	public int getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(int entidad) {
+		this.entidad = entidad;
+	}
+
+	public int getNumeroNotificacion() {
 		return numeroNotificacion;
 	}
 
-	public void setNumeroNotificacion(String numeroNotificacion) {
+	public void setNumeroNotificacion(int numeroNotificacion) {
 		this.numeroNotificacion = numeroNotificacion;
 	}
 

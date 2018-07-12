@@ -1,11 +1,14 @@
 package pe.gob.vuce.entidad;
 
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -13,6 +16,10 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import javax.xml.transform.stream.StreamSource;
+
+import pe.gob.vuce.esquema.notificacion.NotificacionType;
+import pe.gob.vuce.esquema.notificacion.ObjectFactory;
 
 public class SolicitudEntidad {
 
@@ -30,13 +37,13 @@ public class SolicitudEntidad {
 
 	private String version = "1.0";
 
-	public SolicitudEntidad(String request) {
+	public SolicitudEntidad(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
 		super();
 		fechaHoraSolicitud = new Date();
 		extraerElementos(request);
 	}
 
-	private void extraerElementos(String request) throws FactoryConfigurationError {
+	private void extraerElementos(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
 		try {
 
 			XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -64,9 +71,16 @@ public class SolicitudEntidad {
 							nombreUsuario = data;
 						}
 					if (qName.equals(XMLNOTIFICACION)) {
-						String xmlNotificacion = data;
-						javax.activation.DataHandler dataHandler =
-							    new javax.activation.DataHandler(data, "text/plain; charset=UTF-8");
+						byte[] decodedBytes = Base64.getDecoder().decode(data);
+						NotificacionType notificationType = (NotificacionType) getObjectFromXMLString(new String(decodedBytes),
+						pe.gob.vuce.esquema.notificacion.ObjectFactory.class);
+						notificacion = new Notificacion();
+						notificacion.setNumeroDocumento(notificationType.getDocumento().getNumero());
+						notificacion.setTipoDocumento(notificationType.getDocumento().getTipo());
+						notificacion.setTipoMensaje(notificationType.getTipoMensaje());
+						notificacion.setNumeroNotificacion(notificationType.getNumeroNotificacion());
+						notificacion.setEntidad(notificationType.getEntidad());
+						break;
 					}
 				}
 			}
@@ -74,9 +88,24 @@ public class SolicitudEntidad {
 		} catch (
 
 				UnsupportedEncodingException | XMLStreamException e) {
-			e.printStackTrace();
+			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
 
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> Object getObjectFromXMLString(String xmlString, Class<?> objectFactory)
+			throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
+		Object object = null;
+		try {
+			// org.eclipse.persistence.jaxb.JAXBContextFactory x;
+			JAXBContext jaxbContext = JAXBContext.newInstance(objectFactory);
+			object = ((JAXBElement<T>) jaxbContext.createUnmarshaller()
+					.unmarshal(new StreamSource(new StringReader(xmlString)))).getValue();
+		} catch (Exception e) {
+			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
+		}
+		return object;
 	}
 
 	public String getDescripcionFalla() {

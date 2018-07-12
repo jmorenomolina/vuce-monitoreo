@@ -6,7 +6,7 @@
 //
 
 
-package pe.gob.vuce.esquemas;
+package pe.gob.vuce.esquema.transaccion;
 
 import java.util.ArrayList;
 import java.util.List;

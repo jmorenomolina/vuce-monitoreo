@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pe.gob.vuce.entidad.SolicitudEntidad;
 import pe.gob.vuce.entidad.Transaccion;
-import pe.gob.vuce.esquemas.TransaccionType;
+import pe.gob.vuce.esquema.transaccion.TransaccionType;
 
 public class LogProcessor implements Processor {
 
