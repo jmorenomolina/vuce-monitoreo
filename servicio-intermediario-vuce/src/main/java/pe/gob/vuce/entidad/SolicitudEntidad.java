@@ -19,10 +19,11 @@ import javax.xml.stream.events.XMLEvent;
 import javax.xml.transform.stream.StreamSource;
 
 import pe.gob.vuce.esquema.notificacion.NotificacionType;
-import pe.gob.vuce.esquema.notificacion.ObjectFactory;
 
 public class SolicitudEntidad {
 
+	private static final String ERROR = "error";
+	private static final String ID_TRANSACCION = "idTransaccion";
 	private static final String USERNAME = "Username";
 	private static final String XMLNOTIFICACION = "xmlNotificacion";
 	private String descripcionFalla = "No hay falla";
@@ -34,78 +35,22 @@ public class SolicitudEntidad {
 	private String nombreUsuario;
 	private List<Transaccion> transacciones;
 	private Notificacion notificacion;
+	private ConfirmacionRecepcionTransaccion confirmacionRecepcionTransaccion;
 
 	private String version = "1.0";
 
 	public SolicitudEntidad(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
 		super();
 		fechaHoraSolicitud = new Date();
-		extraerElementos(request);
+		extraerElementos_(request);
 	}
 
-	private void extraerElementos(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
-		try {
-
-			XMLInputFactory factory = XMLInputFactory.newInstance();
-			byte[] byteArray;
-			byteArray = request.getBytes("UTF-8");
-
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
-			XMLEventReader eventReader = factory.createXMLEventReader(inputStream);
-
-			String qName = null;
-			while (eventReader.hasNext()) {
-
-				XMLEvent event = eventReader.nextEvent();
-
-				if (event.isStartElement()) {
-					StartElement startElement = event.asStartElement();
-					qName = startElement.getName().getLocalPart();
-				}
-
-				if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
-					Characters characters = event.asCharacters();
-					String data = characters.getData().trim();
-					if (data.length() >= 1)
-						if (qName.equals(USERNAME)) {
-							nombreUsuario = data;
-						}
-					if (qName.equals(XMLNOTIFICACION)) {
-						byte[] decodedBytes = Base64.getDecoder().decode(data);
-						NotificacionType notificationType = (NotificacionType) getObjectFromXMLString(new String(decodedBytes),
-						pe.gob.vuce.esquema.notificacion.ObjectFactory.class);
-						notificacion = new Notificacion();
-						notificacion.setNumeroDocumento(notificationType.getDocumento().getNumero());
-						notificacion.setTipoDocumento(notificationType.getDocumento().getTipo());
-						notificacion.setTipoMensaje(notificationType.getTipoMensaje());
-						notificacion.setNumeroNotificacion(notificationType.getNumeroNotificacion());
-						notificacion.setEntidad(notificationType.getEntidad());
-						break;
-					}
-				}
-			}
-
-		} catch (
-
-				UnsupportedEncodingException | XMLStreamException e) {
-			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
-
-		}
+	public ConfirmacionRecepcionTransaccion getConfirmacionRecepcionTransaccion() {
+		return confirmacionRecepcionTransaccion;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T> Object getObjectFromXMLString(String xmlString, Class<?> objectFactory)
-			throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
-		Object object = null;
-		try {
-			// org.eclipse.persistence.jaxb.JAXBContextFactory x;
-			JAXBContext jaxbContext = JAXBContext.newInstance(objectFactory);
-			object = ((JAXBElement<T>) jaxbContext.createUnmarshaller()
-					.unmarshal(new StreamSource(new StringReader(xmlString)))).getValue();
-		} catch (Exception e) {
-			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
-		}
-		return object;
+	public void setConfirmacionRecepcionTransaccion(ConfirmacionRecepcionTransaccion confirmacionRecepcionTransaccion) {
+		this.confirmacionRecepcionTransaccion = confirmacionRecepcionTransaccion;
 	}
 
 	public String getDescripcionFalla() {
@@ -182,5 +127,85 @@ public class SolicitudEntidad {
 
 	public void setNotificacion(Notificacion notificacion) {
 		this.notificacion = notificacion;
+	}
+
+	private void extraerElementos_(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
+		try {
+
+			XMLInputFactory factory = XMLInputFactory.newInstance();
+			byte[] byteArray;
+			byteArray = request.getBytes("UTF-8");
+
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
+			XMLEventReader eventReader = factory.createXMLEventReader(inputStream);
+
+			String qName = null;
+			while (eventReader.hasNext()) {
+
+				XMLEvent event = eventReader.nextEvent();
+
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+					qName = startElement.getName().getLocalPart();
+				}
+
+				if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
+					Characters characters = event.asCharacters();
+					String data = characters.getData().trim();
+
+					if (data.length() >= 1)
+						if (qName.equals(USERNAME)) {
+							nombreUsuario = data;
+						}
+					
+					if (data.length() >= 1)
+						if (qName.equals(XMLNOTIFICACION)) {
+							byte[] decodedBytes = Base64.getDecoder().decode(data);
+							NotificacionType notificationType = (NotificacionType) getObjectFromXMLString(
+									new String(decodedBytes), pe.gob.vuce.esquema.notificacion.ObjectFactory.class);
+							notificacion = new Notificacion();
+							notificacion.setNumeroDocumento(notificationType.getDocumento().getNumero());
+							notificacion.setTipoDocumento(notificationType.getDocumento().getTipo());
+							notificacion.setTipoMensaje(notificationType.getTipoMensaje());
+							notificacion.setNumeroNotificacion(notificationType.getNumeroNotificacion());
+							notificacion.setEntidad(notificationType.getEntidad());
+							break;
+						}
+					
+					if (data.length() >= 1)
+						if (qName.equals(ID_TRANSACCION)) {
+							confirmacionRecepcionTransaccion = new ConfirmacionRecepcionTransaccion();
+							confirmacionRecepcionTransaccion.setIdTransmision(Integer.parseInt(data));
+						}
+					
+					if (data.length() >= 1)
+						if (qName.equals(ERROR)) {
+							if (confirmacionRecepcionTransaccion != null)
+								confirmacionRecepcionTransaccion.setError(Integer.parseInt(data));
+						}
+				}
+			}
+
+		} catch (
+
+				UnsupportedEncodingException | XMLStreamException e) {
+			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
+
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> Object getObjectFromXMLString(String xmlString, Class<?> objectFactory)
+			throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
+		Object object = null;
+		try {
+			// org.eclipse.persistence.jaxb.JAXBContextFactory x;
+			JAXBContext jaxbContext = JAXBContext.newInstance(objectFactory);
+			object = ((JAXBElement<T>) jaxbContext.createUnmarshaller()
+					.unmarshal(new StreamSource(new StringReader(xmlString)))).getValue();
+		} catch (Exception e) {
+			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
+		}
+		return object;
 	}
 }
