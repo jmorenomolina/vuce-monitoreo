@@ -12,12 +12,12 @@ public class FaultProcessor implements Processor {
 	@Override
 	public void process(final Exchange exchange) throws Exception {
 		
-		SolicitudEntidad transaccion = exchange.getProperty("transaccion", SolicitudEntidad.class);
+		SolicitudEntidad transaccion = exchange.getProperty("solicitud", SolicitudEntidad.class);
 		transaccion.setFechaHoraRespuesta(new Date());
 		transaccion.setHayFalla(1);
 		final Exception cause = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
 		transaccion.setDescripcionFalla(cause.getMessage());
-		exchange.setProperty("transaccion", transaccion);
+		exchange.setProperty("solicitud", transaccion);
 		
 	}
 
