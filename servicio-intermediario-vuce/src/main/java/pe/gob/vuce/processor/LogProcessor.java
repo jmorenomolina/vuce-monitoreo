@@ -73,8 +73,6 @@ public class LogProcessor implements Processor {
 							transaccion.setNumeroDocumento(tx.getDocumento().getNumero());
 							transaccion.setTipoMensaje(tx.getTipoMensaje());
 
-							System.out.println("id transmision: " + tx.getIdTransmision());
-
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
 						}
@@ -104,7 +102,7 @@ public class LogProcessor implements Processor {
 		ObjectMapper mapper = new ObjectMapper();
 	    String jsonSolicitud = mapper.writeValueAsString(solicitud);
 	    in.setBody(jsonSolicitud);
-		System.out.println("version 1.1");
+
 
 	}
 

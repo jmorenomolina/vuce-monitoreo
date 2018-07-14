@@ -1,6 +1,6 @@
 package pe.gob.vuce.entidad;
 
-public class ConfirmacionRecepcionTransaccion {
+public class RecepcionTransaccion {
 	
 	private int idTransmision;
 	private int error;
@@ -21,7 +21,7 @@ public class ConfirmacionRecepcionTransaccion {
 		this.error = error;
 	}
 
-	public ConfirmacionRecepcionTransaccion() {
+	public RecepcionTransaccion() {
 	}
 
 }

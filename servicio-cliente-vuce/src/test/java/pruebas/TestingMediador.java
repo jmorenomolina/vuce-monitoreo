@@ -66,7 +66,7 @@ public class TestingMediador extends TestCase {
 		notificacion.setEntidad(75);
 		DocumentoType documento = new DocumentoType();
 		documento.setTipo("Op");
-		documento.setNumero("201888006130");
+		documento.setNumero("12345");
 		documento.setTasa(55);
 
 		notificacion.setDocumento(documento);

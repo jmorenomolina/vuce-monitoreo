@@ -1,103 +1,82 @@
 package pe.gob.vuce.monitoreo.entity;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "TRANSACCION")
 public class Transaccion {
-		
+
 	@Id
-	@Column(name = "IDMENSAJE")
-	private String idMensaje;
-	@Column(name = "FECHAHORARESPUESTA")
-	private Date fechaHoraRespuesta;
-	@Column(name = "FECHAHORASOLICITUD")
-	private Date fechaHoraSolicitud;
-	@Column(name = "HAYFALLA")
-	private int hayFalla;	
-	@Column(name = "DESCRIPCIONFALLA")
-	private String descripcionFalla;
-	@Column(name = "NOMBREOPERACION")
-	private String nombreOperacion;
-	@Column(name = "NOMBREUSUARIO")
-	private String nombreUsuario;
-	@Column(name = "VERSION")
-	private String version;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAN_SEQ")
+    @SequenceGenerator(sequenceName = "transaccion_seq", allocationSize = 1, name = "TRAN_SEQ")
+	private int idTransaccion;
+	private int idTransmision;
+	private String numeroDocumento;
+	private String tipoDocumento;
+	private String tipoMensaje;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ID_MENSAJE")
+	private SolicitudEntidad solicitudEntidad;
+
+	public SolicitudEntidad getSolicitudEntidad() {
+		return solicitudEntidad;
+	}
+
+	public void setSolicitudEntidad(SolicitudEntidad solicitudEntidad) {
+		this.solicitudEntidad = solicitudEntidad;
+	}
 
 	public Transaccion() {
 		super();
 	}
-
-	public String getDescripcionFalla() {
-		return descripcionFalla;
-	}
-
-	public Date getFechaHoraRespuesta() {
-		return fechaHoraRespuesta;
-	}
-
-	public Date getFechaHoraSolicitud() {
-		return fechaHoraSolicitud;
-	}
-
-	public int getHayFalla() {
-		return hayFalla;
-	}
-
-	public String getIdMensaje() {
-		return idMensaje;
-	}
-
-	public String getNombreOperacion() {
-		return nombreOperacion;
-	}
-
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setDescripcionFalla(String descripcionFalla) {
-		this.descripcionFalla = descripcionFalla;
-	}
-
-	public void setFechaHoraRespuesta(Date fechaHoraRespuesta) {
-		this.fechaHoraRespuesta = fechaHoraRespuesta;
-	}
-
-	public void setFechaHoraSolicitud(Date fechaHoraSolicitud) {
-		this.fechaHoraSolicitud = fechaHoraSolicitud;
-	}
-
-	public void setHayFalla(int hayFalla) {
-		this.hayFalla = hayFalla;
-	}
-
-	public void setIdMensaje(String idMensaje) {
-		this.idMensaje = idMensaje;
-	}
-
-	public void setNombreOperacion(String nombreOperacion) {
-		this.nombreOperacion = nombreOperacion;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	@Override
-	public String toString() {
-		return "Transaccion [fechaHoraRespuesta=" + fechaHoraRespuesta + ", fechaHoraSolicitud="
-				+ fechaHoraSolicitud + ", hayFalla=" + hayFalla + ", descripcionFalla=" + descripcionFalla
-				+ ", idMensaje=" + idMensaje + ", nombreOperacion=" + nombreOperacion + ", nombreUsuario="
-				+ nombreUsuario + ", version=" + version + "]";
-	}
 	
+	public int getIdTransmision() {
+		return idTransmision;
+	}
+
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	public String getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public String getTipoMensaje() {
+		return tipoMensaje;
+	}
+
+	public void setIdTransmision(int idTransmision) {
+		this.idTransmision = idTransmision;
+	}
+
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+	}
+
+		public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+	public void setTipoMensaje(String tipoMensaje) {
+		this.tipoMensaje = tipoMensaje;
+	}
+
+	public int getIdTransaccion() {
+		return idTransaccion;
+	}
+
+	public void setIdTransaccion(int idTransaccion) {
+		this.idTransaccion = idTransaccion;
+	}
+
 }
-	

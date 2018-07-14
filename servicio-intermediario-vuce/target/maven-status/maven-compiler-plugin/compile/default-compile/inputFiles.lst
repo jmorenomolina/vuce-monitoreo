@@ -1,6 +1,5 @@
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\notificacion\ErroresType.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\processor\LogProcessor.java
-C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\eee\Prueba.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\processor\ProcesadorMensajesVUCEException.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\notificacion\DocumentoReferenciaType.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\transaccion\package-info.java
@@ -14,10 +13,10 @@ C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\entidad\Notificacion.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\transaccion\DocumentoType.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\transaccion\ObjectFactory.java
+C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\entidad\RecepcionTransaccion.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\transaccion\NotificacionesResueltasType.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\notificacion\NotificacionType.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\processor\OutputProcessor.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\transaccion\TransaccionType.java
-C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\entidad\ConfirmacionRecepcionTransaccion.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\esquema\transaccion\DocumentoReferenciaType.java
 C:\Proyectos\vuce_workspace\proyectos\servicio-intermediario-vuce\src\main\java\pe\gob\vuce\entidad\Transaccion.java

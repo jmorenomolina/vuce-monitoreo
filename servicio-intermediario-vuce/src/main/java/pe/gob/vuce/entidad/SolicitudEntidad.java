@@ -3,6 +3,7 @@ package pe.gob.vuce.entidad;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -33,9 +34,9 @@ public class SolicitudEntidad {
 	private String idMensaje;
 	private String nombreOperacion;
 	private String nombreUsuario;
-	private List<Transaccion> transacciones;
-	private Notificacion notificacion;
-	private ConfirmacionRecepcionTransaccion confirmacionRecepcionTransaccion;
+	private List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+	private List<RecepcionTransaccion> recepcionTransacciones = new ArrayList<RecepcionTransaccion>();
+	private List<Transaccion> transacciones = new ArrayList<Transaccion>();
 
 	private String version = "1.0";
 
@@ -43,14 +44,6 @@ public class SolicitudEntidad {
 		super();
 		fechaHoraSolicitud = new Date();
 		extraerElementos_(request);
-	}
-
-	public ConfirmacionRecepcionTransaccion getConfirmacionRecepcionTransaccion() {
-		return confirmacionRecepcionTransaccion;
-	}
-
-	public void setConfirmacionRecepcionTransaccion(ConfirmacionRecepcionTransaccion confirmacionRecepcionTransaccion) {
-		this.confirmacionRecepcionTransaccion = confirmacionRecepcionTransaccion;
 	}
 
 	public String getDescripcionFalla() {
@@ -121,14 +114,6 @@ public class SolicitudEntidad {
 		this.transacciones = transacciones;
 	}
 
-	public Notificacion getNotificacion() {
-		return notificacion;
-	}
-
-	public void setNotificacion(Notificacion notificacion) {
-		this.notificacion = notificacion;
-	}
-
 	private void extraerElementos_(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
 		try {
 
@@ -138,6 +123,8 @@ public class SolicitudEntidad {
 
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
 			XMLEventReader eventReader = factory.createXMLEventReader(inputStream);
+
+			RecepcionTransaccion recepcionTransaccion = new RecepcionTransaccion();
 
 			String qName = null;
 			while (eventReader.hasNext()) {
@@ -157,31 +144,33 @@ public class SolicitudEntidad {
 						if (qName.equals(USERNAME)) {
 							nombreUsuario = data;
 						}
-					
+
 					if (data.length() >= 1)
 						if (qName.equals(XMLNOTIFICACION)) {
 							byte[] decodedBytes = Base64.getDecoder().decode(data);
 							NotificacionType notificationType = (NotificacionType) getObjectFromXMLString(
 									new String(decodedBytes), pe.gob.vuce.esquema.notificacion.ObjectFactory.class);
-							notificacion = new Notificacion();
+							Notificacion notificacion = new Notificacion();
 							notificacion.setNumeroDocumento(notificationType.getDocumento().getNumero());
 							notificacion.setTipoDocumento(notificationType.getDocumento().getTipo());
 							notificacion.setTipoMensaje(notificationType.getTipoMensaje());
 							notificacion.setNumeroNotificacion(notificationType.getNumeroNotificacion());
 							notificacion.setEntidad(notificationType.getEntidad());
+							notificaciones.add(notificacion);
 							break;
 						}
-					
+
 					if (data.length() >= 1)
 						if (qName.equals(ID_TRANSACCION)) {
-							confirmacionRecepcionTransaccion = new ConfirmacionRecepcionTransaccion();
-							confirmacionRecepcionTransaccion.setIdTransmision(Integer.parseInt(data));
+							recepcionTransaccion = new RecepcionTransaccion();
+							recepcionTransaccion.setIdTransmision(Integer.parseInt(data));
 						}
-					
+
 					if (data.length() >= 1)
 						if (qName.equals(ERROR)) {
-							if (confirmacionRecepcionTransaccion != null)
-								confirmacionRecepcionTransaccion.setError(Integer.parseInt(data));
+							if (recepcionTransaccion != null)
+								recepcionTransaccion.setError(Integer.parseInt(data));
+							recepcionTransacciones.add(recepcionTransaccion);
 						}
 				}
 			}
@@ -192,6 +181,22 @@ public class SolicitudEntidad {
 			throw new pe.gob.vuce.processor.ProcesadorMensajesVUCEException(e);
 
 		}
+	}
+
+	public List<Notificacion> getNotificaciones() {
+		return notificaciones;
+	}
+
+	public void setNotificaciones(List<Notificacion> notificaciones) {
+		this.notificaciones = notificaciones;
+	}
+
+	public List<RecepcionTransaccion> getRecepcionTransacciones() {
+		return recepcionTransacciones;
+	}
+
+	public void setRecepcionTransacciones(List<RecepcionTransaccion> recepcionTransacciones) {
+		this.recepcionTransacciones = recepcionTransacciones;
 	}
 
 	@SuppressWarnings("unchecked")
