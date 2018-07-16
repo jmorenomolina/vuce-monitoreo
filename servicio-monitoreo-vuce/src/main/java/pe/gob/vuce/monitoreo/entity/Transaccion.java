@@ -18,10 +18,14 @@ public class Transaccion {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRAN_SEQ")
     @SequenceGenerator(sequenceName = "transaccion_seq", allocationSize = 1, name = "TRAN_SEQ")
 	private int idTransaccion;
-	private int idTransmision;
+	
+	
 	private String numeroDocumento;
 	private String tipoDocumento;
 	private String tipoMensaje;
+	private String ebXML;
+	private int idTransmision;
+	private String mensajeXML;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_MENSAJE")
@@ -77,6 +81,22 @@ public class Transaccion {
 
 	public void setIdTransaccion(int idTransaccion) {
 		this.idTransaccion = idTransaccion;
+	}
+
+	public String getEbXML() {
+		return ebXML;
+	}
+
+	public void setEbXML(String ebXML) {
+		this.ebXML = ebXML;
+	}
+
+	public String getMensajeXML() {
+		return mensajeXML;
+	}
+
+	public void setMensajeXML(String mensajeXML) {
+		this.mensajeXML = mensajeXML;
 	}
 
 }

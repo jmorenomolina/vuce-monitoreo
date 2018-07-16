@@ -19,6 +19,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import javax.xml.transform.stream.StreamSource;
 
+import pe.gob.vuce.esquema.notificacion.DocumentoReferenciaType;
 import pe.gob.vuce.esquema.notificacion.NotificacionType;
 
 public class SolicitudEntidad {
@@ -156,6 +157,11 @@ public class SolicitudEntidad {
 							notificacion.setTipoMensaje(notificationType.getTipoMensaje());
 							notificacion.setNumeroNotificacion(notificationType.getNumeroNotificacion());
 							notificacion.setEntidad(notificationType.getEntidad());
+							DocumentoReferenciaType referencia = notificationType.getDocumentoReferencia();
+							if (referencia!=null) {
+								notificacion.setNumeroDocumento(referencia.getNumero());
+								notificacion.setTipoDocumento(referencia.getTipo());
+							}
 							notificaciones.add(notificacion);
 							break;
 						}
