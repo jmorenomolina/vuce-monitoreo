@@ -159,8 +159,8 @@ public class SolicitudEntidad {
 							notificacion.setEntidad(notificationType.getEntidad());
 							DocumentoReferenciaType referencia = notificationType.getDocumentoReferencia();
 							if (referencia!=null) {
-								notificacion.setNumeroDocumento(referencia.getNumero());
-								notificacion.setTipoDocumento(referencia.getTipo());
+								notificacion.setReferenciaNumeroDocumento(referencia.getNumero());
+								notificacion.setReferenciaTipoDocumento(referencia.getTipo());
 							}
 							notificaciones.add(notificacion);
 							break;

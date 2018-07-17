@@ -9,6 +9,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
 import junit.framework.TestCase;
+import ws.crossnet.apn.vuce.mediador.esquema.notificacion.DocumentoReferenciaType;
 import ws.crossnet.apn.vuce.mediador.esquema.notificacion.DocumentoType;
 import ws.crossnet.apn.vuce.mediador.esquema.notificacion.NotificacionType;
 import ws.crossnet.apn.vuce.mediador.router.ClienteServicioVUCE;
@@ -65,11 +66,15 @@ public class TestingMediador extends TestCase {
 		notificacion.setTipoMensaje("N2");
 		notificacion.setEntidad(75);
 		DocumentoType documento = new DocumentoType();
-		documento.setTipo("Op");
+		documento.setTipo("O");
 		documento.setNumero("12347i5");
 		documento.setTasa(55);
-
+        
+		DocumentoReferenciaType referencia = new  DocumentoReferenciaType();
+		referencia.setNumero("123");
+		referencia.setTipo("DR");
 		notificacion.setDocumento(documento);
+		notificacion.setDocumentoReferencia(referencia);
 
 		try {
 

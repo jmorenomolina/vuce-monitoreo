@@ -57,7 +57,7 @@
                 </handled>
                 <process id="faultProcessor" ref="faultProcessor"/>
                 <log id="logError" loggingLevel="ERROR" message="Ocurrio una falla para (Usuario: ${exchangeProperty.usuario}, ExchangeId: ${exchangeId}, Operacion: ${exchangeProperty.operacion}, Falla: ${exception.message})"/>
-                <wireTap id="_wireTap1" uri="direct:ActivityAuditLog"/>
+                <wireTap id="_wireTap1" processorRef="logProcessor" uri="direct:ActivityAuditLog"/>
             </onException>
         </route>
         <route id="ActivityAuditLog" streamCache="true">

@@ -1,5 +1,6 @@
 package pe.gob.vuce.monitoreo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -17,7 +18,9 @@ public class Notificacion {
 	private String numeroDocumento;
 	private String tipoDocumento;
 	private String tipoMensaje;
+	@Column(name="REFERENCIA_NUMERO_DOCUMENTO")
 	private String referenciaNumeroDocumento;
+	@Column(name="REFERENCIA_TIPO_DOCUMENTO")
 	private String referenciaTipoDocumento;
 
 	@ManyToOne(fetch = FetchType.LAZY)
