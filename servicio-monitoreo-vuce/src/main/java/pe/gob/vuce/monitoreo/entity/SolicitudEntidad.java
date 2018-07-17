@@ -109,7 +109,7 @@ public class SolicitudEntidad {
 
 	public void setNotificaciones(List<Notificacion> notificaciones) {
 		this.notificaciones = notificaciones;
-		for (Iterator iterator = notificaciones.iterator(); iterator.hasNext();) {
+		for (Iterator<Notificacion> iterator = notificaciones.iterator(); iterator.hasNext();) {
 			Notificacion notificacion = (Notificacion) iterator.next();
 			notificacion.setSolicitudEntidad(this);
 		}
@@ -121,7 +121,7 @@ public class SolicitudEntidad {
 
 	public void setRecepcionTransacciones(List<RecepcionTransaccion> recepcionTransacciones) {
 		this.recepcionTransacciones = recepcionTransacciones;
-		for (Iterator iterator = recepcionTransacciones.iterator(); iterator.hasNext();) {
+		for (Iterator<RecepcionTransaccion> iterator = recepcionTransacciones.iterator(); iterator.hasNext();) {
 			RecepcionTransaccion  recepcionTransaccion = (RecepcionTransaccion) iterator.next();
 			recepcionTransaccion.setSolicitudEntidad(this);
 		}
@@ -129,7 +129,7 @@ public class SolicitudEntidad {
 
 	public void setTransacciones(List<Transaccion> transacciones) {
 		this.transacciones = transacciones;
-		for (Iterator iterator = transacciones.iterator(); iterator.hasNext();) {
+		for (Iterator<Transaccion> iterator = transacciones.iterator(); iterator.hasNext();) {
 			Transaccion transaccion = (Transaccion) iterator.next();
 			transaccion.setSolicitudEntidad(this);
 		}

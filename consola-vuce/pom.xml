@@ -1,21 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>pe.gob.vuce</groupId>
-	<artifactId>servicio-monitoreo-vuce</artifactId>
-	<version>1.0</version>
 
-	<name>servicio-monitoreo-vuce</name>
-	<description>Servicio de monitoreo de intercambio de entidades de mensaje con la vuce</description>
+	<groupId>com.codenotfound</groupId>
+	<artifactId>jsf-primefaces-datatable</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>jsf-primefaces-datatable</name>
+	<description>JSF - PrimeFaces DataTable Example</description>
+	<url>https://www.codenotfound.com/jsf-primefaces-datatable-example.html</url>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.3.RELEASE</version>
+		<groupId>org.joinfaces</groupId>
+		<artifactId>joinfaces-parent</artifactId>
+		<version>3.2.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,32 +28,15 @@
 	</properties>
 
 	<dependencies>
-
+		<!-- joinfaces -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-activemq</artifactId>
+			<groupId>org.joinfaces</groupId>
+			<artifactId>primefaces-spring-boot-starter</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
+		<!-- spring-boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-					<artifactId>tomcat-jdbc</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- Oracle JDBC driver -->
@@ -59,16 +45,15 @@
 			<artifactId>ojdbc7</artifactId>
 			<version>${oracle.version}</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- spring-boot-maven-plugin -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
