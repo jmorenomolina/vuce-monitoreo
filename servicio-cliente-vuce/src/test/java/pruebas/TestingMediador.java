@@ -62,12 +62,12 @@ public class TestingMediador extends TestCase {
 	public void testEnviarN2() {
 
 		NotificacionType notificacion = new NotificacionType();
-		notificacion.setNumeroNotificacion(1293);
+		notificacion.setNumeroNotificacion(12934);
 		notificacion.setTipoMensaje("N2");
 		notificacion.setEntidad(75);
 		DocumentoType documento = new DocumentoType();
 		documento.setTipo("O");
-		documento.setNumero("12347i5");
+		documento.setNumero("12347");
 		documento.setTasa(55);
         
 		DocumentoReferenciaType referencia = new  DocumentoReferenciaType();

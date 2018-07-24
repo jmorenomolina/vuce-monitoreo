@@ -36,8 +36,8 @@ public class ViewDetalleTransacciones implements Serializable {
 	private Date fechaPrimeraLectura;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_PROCESAMIENTO")
-	private Date fechaProcesamiento;
+	@Column(name="FECHA_CONFIRMACION")
+	private Date fechaConfirmacion;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_ULTIMA_LECTURA")
@@ -100,12 +100,12 @@ public class ViewDetalleTransacciones implements Serializable {
 		this.fechaPrimeraLectura = fechaPrimeraLectura;
 	}
 
-	public Date getFechaProcesamiento() {
-		return this.fechaProcesamiento;
+	public Date getFechaConfirmacion() {
+		return this.fechaConfirmacion;
 	}
 
-	public void setFechaProcesamiento(Date fechaProcesamiento) {
-		this.fechaProcesamiento = fechaProcesamiento;
+	public void setFechaConfirmacion(Date fechaConfirmacion) {
+		this.fechaConfirmacion = fechaConfirmacion;
 	}
 
 	public Date getFechaUltimaLectura() {
