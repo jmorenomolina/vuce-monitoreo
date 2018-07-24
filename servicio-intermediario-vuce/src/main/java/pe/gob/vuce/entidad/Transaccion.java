@@ -8,10 +8,20 @@ public class Transaccion {
 	private String numeroDocumento;
 	private String tipoDocumento;
 	private String tipoMensaje;
+	private long tamanoAdjuntos;
 	
 	public Transaccion() {
 		super();
 	}
+	
+	public long getTamanoAdjuntos() {
+		return tamanoAdjuntos;
+	}
+	
+	public void setTamanoAdjuntos(long tamanoAdjuntos) {
+		this.tamanoAdjuntos = tamanoAdjuntos;
+	}
+	
 	public String getEbXML() {
 		return ebXML;
 	}

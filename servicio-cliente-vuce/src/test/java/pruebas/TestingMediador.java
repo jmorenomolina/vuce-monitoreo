@@ -28,7 +28,7 @@ public class TestingMediador extends TestCase {
 	public void testDescargarTransacciones() {
 
 		VucentWSPortType servicioVUCE = new VucentWS().getVucentWSHttpSoap11Endpoint();
-		List<DataHandler> result = (List<DataHandler>) servicioVUCE.obtenerTransaccionesPendientes(74);
+		List<DataHandler> result = (List<DataHandler>) servicioVUCE.obtenerTransaccionesPendientes(75);
 
 		System.out.println("Inicio de descarga");
 

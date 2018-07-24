@@ -1,5 +1,6 @@
 package pe.gob.vuce.processor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.Charset;
@@ -25,8 +26,9 @@ import pe.gob.vuce.esquema.transaccion.TransaccionType;
 
 public class LogProcessor implements Processor {
 
-	public static final String MENSAJE_XML = "mensaje.xml";
-	public static final String MENSAJE_EBXML = "formatoEBXML.xml";
+	private static final String MENSAJE_XML = "mensaje.xml";
+	private static final String MENSAJE_EBXML = "formatoEBXML.xml";
+	private static final String MENSAJE_ADJUNTOS = "adjuntos.zip";
 
 	@Override
 	public void process(final Exchange exchange) throws Exception {
@@ -38,14 +40,13 @@ public class LogProcessor implements Processor {
 		ZipEntry ze = null;
 
 		ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
-		
+
 		for (Map.Entry<String, DataHandler> entry : adjuntos.entrySet()) {
 
 			DataHandler dataHandler = entry.getValue();
 			ZipInputStream zis = null;
 
 			Transaccion transaccion = new Transaccion();
-		
 
 			// Abrir el archivo zip
 
@@ -62,7 +63,6 @@ public class LogProcessor implements Processor {
 					if (entryName.equals(MENSAJE_XML)) {
 
 						String mensajeXML = extraerXML(zis);
-				
 
 						try {
 
@@ -77,13 +77,19 @@ public class LogProcessor implements Processor {
 							System.out.println(e.getMessage());
 						}
 
-					}
+					} else
 
 					if (entryName.equals(MENSAJE_EBXML)) {
 
 						String ebXML = extraerXML(zis); // Leer el ebXML
 						transaccion.setEbXML(ebXML);
-						
+
+					} else
+
+					if (entryName.equals(MENSAJE_ADJUNTOS)) {
+						transaccion.setTamanoAdjuntos(determinarTamanoAdjuntos(zis));
+						System.out.println("nombre: " + ze.getName());
+						System.out.println("Tamaño : " + transaccion.getTamanoAdjuntos());
 					}
 
 					zis.closeEntry();
@@ -98,11 +104,10 @@ public class LogProcessor implements Processor {
 
 		}
 
-		solicitud.setTransacciones(transacciones);		
+		solicitud.setTransacciones(transacciones);
 		ObjectMapper mapper = new ObjectMapper();
-	    String jsonSolicitud = mapper.writeValueAsString(solicitud);
-	    in.setBody(jsonSolicitud);
-
+		String jsonSolicitud = mapper.writeValueAsString(solicitud);
+		in.setBody(jsonSolicitud);
 
 	}
 
@@ -132,4 +137,18 @@ public class LogProcessor implements Processor {
 		return transaccion;
 	}
 
+	private int determinarTamanoAdjuntos(ZipInputStream zis) throws ProcesadorMensajesVUCEException {
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			final byte[] buffer = new byte[1024];
+			int read = 0;
+			while ((read = zis.read(buffer, 0, buffer.length)) != -1) {
+				baos.write(buffer, 0, read);
+			}
+			baos.flush();
+			return baos.size();
+		} catch (Exception e) {
+			throw new ProcesadorMensajesVUCEException(e);
+		}
+	}
 }

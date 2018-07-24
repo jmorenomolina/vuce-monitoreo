@@ -18,7 +18,9 @@ public class Transaccion {
 	private String tipoDocumento;
 	private String tipoMensaje;
 	private String ebXML;
+	private long tamanoAdjuntos;
 	
+
 	private String mensajeXML;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -85,4 +87,11 @@ public class Transaccion {
 		this.mensajeXML = mensajeXML;
 	}
 
+	public long getTamanoAdjuntos() {
+		return tamanoAdjuntos;
+	}
+
+	public void setTamanoAdjuntos(long tamanoAdjuntos) {
+		this.tamanoAdjuntos = tamanoAdjuntos;
+	}
 }
