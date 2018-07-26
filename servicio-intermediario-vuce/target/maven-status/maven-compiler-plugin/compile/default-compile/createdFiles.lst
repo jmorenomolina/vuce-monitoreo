@@ -15,6 +15,7 @@ pe\gob\vuce\esquema\transaccion\package-info.class
 pe\gob\vuce\esquema\transaccion\DocumentoType.class
 pe\gob\vuce\esquema\notificacion\NotificacionType.class
 pe\gob\vuce\esquema\transaccion\TransaccionType.class
+pe\gob\vuce\entidad\RecepcionTransaccion.class
 pe\gob\vuce\esquema\notificacion\DocumentoReferenciaType.class
 pe\gob\vuce\entidad\Transaccion.class
 pe\gob\vuce\esquema\transaccion\DocumentoReferenciaType.class
