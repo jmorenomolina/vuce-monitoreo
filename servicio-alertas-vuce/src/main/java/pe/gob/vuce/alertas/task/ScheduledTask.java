@@ -17,7 +17,7 @@ public class ScheduledTask {
 	AlertasComponent alertasComponent;
 
 	@Scheduled(fixedRate = 5000)
-	public void reportarAlertas() {
+	public void enviarAlertas() {
 		alertasComponent.generarAlertas();
 	}
 }
