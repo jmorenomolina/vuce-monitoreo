@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import pe.gob.vuce.alertas.component.AlertasComponent;
+import pe.gob.vuce.alertas.component.InformeIncidentesComponent;
 
 @Component
 public class ScheduledTask {
@@ -14,10 +14,10 @@ public class ScheduledTask {
 	//private static final Logger log = LoggerFactory.getLogger(ScheduledTask.class);
 
 	@Autowired
-	AlertasComponent alertasComponent;
+	InformeIncidentesComponent incidenteComponent;
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 60000)
 	public void enviarAlertas() {
-		alertasComponent.generarAlertas();
+		incidenteComponent.enviarInformeIncidentes();
 	}
 }
