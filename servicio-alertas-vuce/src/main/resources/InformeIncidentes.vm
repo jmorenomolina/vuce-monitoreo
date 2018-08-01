@@ -1,0 +1,78 @@
+<p>Estimados Sres $nombreEntidad</p>
+<p>VUCE le env&iacute;a el listado de incidentes abiertos</p>
+<p><strong>Fecha y hora de env&iacute;o:&nbsp;</strong> $fechaEnvio</p>
+<p><strong>Transacciones sin confirmar</strong></p>
+
+<table>
+<tbody>
+<tr>
+<td>
+
+<table>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Transmisi&oacute;n</strong></td>
+<td style="text-align: center;"><strong>Tipo de mensaje</strong></td>
+<td style="text-align: center;"><strong>Tipo de documento</strong></td>
+<td style="text-align: center;"><strong>Nro. de documento</strong></td>
+<td style="text-align: center;"><strong>&Uacute;ltima lectura</strong></td>
+<td style="text-align: center;"><strong>Antiguedad (horas) </strong></td>
+</tr>
+#foreach( $transaccionSinConfirmar in $transaccionesSinConfirmar)
+<tr>
+<td style="text-align: center;">$transaccionSinConfirmar.idTransmision</td>
+<td style="text-align: center;">$transaccionSinConfirmar.tipoMensaje</td>
+<td style="text-align: center;">$transaccionSinConfirmar.tipoDocumento</td>
+<td style="text-align: center;">$transaccionSinConfirmar.numeroDocumento</td>
+<td style="text-align: center;">$transaccionSinConfirmar.fechaPrimeraLectura</td>
+<td style="text-align: center;">$transaccionSinConfirmar.antiguedad (horas) </td>
+</tr>
+#end
+</tbody>
+</table>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Transacciones confirmadas con error</strong></p>
+
+<table>
+<tbody>
+<tr>
+<td>
+
+<table>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Transmisi&oacute;n</strong></td>
+<td style="text-align: center;"><strong>Tipo de mensaje</strong></td>
+<td style="text-align: center;"><strong>Tipo de documento</strong></td>
+<td style="text-align: center;"><strong>Nro. de documento</strong></td>
+<td style="text-align: center;"><strong>&Uacute;ltima lectura</strong></td>
+<td style="text-align: center;"><strong>Antiguedad</strong></td>
+</tr>
+#foreach( $transaccionConfirmadaError in $transaccionesConfirmadasError)
+<tr>
+<td style="text-align: center;">$transaccionConfirmadaError.idTransmision</td>
+<td style="text-align: center;">$transaccionConfirmadaError.tipoMensaje</td>
+<td style="text-align: center;">$transaccionConfirmadaError.tipoDocumento</td>
+<td style="text-align: center;">$transaccionConfirmadaError.numeroDocumento</td>
+<td style="text-align: center;">$transaccionConfirmadaError.fechaPrimeraLectura</td>
+<td style="text-align: center;">$transaccionConfirmadaError.antiguedad</td>
+</tr>
+#end
+</tbody>
+</table>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Atentamente,</p>
+<p>Soporte VUCE</p>
+<p><strong>Aviso de Confidencialidad</strong><br />Si usted no es el destinatario previsto, le agradeceremos se sirva destruir todas las copias de este mensaje y notif&iacute;quenos inmediatamente</p>
