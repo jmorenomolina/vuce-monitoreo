@@ -14,7 +14,6 @@ public class Notificacion {
 	
 	@Id
 	private int numeroNotificacion;
-	private int entidad;
 	private String numeroDocumento;
 	private String tipoDocumento;
 	private String tipoMensaje;
@@ -28,10 +27,6 @@ public class Notificacion {
 	private SolicitudEntidad solicitudEntidad;
 	
 	public Notificacion() {
-	}
-	
-	public int getEntidad() {
-		return entidad;
 	}
 	
 	public String getNumeroDocumento() {
@@ -48,10 +43,6 @@ public class Notificacion {
 
 	public String getTipoMensaje() {
 		return tipoMensaje;
-	}
-
-	public void setEntidad(int entidad) {
-		this.entidad = entidad;
 	}
 
 	public void setNumeroDocumento(String numeroDocumento) {

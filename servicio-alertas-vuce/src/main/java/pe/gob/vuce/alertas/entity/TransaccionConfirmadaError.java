@@ -12,12 +12,13 @@ import javax.persistence.Table;
 public class TransaccionConfirmadaError implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private long antiguedad;
-
 	private String entidad;
 
 	@Column(name="FECHA_PRIMERA_LECTURA")
 	private String fechaPrimeraLectura;
+	
+	@Column(name="FECHA_CONFIRMACION")
+	private String fechaConfirmacion;
 
 	@Id
 	@Column(name="ID_TRANSMISION")
@@ -49,14 +50,6 @@ public class TransaccionConfirmadaError implements Serializable {
 	public TransaccionConfirmadaError() {
 	}
 	
-
-	public long getAntiguedad() {
-		return this.antiguedad;
-	}
-
-	public void setAntiguedad(long antiguedad) {
-		this.antiguedad = antiguedad;
-	}
 
 	public String getEntidad() {
 		return this.entidad;
@@ -105,5 +98,16 @@ public class TransaccionConfirmadaError implements Serializable {
 	public void setTipoMensaje(String tipoMensaje) {
 		this.tipoMensaje = tipoMensaje;
 	}
+
+
+	public String getFechaConfirmacion() {
+		return fechaConfirmacion;
+	}
+
+
+	public void setFechaConfirmacion(String fechaConfirmacion) {
+		this.fechaConfirmacion = fechaConfirmacion;
+	}
+	
 
 }

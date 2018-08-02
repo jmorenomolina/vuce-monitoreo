@@ -25,7 +25,7 @@
 <td style="text-align: center;">$transaccionSinConfirmar.tipoDocumento</td>
 <td style="text-align: center;">$transaccionSinConfirmar.numeroDocumento</td>
 <td style="text-align: center;">$transaccionSinConfirmar.fechaPrimeraLectura</td>
-<td style="text-align: center;">$transaccionSinConfirmar.antiguedad (horas) </td>
+<td style="text-align: center;">$transaccionSinConfirmar.antiguedad</td>
 </tr>
 #end
 </tbody>
@@ -52,7 +52,7 @@
 <td style="text-align: center;"><strong>Tipo de documento</strong></td>
 <td style="text-align: center;"><strong>Nro. de documento</strong></td>
 <td style="text-align: center;"><strong>&Uacute;ltima lectura</strong></td>
-<td style="text-align: center;"><strong>Antiguedad</strong></td>
+<td style="text-align: center;"><strong>Fecha de confirmaci&oacute;n</strong></td>
 </tr>
 #foreach( $transaccionConfirmadaError in $transaccionesConfirmadasError)
 <tr>
@@ -61,7 +61,7 @@
 <td style="text-align: center;">$transaccionConfirmadaError.tipoDocumento</td>
 <td style="text-align: center;">$transaccionConfirmadaError.numeroDocumento</td>
 <td style="text-align: center;">$transaccionConfirmadaError.fechaPrimeraLectura</td>
-<td style="text-align: center;">$transaccionConfirmadaError.antiguedad</td>
+<td style="text-align: center;">$transaccionConfirmadaError.fechaConfirmacion</td>
 </tr>
 #end
 </tbody>
