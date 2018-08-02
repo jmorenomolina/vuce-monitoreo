@@ -15,7 +15,7 @@
 <td style="text-align: center;"><strong>Tipo de mensaje</strong></td>
 <td style="text-align: center;"><strong>Tipo de documento</strong></td>
 <td style="text-align: center;"><strong>Nro. de documento</strong></td>
-<td style="text-align: center;"><strong>&Uacute;ltima lectura</strong></td>
+<td style="text-align: center;"><strong>Primera lectura</strong></td>
 <td style="text-align: center;"><strong>Antiguedad (horas) </strong></td>
 </tr>
 #foreach( $transaccionSinConfirmar in $transaccionesSinConfirmar)
@@ -51,7 +51,7 @@
 <td style="text-align: center;"><strong>Tipo de mensaje</strong></td>
 <td style="text-align: center;"><strong>Tipo de documento</strong></td>
 <td style="text-align: center;"><strong>Nro. de documento</strong></td>
-<td style="text-align: center;"><strong>&Uacute;ltima lectura</strong></td>
+<td style="text-align: center;"><strong>Primera lectura</strong></td>
 <td style="text-align: center;"><strong>Fecha de confirmaci&oacute;n</strong></td>
 </tr>
 #foreach( $transaccionConfirmadaError in $transaccionesConfirmadasError)
