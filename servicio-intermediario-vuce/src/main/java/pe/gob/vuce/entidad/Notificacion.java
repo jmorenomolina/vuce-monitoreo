@@ -5,29 +5,15 @@ public class Notificacion {
 	private int entidad;
 	private String numeroDocumento;
 	private int numeroNotificacion;
-	private String tipoDocumento;
-	private String tipoMensaje;
 	private String referenciaNumeroDocumento;
 	private String referenciaTipoDocumento;
-
+	private String tipoDocumento;
+	private String tipoMensaje;
+    private String XML;
+    
 	public Notificacion() {
 	}
 
-	public String getReferenciaNumeroDocumento() {
-		return referenciaNumeroDocumento;
-	}
-
-	public void setReferenciaNumeroDocumento(String referenciaNumeroDocumento) {
-		this.referenciaNumeroDocumento = referenciaNumeroDocumento;
-	}
-
-	public String getReferenciaTipoDocumento() {
-		return referenciaTipoDocumento;
-	}
-
-	public void setReferenciaTipoDocumento(String referenciaTipoDocumento) {
-		this.referenciaTipoDocumento = referenciaTipoDocumento;
-	}
 	public int getEntidad() {
 		return entidad;
 	}
@@ -40,12 +26,23 @@ public class Notificacion {
 		return numeroNotificacion;
 	}
 
+	public String getReferenciaNumeroDocumento() {
+		return referenciaNumeroDocumento;
+	}
+
+	public String getReferenciaTipoDocumento() {
+		return referenciaTipoDocumento;
+	}
+
 	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
-
 	public String getTipoMensaje() {
 		return tipoMensaje;
+	}
+
+	public String getXML() {
+		return XML;
 	}
 
 	public void setEntidad(int entidad) {
@@ -60,12 +57,24 @@ public class Notificacion {
 		this.numeroNotificacion = numeroNotificacion;
 	}
 
+	public void setReferenciaNumeroDocumento(String referenciaNumeroDocumento) {
+		this.referenciaNumeroDocumento = referenciaNumeroDocumento;
+	}
+
+	public void setReferenciaTipoDocumento(String referenciaTipoDocumento) {
+		this.referenciaTipoDocumento = referenciaTipoDocumento;
+	}
+
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
 
 	public void setTipoMensaje(String tipoMensaje) {
 		this.tipoMensaje = tipoMensaje;
+	}
+
+	public void setXML(String xML) {
+		XML = xML;
 	}
 
 

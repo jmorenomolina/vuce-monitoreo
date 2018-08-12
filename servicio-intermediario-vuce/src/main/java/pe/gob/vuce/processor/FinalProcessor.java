@@ -9,9 +9,7 @@ public class FinalProcessor implements Processor {
 
 	@Override
 	public void process(final Exchange exchange) throws Exception {
-
 		exchange.getOut().setBody(exchange.getIn().getBody());
-
 	}
 
 }

@@ -344,7 +344,7 @@
    <soapenv:Body>
       <ent:obtenerTransaccionesPendientes>
          <!--Optional:-->
-         <idEntidad>75</idEntidad>
+         <idEntidad>80</idEntidad>
       </ent:obtenerTransaccionesPendientes>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:obtenerTransaccionesPendientes"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="32ca6016-a724-49e5-b86d-e4f28ec8bd25" isOneWay="false" action="urn:obtenerTransaccionesPendientesConLimite" name="obtenerTransaccionesPendientesConLimite" bindingOperationName="obtenerTransaccionesPendientesConLimite" type="Request-Response" outputName="obtenerTransaccionesPendientesConLimiteResponse" inputName="obtenerTransaccionesPendientesConLimite" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c84fa776-f276-42c1-80ad-f38c42b3dc35" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8181/cxf/vuce</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ent="http://entidad.ws.remoting.ve.vuce.mincetur.gob.pe/">\r
