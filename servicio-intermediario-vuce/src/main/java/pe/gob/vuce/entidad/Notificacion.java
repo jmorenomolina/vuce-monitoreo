@@ -1,68 +1,43 @@
 package pe.gob.vuce.entidad;
 
 public class Notificacion {
-	
-	private int entidad;
+
+	private NotificacionPK id;
+
 	private String numeroDocumento;
-	private int numeroNotificacion;
-	private String referenciaNumeroDocumento;
-	private String referenciaTipoDocumento;
 	private String tipoDocumento;
 	private String tipoMensaje;
-    private String XML;
-    
-	public Notificacion() {
-	}
+	private String xml;
 
-	public int getEntidad() {
-		return entidad;
+	public Notificacion() {
 	}
 
 	public String getNumeroDocumento() {
 		return numeroDocumento;
 	}
 
-	public int getNumeroNotificacion() {
-		return numeroNotificacion;
+	public NotificacionPK getId() {
+		return id;
 	}
 
-	public String getReferenciaNumeroDocumento() {
-		return referenciaNumeroDocumento;
-	}
-
-	public String getReferenciaTipoDocumento() {
-		return referenciaTipoDocumento;
+	public void setId(NotificacionPK id) {
+		this.id = id;
 	}
 
 	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
+
 	public String getTipoMensaje() {
 		return tipoMensaje;
 	}
 
-	public String getXML() {
-		return XML;
-	}
-
-	public void setEntidad(int entidad) {
-		this.entidad = entidad;
+	public String getXml() {
+		return xml;
 	}
 
 	public void setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
-	}
-
-	public void setNumeroNotificacion(int numeroNotificacion) {
-		this.numeroNotificacion = numeroNotificacion;
-	}
-
-	public void setReferenciaNumeroDocumento(String referenciaNumeroDocumento) {
-		this.referenciaNumeroDocumento = referenciaNumeroDocumento;
-	}
-
-	public void setReferenciaTipoDocumento(String referenciaTipoDocumento) {
-		this.referenciaTipoDocumento = referenciaTipoDocumento;
 	}
 
 	public void setTipoDocumento(String tipoDocumento) {
@@ -73,10 +48,8 @@ public class Notificacion {
 		this.tipoMensaje = tipoMensaje;
 	}
 
-	public void setXML(String xML) {
-		XML = xML;
+	public void setXml(String xml) {
+		this.xml = xml;
 	}
-
-
 
 }

@@ -1,26 +1,32 @@
 package pe.gob.vuce.monitoreo.entity;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 @Entity
 @Table(name = "NOTIFICACION")
 public class Notificacion {
 	
-	@Id
-	private int numeroNotificacion;
+	@EmbeddedId
+	private NotificacionPK id;
+
+	@Column(name="NUMERO_DOCUMENTO")
 	private String numeroDocumento;
+
+	@Column(name="TIPO_DOCUMENTO")
 	private String tipoDocumento;
+
+	@Column(name="TIPO_MENSAJE")
 	private String tipoMensaje;
-	@Column(name="REFERENCIA_NUMERO_DOCUMENTO")
-	private String referenciaNumeroDocumento;
-	@Column(name="REFERENCIA_TIPO_DOCUMENTO")
-	private String referenciaTipoDocumento;
+
+	@Lob
+	private String xml;
+	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_MENSAJE")
@@ -33,10 +39,6 @@ public class Notificacion {
 		return numeroDocumento;
 	}
 
-	public int getNumeroNotificacion() {
-		return numeroNotificacion;
-	}
-
 	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
@@ -47,10 +49,6 @@ public class Notificacion {
 
 	public void setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
-	}
-
-	public void setNumeroNotificacion(int numeroNotificacion) {
-		this.numeroNotificacion = numeroNotificacion;
 	}
 
 	public void setTipoDocumento(String tipoDocumento) {
@@ -68,20 +66,22 @@ public class Notificacion {
 	public void setSolicitudEntidad(SolicitudEntidad solicitudEntidad) {
 		this.solicitudEntidad = solicitudEntidad;
 	}
-
-	public String getReferenciaNumeroDocumento() {
-		return referenciaNumeroDocumento;
+	
+	public String getXml() {
+		return xml;
 	}
 
-	public void setReferenciaNumeroDocumento(String referenciaNumeroDocumento) {
-		this.referenciaNumeroDocumento = referenciaNumeroDocumento;
+	public void setXml(String xml) {
+		this.xml = xml;
 	}
 
-	public String getReferenciaTipoDocumento() {
-		return referenciaTipoDocumento;
+	public NotificacionPK getId() {
+		return id;
 	}
 
-	public void setReferenciaTipoDocumento(String referenciaTipoDocumento) {
-		this.referenciaTipoDocumento = referenciaTipoDocumento;
+	public void setId(NotificacionPK id) {
+		this.id = id;
 	}
+
+
 }
