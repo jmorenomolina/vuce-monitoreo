@@ -8,33 +8,33 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "NOTIFICACION")
 public class Notificacion {
-	
+
 	@EmbeddedId
 	private NotificacionPK id;
 
-	@Column(name="NUMERO_DOCUMENTO")
+	@Column(name = "NUMERO_DOCUMENTO")
 	private String numeroDocumento;
 
-	@Column(name="TIPO_DOCUMENTO")
+	@Column(name = "TIPO_DOCUMENTO")
 	private String tipoDocumento;
 
-	@Column(name="TIPO_MENSAJE")
+	@Column(name = "TIPO_MENSAJE")
 	private String tipoMensaje;
 
 	@Lob
 	private String xml;
-	
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_MENSAJE")
+	@JoinColumn(name = "ID_MENSAJE")
 	private SolicitudEntidad solicitudEntidad;
-	
+
 	public Notificacion() {
 	}
-	
+
 	public String getNumeroDocumento() {
 		return numeroDocumento;
 	}
@@ -66,7 +66,7 @@ public class Notificacion {
 	public void setSolicitudEntidad(SolicitudEntidad solicitudEntidad) {
 		this.solicitudEntidad = solicitudEntidad;
 	}
-	
+
 	public String getXml() {
 		return xml;
 	}
@@ -82,6 +82,5 @@ public class Notificacion {
 	public void setId(NotificacionPK id) {
 		this.id = id;
 	}
-
 
 }

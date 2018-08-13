@@ -27,7 +27,7 @@ public class JmsConsumer {
 	@SuppressWarnings("rawtypes")
 	@JmsListener(destination = TRANSACCION_QUEUE, containerFactory = "myFactory")
 	public void receiveMessage(Message message) {
-		try {			
+		try {
 		    SolicitudEntidad solicitudEntidad = new ObjectMapper().readValue((String) message.getPayload(), SolicitudEntidad.class);
 		    transaccionComponent.registrarSolicitud(solicitudEntidad);	
 		} catch (Exception e) {			

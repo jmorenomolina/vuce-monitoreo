@@ -9,9 +9,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TRANSACCION")
+
+
 public class Transaccion {
 
-	
 	@Id
 	private int idTransmision;
 	private String numeroDocumento;
@@ -19,12 +20,11 @@ public class Transaccion {
 	private String tipoMensaje;
 	private String ebXML;
 	private long tamanoAdjuntos;
-	
 
 	private String mensajeXML;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_MENSAJE")
+	@JoinColumn(name = "ID_MENSAJE")
 	private SolicitudEntidad solicitudEntidad;
 
 	public SolicitudEntidad getSolicitudEntidad() {
@@ -38,7 +38,7 @@ public class Transaccion {
 	public Transaccion() {
 		super();
 	}
-	
+
 	public int getIdTransmision() {
 		return idTransmision;
 	}
@@ -63,7 +63,7 @@ public class Transaccion {
 		this.numeroDocumento = numeroDocumento;
 	}
 
-		public void setTipoDocumento(String tipoDocumento) {
+	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
 

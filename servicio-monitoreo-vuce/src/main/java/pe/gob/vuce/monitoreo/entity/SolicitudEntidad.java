@@ -8,11 +8,25 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;;
 
 @Entity
 @Table(name = "SOLICITUDENTIDAD")
+@NamedStoredProcedureQueries({
+		@NamedStoredProcedureQuery(name = "reenviarTransaccion", procedureName = "REENVIAR_TRANSACCION", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "id_transmision", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje_error", type = String.class) }),
+		@NamedStoredProcedureQuery(name = "anularNotificacion", procedureName = "ANULAR_NOTIFICACION", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje_error", type = String.class) }),
+		@NamedStoredProcedureQuery(name = "reprocesarNotificacion", procedureName = "REPROCESAR_NOTIFICACION", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje_error", type = String.class) }) })
 public class SolicitudEntidad {
 
 	@Id
@@ -24,14 +38,14 @@ public class SolicitudEntidad {
 	private String nombreOperacion;
 	private String nombreUsuario;
 	private String version;
-	
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy="solicitudEntidad")
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
 	private List<Notificacion> notificaciones;
 
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy="solicitudEntidad")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
 	private List<RecepcionTransaccion> recepcionTransacciones;
 
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy="solicitudEntidad")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
 	private List<Transaccion> transacciones;
 
 	public SolicitudEntidad() {
@@ -102,7 +116,6 @@ public class SolicitudEntidad {
 		this.nombreUsuario = nombreUsuario;
 	}
 
-
 	public List<Notificacion> getNotificaciones() {
 		return notificaciones;
 	}
@@ -122,7 +135,7 @@ public class SolicitudEntidad {
 	public void setRecepcionTransacciones(List<RecepcionTransaccion> recepcionTransacciones) {
 		this.recepcionTransacciones = recepcionTransacciones;
 		for (Iterator<RecepcionTransaccion> iterator = recepcionTransacciones.iterator(); iterator.hasNext();) {
-			RecepcionTransaccion  recepcionTransaccion = (RecepcionTransaccion) iterator.next();
+			RecepcionTransaccion recepcionTransaccion = (RecepcionTransaccion) iterator.next();
 			recepcionTransaccion.setSolicitudEntidad(this);
 		}
 	}
