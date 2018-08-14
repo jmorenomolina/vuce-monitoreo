@@ -18,7 +18,7 @@
 <td style="text-align: center;"><strong>Primera lectura</strong></td>
 <td style="text-align: center;"><strong>Antiguedad (min) </strong></td>
 </tr>
-#foreach( $transaccion in $transacciones)
+#foreach( $transacciones in $transaccion)
 <tr>
 <td style="text-align: center;">$transaccion.idTransmision</td>
 <td style="text-align: center;">$transaccion.tipoMensaje</td>
@@ -29,7 +29,13 @@
 </tr>
 #end
 </tbody>
-</table
+</table>
+
+</td>
+</tr>
+</tbody>
+</table>
+
 
 <p><strong>Notificaciones con incidentes</strong></p>
 
@@ -48,7 +54,7 @@
 <td style="text-align: center;"><strong>Fecha de recepci&oacute;n</strong></td>
 <td style="text-align: center;"><strong>Fecha de procesamiento</strong></td>
 </tr>
-#foreach( $notificacion in $notificaciones)
+#foreach( $notificaciones in $notificacion)
 <tr>
 <td style="text-align: center;">$notificacion.veId</td>
 <td style="text-align: center;">$notificacion.tipoMensaje</td>
@@ -65,6 +71,8 @@
 </tr>
 </tbody>
 </table>
+
+
 <p>Atentamente,</p>
 <p>Soporte VUCE</p>
 <p><strong>Aviso de Confidencialidad</strong><br />Si usted no es el destinatario previsto, le agradeceremos se sirva destruir todas las copias de este mensaje y notif&iacute;quenos inmediatamente</p>

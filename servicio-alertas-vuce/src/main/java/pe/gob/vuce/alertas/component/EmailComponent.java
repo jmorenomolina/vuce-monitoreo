@@ -19,8 +19,10 @@ public class EmailComponent {
 
 	@Autowired
 	private MailSender mailSender;
+	
 	@Autowired
 	private JavaMailSender javaMailSender;
+	
 	@Autowired
 	MailProperties mailProperties;
 
@@ -45,7 +47,6 @@ public class EmailComponent {
 		helper.setSubject(subject);
 		helper.setText(body, true);
 		javaMailSender.send(mail);
-
 	}
 
 }

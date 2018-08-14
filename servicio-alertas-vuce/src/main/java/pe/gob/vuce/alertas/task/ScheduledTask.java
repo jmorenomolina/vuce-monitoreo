@@ -18,6 +18,6 @@ public class ScheduledTask {
 
 	@Scheduled(fixedRate = 60000)
 	public void enviarAlertas() {
-		incidenteComponent.enviarInformeIncidentes();
+		incidenteComponent.enviarInformeIncidentes(true);
 	}
 }

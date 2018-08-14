@@ -14,7 +14,7 @@ public class Entidad implements Serializable {
 
 	@Id
 	@Column(name="ID_ENTIDAD")
-	private long idEntidad;
+	private String idEntidad;
 
 	@Column(name="CORREO_SOPORTE")
 	private String correoSoporte;
@@ -27,11 +27,11 @@ public class Entidad implements Serializable {
 	public Entidad() {
 	}
 
-	public long getIdEntidad() {
+	public String getIdEntidad() {
 		return this.idEntidad;
 	}
 
-	public void setIdEntidad(long idEntidad) {
+	public void setIdEntidad(String idEntidad) {
 		this.idEntidad = idEntidad;
 	}
 
