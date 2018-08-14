@@ -19,11 +19,11 @@
     <bean class=" pe.gob.vuce.processor.LogProcessor" id="logProcessor"/>
     <bean class=" pe.gob.vuce.processor.FinalProcessor" id="finalProcessor"/>
     <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq1">
-        <property name="brokerURL" value="tcp://Lenovo-PC:61616"/>
+        <property name="brokerURL" value="tcp://localhost:61616"/>
         <property name="userName" value="karaf"/>
         <property name="password" value="karaf"/>
     </bean>
-    <cxf:cxfEndpoint address="/vuce" endpointName="c:VucentWSImplPort"
+    <cxf:cxfEndpoint address="http://localhost:9001/vucent/services/VucentWS" endpointName="c:VucentWSImplPort"
         id="vuce-ws-consumer" serviceName="c:VucentWSImplService"
         wsdlURL="wsdl/VuceWS.wsdl" xmlns:c="http://entidad.ws.remoting.ve.vuce.mincetur.gob.pe/">
         <cxf:properties>

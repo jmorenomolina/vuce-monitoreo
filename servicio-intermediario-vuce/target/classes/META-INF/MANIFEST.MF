@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1534114727769
+Bnd-LastModified: 1534264816477
 Build-Jdk: 1.8.0_102
 Built-By: jmoreno
 Bundle-ManifestVersion: 2
@@ -7,17 +7,16 @@ Bundle-Name: VUCE :: Servicio Intermediario
 Bundle-SymbolicName: pe.gob.vuce.servicio-intermediario-vuce
 Bundle-Version: 1.0.0
 Created-By: Apache Maven Bundle Plugin
-Export-Package: pe.gob.vuce.entidad;version="1.0.0";uses:="pe.gob.vuce.p
- rocessor",pe.gob.vuce.esquema.notificacion;version="1.0.0";uses:="javax
- .xml.bind,javax.xml.bind.annotation",pe.gob.vuce.esquema.transaccion;ve
- rsion="1.0.0";uses:="javax.xml.bind,javax.xml.bind.annotation",pe.gob.v
- uce.processor;version="1.0.0";uses:="org.apache.camel"
+Export-Package: pe.gob.vuce.entidad;uses:="pe.gob.vuce.processor";versio
+ n="1.0.0",pe.gob.vuce.esquema.notificacion;uses:="javax.xml.bind,javax.
+ xml.bind.annotation";version="1.0.0",pe.gob.vuce.esquema.transaccion;us
+ es:="javax.xml.bind,javax.xml.bind.annotation";version="1.0.0",pe.gob.v
+ uce.processor;uses:="org.apache.camel";version="1.0.0"
 Import-Package: com.fasterxml.jackson.databind;version="[2.6,3)",javax.a
  ctivation,javax.xml.bind,javax.xml.bind.annotation,javax.xml.namespace,
  javax.xml.stream,javax.xml.stream.events,javax.xml.transform,javax.xml.
  transform.stream,org.apache.activemq.camel.component,org.apache.camel;v
- ersion="[2.16,3)",pe.gob.vuce.entidad;version="[1.0,2)",pe.gob.vuce.esq
- uema.notificacion;version="[1.0,2)",pe.gob.vuce.esquema.transaccion;ver
- sion="[1.0,2)",pe.gob.vuce.processor;version="[1.0,2)"
+ ersion="[2.16,3)",pe.gob.vuce.entidad,pe.gob.vuce.esquema.notificacion,
+ pe.gob.vuce.esquema.transaccion,pe.gob.vuce.processor
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.5.0.201709291849
