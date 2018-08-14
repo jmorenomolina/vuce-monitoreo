@@ -20,13 +20,13 @@ import javax.persistence.Table;;
 @NamedStoredProcedureQueries({
 		@NamedStoredProcedureQuery(name = "reenviarTransaccion", procedureName = "REENVIAR_TRANSACCION", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "id_transmision", type = String.class),
-				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje_error", type = String.class) }),
+				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }),
 		@NamedStoredProcedureQuery(name = "anularNotificacion", procedureName = "ANULAR_NOTIFICACION", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
-				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje_error", type = String.class) }),
+				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }),
 		@NamedStoredProcedureQuery(name = "reprocesarNotificacion", procedureName = "REPROCESAR_NOTIFICACION", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
-				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje_error", type = String.class) }) })
+				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }) })
 public class SolicitudEntidad {
 
 	@Id
