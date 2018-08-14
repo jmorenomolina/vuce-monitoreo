@@ -69,15 +69,56 @@ var graphic = {
             }
         });
     },
-    createTable: function (idTable,dataSet,paging) {            
+    createLine: function (canvasId,fechas, datasetsParam,Ytitle) {
+        resetCanvas(canvasId);
+ 
+        var ctxBar = document.getElementById(canvasId).getContext('2d');
+        var myChartLine = new Chart(ctxBar, {
+            type: 'line',
+            data: {
+                labels: fechas,
+                datasets: datasetsParam                
+            },
+            options: {
+                legend: {
+                    display: true,
+                    labels: {
+                        fontColor: 'rgb(0, 0, 0)'
+                    }
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Fechas'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: Ytitle
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                }
+            }
+        });
+    },
+    createTable: function (idTable,dataSet,pagingParam) {            
         $('#'+idTable).DataTable({            
-            data: dataSet,
-            'paging': paging,
+             data: dataSet,
+            'paging': pagingParam,
             'lengthChange': false,
             'searching': false,
             'ordering': true,
             'info': true,
             'autoWidth': false,
+            "scrollX": true,
             'language': {
                 'lengthMenu': "Mostrar _MENU_ registros por pagina",
                 'zeroRecords': "No encontrado.",
