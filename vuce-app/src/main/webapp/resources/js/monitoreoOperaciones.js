@@ -30,11 +30,11 @@ var contextApi = "http://localhost:9000/api";
             
             actionOperaciones.executeEntidades();
             actionOperaciones.executeAllReport();
-            /*
-             setInterval(function(){ 
+            
+            setInterval(function(){ 
                         console.log("refresh");
-                        action.executeAllReport();                    
-                    }, 60000);*/
+                        actionOperaciones.executeAllReport();                    
+                    }, 30000);
             
         });
         

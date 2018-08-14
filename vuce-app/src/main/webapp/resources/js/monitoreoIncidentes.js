@@ -28,11 +28,11 @@ var contextApi = "http://localhost:9000/api";
             action.executeTransaccionIncidentesTable(true);
             action.executeNotificacionIncidentesTable(true);
             action.executeFrecuenciaLectura(true);
-            /*
+            
              setInterval(function(){ 
                         console.log("refresh");
                         action.executeAllReport();                    
-                    }, 60000);*/
+                    }, 30000);
             
         });
         
