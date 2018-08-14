@@ -24,7 +24,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Reporte VUCE - Monitoreo de Operaciones   
+               Monitoreo de Operaciones   
             </h1>           
         </section>
 
@@ -99,8 +99,8 @@
                             </div>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body text-center" id="parent-transacciones-procesadas">
-                            <canvas id="transacciones-procesadas"></canvas>
+                        <div class="box-body text-center" id="parent-distribucion-peticiones">
+                            <canvas id="distribucion-peticiones"></canvas>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -121,8 +121,8 @@
                             </div>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body text-center" id="parent-notificaciones-incidencias">
-                            <canvas id="notificaciones-incidencias"></canvas>
+                        <div class="box-body text-center" id="parent-distribucion-fallas">
+                            <canvas id="distribucion-fallas"></canvas>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -145,21 +145,18 @@
                         <div class="box-body text-center">
 
                             <div class="col-sm-12">
-                                <table id="tb-notificacion-incidente" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-notificacion-incidente">
+                                <table id="tb-operaciones" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-operaciones">
                                     <thead>
-                                        <tr role="row">
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1"></th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Tipo</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Entidad</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">VE Id</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">VC Id</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Mensaje</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Documento</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Nro Documento</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Recepcion.</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Procesamiento.</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Antiguedad.</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">XML</th>
+                                        <tr role="row">               
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Entidad</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Operacion</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Fecha</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Peticiones</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Cant. Fallas</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Fiabilidad(%)</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Tpo. Resp Promedio</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Tpo. Resp Minimo</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Tpo. Resp Maximo</th>
                                         </tr>
                                     </thead>
                                     <tbody>

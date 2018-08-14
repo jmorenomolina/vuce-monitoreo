@@ -1,8 +1,6 @@
 var contextApi = "http://localhost:9000/api";
         $(document).ready(function () {
             
-         
-            
             $('#datepickerDesde').datepicker({
                 autoclose: true,
                 dateFormat: 'dd/mm/yyyy'
@@ -14,13 +12,14 @@ var contextApi = "http://localhost:9000/api";
            });
             
                
-            $("#datepickerDesde").val(action.getDate());
-            $("#datepickerHasta").val(action.getDate());
+            $("#datepickerDesde").val(actionOperaciones.getDate());
+            $("#datepickerHasta").val(actionOperaciones.getDate());
             
             
             
             document.getElementById("filtrar-incidentes").onclick = function () {
-                action.executeAllReport();
+                actionOperaciones.executeAllReport();
+              
             };
             
             
@@ -29,8 +28,8 @@ var contextApi = "http://localhost:9000/api";
             });
             
             
-            action.executeEntidades();
-            action.executeNotificacionIncidentesTable();
+            actionOperaciones.executeEntidades();
+            actionOperaciones.executeAllReport();
             /*
              setInterval(function(){ 
                         console.log("refresh");
@@ -41,7 +40,7 @@ var contextApi = "http://localhost:9000/api";
         
         
         
-        var action = {
+        var actionOperaciones = {
                           
                 getDate: function () {
                
@@ -63,7 +62,9 @@ var contextApi = "http://localhost:9000/api";
                 },
                 executeAllReport: function () {
                
-                        action.executeNotificacionIncidentesTable(false);
+                        actionOperaciones.executeOperacionesTable(false);
+                        actionOperaciones.executeOperacionesLineBarPeticiones();
+                        actionOperaciones.executeOperacionesLineBarFallas();
                
                 },
                 executeEntidades: function () {
@@ -83,37 +84,166 @@ var contextApi = "http://localhost:9000/api";
                             });
                         });
                 },
-                executeNotificacionIncidentesTable: function (isNew) {
+                executeOperacionesTable: function (isNew) {
                     $.ajax({
-                        url: contextApi + "/reporte/notificacion/con/incidentes",
+                        url: contextApi + "/reporte/operaciones",
                         data: $("#form-search").serialize()
                     }).done(function (data) {
                         var dataSet = [];
                         $.each(data, function (key, value)
                         {
-                            var row = [];                            
-                            row.push((value.tipo===2)? "<input type='checkbox' name='notificacion' value='"+value.vcId+"' />":"");                            
-                            row.push("<div class='tipo-transacciones-" + value.tipo + "'></div>");
+                            var row = [];   
                             row.push(value.entidad);
-                            row.push(value.veId);
-                            row.push(value.vcId);
-                            row.push(value.tipoMensaje);
-                            row.push(value.tipoDocumento);
-                            row.push(value.numeroDocumento);
-                            row.push(value.fechaRecepcion);
-                            row.push(value.fechaProcesamiento);                              
-                            row.push(value.antiguedad + " min");                        
-                            row.push("Ver");
+                            row.push(value.nombreOperacion);
+                            row.push(value.fechaSolicitud);
+                            row.push(value.cantidadPeticiones);
+                            row.push(value.cantidadFallas);
+                            
+                            if(value.fiabilidad<90){
+                              row.push("<span class='operaciones-red'>"+value.fiabilidad+"</span>");
+                            }else{
+                              row.push("<span>"+value.fiabilidad+"</span>");  
+                            }
+                            
+                             if(value.tiempoRespuestaProm>60){
+                              row.push("<span class='operaciones-red'>"+value.tiempoRespuestaProm+"</span>");
+                            }else{
+                              row.push("<span>"+value.tiempoRespuestaProm+"</span>");  
+                            }
+                        
+                            row.push(value.tiempoRespuestaMin);                              
+                            row.push(value.tiempoRespuestaMax);     
                             dataSet.push(row);
                         });
                         if(isNew){
-                            graphic.createTable("tb-notificacion-incidente",dataSet,true); 
+                            graphic.createTable("tb-operaciones",dataSet,true); 
                         }else{
-                            graphic.updateTable("tb-notificacion-incidente",dataSet,true);  
+                            graphic.updateTable("tb-operaciones",dataSet,true);  
                         }
                            
                     });
+                },
+                executeOperacionesLineBarPeticiones: function () {
+                    $.ajax({
+                        url: contextApi + "/reporte/operaciones/grafico",
+                        data: $("#form-search").serialize()
+                    }).done(function (data) {
+                        var dataSet = [];
+                        
+                        
+                        var fechas = [];
+                        var resultados = [];
+                        $.each(data, function (key, value)
+                        {       
+                            if(value.entidad==="APN"){
+                                resultados.push(value.sumCantidadPeticiones);
+                                fechas.push(value.graficoOperacionPk.fechaSolicitud);
+                            }
+                           
+                           
+                        });
+                                                
+                        
+                        var dataApn = {
+                            label: 'APN',
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor:  'rgba(255, 99, 132, 0.7)',
+                            data: resultados,                            
+                            borderWidth: 0,
+                            fill: false
+                        };
+                    
+                        
+                  
+                        var resultados = [];
+                        $.each(data, function (key, value)
+                        {  
+                            if(value.entidad==="SENASA"){
+                                resultados.push(value.sumCantidadPeticiones);
+                              
+                            }
+                           
+                        });
+                        
+                         var dataSenasa = {
+                            label: 'Senasa',
+                            backgroundColor:   'rgba(153, 102, 255, 1)',
+                            borderColor:      'rgba(153, 102, 255, 1)',
+                            data: resultados,                            
+                            borderWidth: 0,
+                            fill: false
+                        };                       
+                        
+                        dataSet.push(dataApn);
+                        dataSet.push(dataSenasa);
+                        
+                        graphic.createLine("distribucion-peticiones", fechas, dataSet,"Peticiones");
+                       
+                        
+                           
+                    });
+                },
+                  executeOperacionesLineBarFallas: function () {
+                    $.ajax({
+                        url: contextApi + "/reporte/operaciones/grafico",
+                        data: $("#form-search").serialize()
+                    }).done(function (data) {
+                        var dataSet = [];
+                        
+                        
+                        var fechas = [];
+                        var resultados = [];
+                        $.each(data, function (key, value)
+                        {       
+                            if(value.entidad==="APN"){
+                                resultados.push(value.sumCantidadFallas);
+                                fechas.push(value.graficoOperacionPk.fechaSolicitud);
+                            }
+                           
+                           
+                        });
+                                                
+                        
+                        var dataApn = {
+                            label: 'APN',
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor:  'rgba(255, 99, 132, 0.7)',
+                            data: resultados,                            
+                            borderWidth: 0,
+                            fill: false
+                        };
+                    
+                        
+                  
+                        var resultados = [];
+                        $.each(data, function (key, value)
+                        {  
+                            if(value.entidad==="SENASA"){
+                                resultados.push(value.sumCantidadFallas);
+                              
+                            }
+                           
+                        });
+                        
+                         var dataSenasa = {
+                            label: 'Senasa',
+                            backgroundColor:   'rgba(153, 102, 255, 1)',
+                            borderColor:      'rgba(153, 102, 255, 1)',
+                            data: resultados,                            
+                            borderWidth: 0,
+                            fill: false
+                        };                       
+                        
+                        dataSet.push(dataApn);
+                        dataSet.push(dataSenasa);
+                        
+                             graphic.createLine("distribucion-fallas", fechas, dataSet,"Fallas");
+                       
+                        
+                           
+                    });
                 }
+                
                 
                 
 

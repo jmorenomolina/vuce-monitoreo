@@ -30,7 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
 import vuce.gob.pe.app.model.Entidad;
 import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.model.GraficoNotificacionIncidente;
+import vuce.gob.pe.app.model.GraficoOperacion;
 import vuce.gob.pe.app.model.GraficoTransaccionIncidente;
+import vuce.gob.pe.app.model.MonitoreoOperacion;
 import vuce.gob.pe.app.model.NotificacionIncidente;
 import vuce.gob.pe.app.model.TransaccionIncidente;
 import vuce.gob.pe.app.repository.EntidadRepository;
@@ -42,6 +44,8 @@ import vuce.gob.pe.app.service.NotificacionIncidenteService;
 import vuce.gob.pe.app.service.TransaccionIncidenteService;
 import vuce.gob.pe.app.rest.dto.ReenviarTransaccionResponse;
 import vuce.gob.pe.app.rest.dto.ReprocesarNotificacionResponse;
+import vuce.gob.pe.app.service.GraficoOperacionesService;
+import vuce.gob.pe.app.service.MonitoreoOperacionesService;
 
 /**
  *
@@ -70,6 +74,12 @@ public class RestApiController {
 
     @Autowired
     private final FrecuenciaLecturaService repositoryFrecuenciaLectura = null;
+    
+    @Autowired
+    private final MonitoreoOperacionesService repositoryMonitoreoOperaciones = null;
+    
+    @Autowired
+    private final GraficoOperacionesService repositoryGraficoOperacionesService = null;
 
     private static final String ALL_DATA = "-1";
 
@@ -240,7 +250,60 @@ public class RestApiController {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(frecuenciaLectura, HttpStatus.OK);
-
     }
 
+    
+    @RequestMapping(value = "/reporte/operaciones", method = RequestMethod.GET)
+    public ResponseEntity<List<MonitoreoOperacion>> obtenerOperaciones(@RequestParam(name = "entidades", required = false) List<String> entidades) {
+        List<MonitoreoOperacion> operaciones;
+        if (entidades != null && !entidades.isEmpty()) {
+            List<Integer> entidadesInteger = new ArrayList<>();
+            entidades.forEach(e -> {
+                if (!ALL_DATA.equals(e)) {
+                    entidadesInteger.add(Integer.parseInt(e));
+                }
+            });
+            if (entidadesInteger.isEmpty()) {
+                operaciones = repositoryMonitoreoOperaciones.findAll();
+            } else {
+                operaciones = repositoryMonitoreoOperaciones.findByEntitidades(entidadesInteger,null,null);
+            }
+
+        } else {
+            operaciones = repositoryMonitoreoOperaciones.findAll();
+        }
+        if (operaciones.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(operaciones, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/reporte/operaciones/grafico", method = RequestMethod.GET)
+    public ResponseEntity<List<GraficoOperacion>> obtenerOperacionesGrafico(@RequestParam(name = "entidades", required = false) List<String> entidades) {
+        List<GraficoOperacion> operaciones;
+        if (entidades != null && !entidades.isEmpty()) {
+            List<Integer> entidadesInteger = new ArrayList<>();
+            entidades.forEach(e -> {
+                if (!ALL_DATA.equals(e)) {
+                    entidadesInteger.add(Integer.parseInt(e));
+                }
+            });
+            if (entidadesInteger.isEmpty()) {
+                operaciones = repositoryGraficoOperacionesService.findAll();
+            } else {
+                operaciones = repositoryGraficoOperacionesService.findByEntitidades(entidadesInteger,null,null);
+            }
+
+        } else {
+            operaciones = repositoryGraficoOperacionesService.findAll();
+        }
+        if (operaciones.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(operaciones, HttpStatus.OK);
+    }
+    
+    
+    
+    
 }
