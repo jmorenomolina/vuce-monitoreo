@@ -23,9 +23,10 @@
         <property name="userName" value="karaf"/>
         <property name="password" value="karaf"/>
     </bean>
-    <cxf:cxfEndpoint address="http://localhost:9001/vucent/services/VucentWS" endpointName="c:VucentWSImplPort"
-        id="vuce-ws-consumer" serviceName="c:VucentWSImplService"
-        wsdlURL="wsdl/VuceWS.wsdl" xmlns:c="http://entidad.ws.remoting.ve.vuce.mincetur.gob.pe/">
+    <cxf:cxfEndpoint
+        address="http://localhost:9001/vucent/services/VucentWS"
+        endpointName="c:VucentWSImplPort" id="vuce-ws-consumer"
+        serviceName="c:VucentWSImplService" wsdlURL="wsdl/VuceWS.wsdl" xmlns:c="http://entidad.ws.remoting.ve.vuce.mincetur.gob.pe/">
         <cxf:properties>
             <entry key="dataFormat" value="CXF_MESSAGE"/>
             <entry key="mtom-enabled" value="true"/>
