@@ -52,6 +52,7 @@ public class LogProcessor implements Processor {
 
 			try {
 
+				@SuppressWarnings("unused")
 				InputStream is = dataHandler.getInputStream();
 				DataHandler dh = new DataHandler(dataHandler.getDataSource());
 				zis = new ZipInputStream(dh.getInputStream(), Charset.forName("ISO-8859-1"));
@@ -88,8 +89,6 @@ public class LogProcessor implements Processor {
 
 					if (entryName.equals(MENSAJE_ADJUNTOS)) {
 						transaccion.setTamanoAdjuntos(determinarTamanoAdjuntos(zis));
-						System.out.println("nombre: " + ze.getName());
-						System.out.println("Tamaño : " + transaccion.getTamanoAdjuntos());
 					}
 
 					zis.closeEntry();

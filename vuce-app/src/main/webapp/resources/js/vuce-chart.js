@@ -92,7 +92,7 @@ var graphic = {
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Fechas'
+                                labelString: 'Hora'
                             }
                         }],
                     yAxes: [{

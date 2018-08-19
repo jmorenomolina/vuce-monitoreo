@@ -1,40 +1,16 @@
 var contextApi = "http://localhost:9000/api";
         $(document).ready(function () {
             
-            $('#datepickerDesde').datepicker({
-                autoclose: true,
-                dateFormat: 'dd/mm/yyyy'
-           });
             
-            $('#datepickerHasta').datepicker({
-                autoclose: true,
-                dateFormat: 'dd/mm/yyyy'
-           });
-            
-               
-            $("#datepickerDesde").val(actionOperaciones.getDate());
-            $("#datepickerHasta").val(actionOperaciones.getDate());
-            
-            
-            
-            document.getElementById("filtrar-incidentes").onclick = function () {
-                actionOperaciones.executeAllReport();
-              
-            };
-            
-            
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-            
-            
+                        
             actionOperaciones.executeEntidades();
             actionOperaciones.executeAllReport();
             
+           
             setInterval(function(){ 
                         console.log("refresh");
                         actionOperaciones.executeAllReport();                    
-                    }, 30000);
+                    }, 10000);
             
         });
         
@@ -42,24 +18,7 @@ var contextApi = "http://localhost:9000/api";
         
         var actionOperaciones = {
                           
-                getDate: function () {
-               
-                    var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth()+1; //January is 0!
-                    var yyyy = today.getFullYear();
-
-                    if(dd<10) {
-                        dd = '0'+dd
-                    } 
-
-                    if(mm<10) {
-                        mm = '0'+mm
-                    } 
-
-                    return dd + '/' + mm + '/' + yyyy;
-               
-                },
+                
                 executeAllReport: function () {
                
                         actionOperaciones.executeOperacionesTable(false);
@@ -92,10 +51,10 @@ var contextApi = "http://localhost:9000/api";
                         var dataSet = [];
                         $.each(data, function (key, value)
                         {
-                            var row = [];   
-                            row.push(value.entidad);
+                            var row = [];                             
                             row.push(value.nombreOperacion);
                             row.push(value.fechaSolicitud);
+                            row.push(value.horaSolicitud);                            
                             row.push(value.cantidadPeticiones);
                             row.push(value.cantidadFallas);
                             
@@ -105,7 +64,7 @@ var contextApi = "http://localhost:9000/api";
                               row.push("<span>"+value.fiabilidad+"</span>");  
                             }
                             
-                             if(value.tiempoRespuestaProm>60){
+                             if(value.tiempoRespuestaProm>60000){
                               row.push("<span class='operaciones-red'>"+value.tiempoRespuestaProm+"</span>");
                             }else{
                               row.push("<span>"+value.tiempoRespuestaProm+"</span>");  
@@ -129,57 +88,23 @@ var contextApi = "http://localhost:9000/api";
                         data: $("#form-search").serialize()
                     }).done(function (data) {
                         var dataSet = [];
-                        
-                        
                         var fechas = [];
                         var resultados = [];
                         $.each(data, function (key, value)
                         {       
-                            if(value.entidad==="APN"){
-                                resultados.push(value.sumCantidadPeticiones);
-                                fechas.push(value.graficoOperacionPk.fechaSolicitud);
-                            }
-                           
-                           
+                            resultados.push(value.cantidadPeticiones);
+                            fechas.push(value.horaSolicitud);                           
                         });
-                                                
-                        
-                        var dataApn = {
-                            label: 'APN',
-                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                            borderColor:  'rgba(255, 99, 132, 0.7)',
+                        var data = {
+                            label: 'Peticiones',                           
+                            backgroundColor: 'rgba(48, 90, 210, 0.7)',
+                            borderColor:  'rgba(48, 90, 210, 0.7)',
                             data: resultados,                            
                             borderWidth: 0,
                             fill: false
                         };
-                    
-                        
-                  
-                        var resultados = [];
-                        $.each(data, function (key, value)
-                        {  
-                            if(value.entidad==="SENASA"){
-                                resultados.push(value.sumCantidadPeticiones);
-                              
-                            }
-                           
-                        });
-                        
-                         var dataSenasa = {
-                            label: 'Senasa',
-                            backgroundColor:   'rgba(153, 102, 255, 1)',
-                            borderColor:      'rgba(153, 102, 255, 1)',
-                            data: resultados,                            
-                            borderWidth: 0,
-                            fill: false
-                        };                       
-                        
-                        dataSet.push(dataApn);
-                        dataSet.push(dataSenasa);
-                        
-                        graphic.createLine("distribucion-peticiones", fechas, dataSet,"Peticiones");
-                       
-                        
+                        dataSet.push(data);                        
+                        graphic.createLine("distribucion-peticiones", fechas, dataSet,"Cantidad");
                            
                     });
                 },
@@ -188,56 +113,30 @@ var contextApi = "http://localhost:9000/api";
                         url: contextApi + "/reporte/operaciones/grafico",
                         data: $("#form-search").serialize()
                     }).done(function (data) {
-                        var dataSet = [];
-                        
-                        
-                        var fechas = [];
-                        var resultados = [];
+                          var dataSet = [];
+                          var fechas = [];
+                          var resultados = [];
                         $.each(data, function (key, value)
                         {       
-                            if(value.entidad==="APN"){
-                                resultados.push(value.sumCantidadFallas);
-                                fechas.push(value.graficoOperacionPk.fechaSolicitud);
-                            }
-                           
-                           
+                            resultados.push(value.tiempoRespuestaProm);
+                            fechas.push(value.horaSolicitud);  
                         });
                                                 
                         
-                        var dataApn = {
-                            label: 'APN',
-                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                            borderColor:  'rgba(255, 99, 132, 0.7)',
+                         var data = {
+                            label: 'Tiempo Promedio',                           
+                            backgroundColor: 'rgba(241, 33, 33, 0.7)',
+                            borderColor:  'rgba(241, 33, 33, 0.7)',
                             data: resultados,                            
                             borderWidth: 0,
                             fill: false
                         };
                     
+                                          
                         
-                  
-                        var resultados = [];
-                        $.each(data, function (key, value)
-                        {  
-                            if(value.entidad==="SENASA"){
-                                resultados.push(value.sumCantidadFallas);
-                              
-                            }
-                           
-                        });
+                        dataSet.push(data);
                         
-                         var dataSenasa = {
-                            label: 'Senasa',
-                            backgroundColor:   'rgba(153, 102, 255, 1)',
-                            borderColor:      'rgba(153, 102, 255, 1)',
-                            data: resultados,                            
-                            borderWidth: 0,
-                            fill: false
-                        };                       
-                        
-                        dataSet.push(dataApn);
-                        dataSet.push(dataSenasa);
-                        
-                             graphic.createLine("distribucion-fallas", fechas, dataSet,"Fallas");
+                        graphic.createLine("distribucion-fallas", fechas, dataSet,"Cantidad");
                        
                         
                            

@@ -16,18 +16,18 @@
 
 package vuce.gob.pe.app;
 
-import vuce.gob.pe.app.SecurityConfig;
+//import vuce.gob.pe.app.SecurityConfig;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 public class SecurityConfigIT {
-
+/*
 	@Test(expected = RuntimeException.class)
         @Ignore
 	public void exceptionOnConfigureNull() {
 		new SecurityConfig().configure((HttpSecurity) null);
-	}
+	}*/
 
 }

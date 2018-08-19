@@ -24,7 +24,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Monitoreo de Operaciones   
+               Monitoreo de las Operaciones del día 
             </h1>           
         </section>
 
@@ -35,64 +35,12 @@
 
 
 
-            <form id="form-search" method="GET">
-                <div class="col-md-12" style="padding-right: 1px; padding-left: 1px;">
-                    <!-- general form elements -->
-                    <div class="box box-danger">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><small></small></h3>   
-
-                            <a href="#">
-
-                            </a>
-
-                        </div>                  
-                        <div class="box-body">
-                            <div class="form-group">
-                                <div style="margin: 10px 0px 0px 0px;">
-                                    <label for="unidad-organica" class="col-sm-12 col-md-2 col-lg-2 control-label">Entidad</label>
-                                    <div class="col-sm-12 col-md-9 col-lg-2" style="margin-bottom: 8px;">
-                                        <select name="entidades" class="selectpicker show-menu-arrow form-control" multiple="multiple" data-max-options="10" id="entidades"/>
-                                    </div>
-
-                                    <div class="col-sm-12 col-md-12 col-lg-3" style="margin-bottom: 8px;">
-                                        <label for="desde" class="col-sm-2 control-label" style="top: 5px;">Desde</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right" id="datepickerDesde"/>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-3" style="margin-bottom: 8px;">
-                                        <label for="desde" class="col-sm-2 control-label" style="top: 5px;">Hasta</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right" id="datepickerHasta"/>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-12 col-md-12 col-lg-2" style="margin-bottom: 8px;">
-                                        <button type="button" class="btn btn-block btn-primary"  id="filtrar-incidentes">Aplicar filtro</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="box box-solid">
                         <div class="box-header">
                             <i class="fa fa-bar-chart"></i>
-                            <h3 class="box-title text-danger">Distribucion de peticiones</h3>
+                            <h3 class="box-title text-danger">Invocaciones a obtenerTransaccionesPendientes</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
@@ -114,7 +62,7 @@
                     <div class="box box-solid">
                         <div class="box-header">
                             <i class="fa fa-bar-chart"></i>
-                            <h3 class="box-title text-warning">Distribucion de fallas</h3>
+                            <h3 class="box-title text-warning">TRP de obtenerTransaccionesPendientes</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
@@ -148,9 +96,10 @@
                                 <table id="tb-operaciones" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-operaciones">
                                     <thead>
                                         <tr role="row">               
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Entidad</th>
+                                        
                                             <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Operacion</th>
                                             <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Fecha</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Hora</th>
                                             <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Peticiones</th>
                                             <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Cant. Fallas</th>
                                             <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Fiabilidad(%)</th>

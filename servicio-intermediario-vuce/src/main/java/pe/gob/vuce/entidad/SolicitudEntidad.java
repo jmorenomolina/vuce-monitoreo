@@ -43,7 +43,7 @@ public class SolicitudEntidad {
 	public SolicitudEntidad(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
 		super();
 		fechaHoraSolicitud = new Date();
-		extraerElementos_(request);
+		extraerElementos(request);
 	}
 
 	public String getDescripcionFalla() {
@@ -114,7 +114,7 @@ public class SolicitudEntidad {
 		this.transacciones = transacciones;
 	}
 
-	private void extraerElementos_(String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
+	private void extraerElementos (String request) throws pe.gob.vuce.processor.ProcesadorMensajesVUCEException {
 		try {
 
 			XMLInputFactory factory = XMLInputFactory.newInstance();

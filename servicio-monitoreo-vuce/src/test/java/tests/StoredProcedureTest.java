@@ -2,6 +2,7 @@ package tests;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class StoredProcedureTest {
 	public static String id = "123";
 	
 	@Test
+	@Ignore
 	public void reenviarTransaccionProcedure() {
 		try {
 			
@@ -50,6 +52,7 @@ public class StoredProcedureTest {
 	}
 	
 	@Test
+	@Ignore
 	public void reprocesarNotificacionProcedure() {
 		try {
 			
@@ -64,6 +67,7 @@ public class StoredProcedureTest {
 	}
 	
 	@Test
+	@Ignore
 	public void anularNotificacionProcedure() {
 		try {
 			

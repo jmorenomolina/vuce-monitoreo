@@ -1,4 +1,6 @@
 pe\gob\vuce\monitoreo\entity\SolicitudEntidad.class
+pe\gob\vuce\monitoreo\entity\NotificacionPK.class
+pe\gob\vuce\monitoreo\ServicioMonitoreoVuceApplication.class
 pe\gob\vuce\monitoreo\component\JmsConsumer.class
 pe\gob\vuce\monitoreo\entity\Notificacion.class
 pe\gob\vuce\monitoreo\entity\RecepcionTransaccion.class

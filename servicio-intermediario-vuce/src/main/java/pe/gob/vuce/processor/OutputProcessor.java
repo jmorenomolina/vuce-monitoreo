@@ -9,8 +9,6 @@ import pe.gob.vuce.entidad.SolicitudEntidad;
 
 public class OutputProcessor implements Processor {
 
-	
-
 	@Override
 	public void process(final Exchange exchange) throws Exception {
 

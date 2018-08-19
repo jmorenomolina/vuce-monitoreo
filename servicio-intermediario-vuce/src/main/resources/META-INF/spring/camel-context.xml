@@ -11,8 +11,9 @@
 	language governing permissions and limitations under the License. -->
 <!-- Configures the Camel Context -->
 <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
     xmlns:cxf="http://camel.apache.org/schema/cxf"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd   http://camel.apache.org/schema/cxf              http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="                  http://www.springframework.org/schema/beans      http://www.springframework.org/schema/beans/spring-beans.xsd                  http://camel.apache.org/schema/spring      http://camel.apache.org/schema/spring/camel-spring.xsd             http://camel.apache.org/schema/cxf                   http://camel.apache.org/schema/cxf/camel-cxf.xsd     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <bean class=" pe.gob.vuce.processor.InputProcessor" id="inputProcessor"/>
     <bean class=" pe.gob.vuce.processor.OutputProcessor" id="outputProcessor"/>
     <bean class=" pe.gob.vuce.processor.FaultProcessor" id="faultProcessor"/>
@@ -23,8 +24,8 @@
         <property name="userName" value="karaf"/>
         <property name="password" value="karaf"/>
     </bean>
-    <cxf:cxfEndpoint
-        address="http://localhost:9001/vucent/services/VucentWS"
+    <context:property-placeholder location="file:${karaf.home}/etc/servicio-intermediario-vuce.properties"/>
+    <cxf:cxfEndpoint address="${proxy.uri}"
         endpointName="c:VucentWSImplPort" id="vuce-ws-consumer"
         serviceName="c:VucentWSImplService" wsdlURL="wsdl/VuceWS.wsdl" xmlns:c="http://entidad.ws.remoting.ve.vuce.mincetur.gob.pe/">
         <cxf:properties>
@@ -32,8 +33,7 @@
             <entry key="mtom-enabled" value="true"/>
         </cxf:properties>
     </cxf:cxfEndpoint>
-    <cxf:cxfEndpoint
-        address="http://200.62.224.217/vucent/services/VucentWS"
+    <cxf:cxfEndpoint address="${real.uri}"
         endpointName="c:VucentWSImplPort" id="vuce-ws-producer"
         serviceName="c:VucentWSImplService" wsdlURL="wsdl/VuceWS.wsdl" xmlns:c="http://entidad.ws.remoting.ve.vuce.mincetur.gob.pe/">
         <cxf:properties>
@@ -41,7 +41,7 @@
             <entry key="mtom-enabled" value="true"/>
         </cxf:properties>
     </cxf:cxfEndpoint>
-    <camelContext id="Servicio_Intermediario_VUCE" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="Servicio_Intermediario_VUCE" streamCache="true" xmlns="http://camel.apache.org/schema/spring">
         <route id="Servicio_Intermediario_VUCE_Route" streamCache="true">
             <from id="_from1" uri="cxf:bean:vuce-ws-consumer"/>
             <process id="inputProcessor" ref="inputProcessor"/>

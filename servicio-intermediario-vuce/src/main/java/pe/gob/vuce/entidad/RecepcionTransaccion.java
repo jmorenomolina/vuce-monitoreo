@@ -5,6 +5,9 @@ public class RecepcionTransaccion {
 	private int idTransmision;
 	private int error;
 
+	public RecepcionTransaccion() {
+	}
+
 	public int getIdTransmision() {
 		return idTransmision;
 	}
@@ -19,9 +22,6 @@ public class RecepcionTransaccion {
 
 	public void setError(int error) {
 		this.error = error;
-	}
-
-	public RecepcionTransaccion() {
 	}
 
 }

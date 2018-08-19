@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1534355269523
+Bnd-LastModified: 1534530348396
 Build-Jdk: 1.8.0_102
 Built-By: jmoreno
 Bundle-ManifestVersion: 2
-Bundle-Name: VUCE :: Servicio Intermediario
+Bundle-Name: servicio-intermediario-vuce
 Bundle-SymbolicName: pe.gob.vuce.servicio-intermediario-vuce
 Bundle-Version: 1.0.0
 Created-By: Apache Maven Bundle Plugin

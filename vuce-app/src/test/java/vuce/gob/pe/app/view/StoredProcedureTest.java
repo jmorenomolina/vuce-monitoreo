@@ -13,16 +13,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import vuce.gob.pe.app.ConsolaMonitoreoApplication;
 
-import vuce.gob.pe.app.service.TransaccionIncidenteService;
-import vuce.gob.pe.app.rest.dto.ReenviarTransaccionResponse;
+//import vuce.gob.pe.app.service.TransaccionIncidenteService;
+//import vuce.gob.pe.app.rest.dto.ReenviarTransaccionResponse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ConsolaMonitoreoApplication.class)
 @Transactional
 public class StoredProcedureTest {
 
-    @Autowired
-    private TransaccionIncidenteService repository;
+   // @Autowired
+   // private TransaccionIncidenteService repository;
 
     public StoredProcedureTest() {
         // TODO Auto-generated constructor stub
@@ -42,7 +42,7 @@ public class StoredProcedureTest {
     @Test
     @Ignore
     public void reenviarTransaccionProcedure() {
-        try {
+     /*   try {
             
             List<String> ids = new ArrayList<>();
             ids.add("123");
@@ -60,7 +60,7 @@ public class StoredProcedureTest {
             e.printStackTrace();
             throw e;
         }
-
+*/
     }
 /*
     @Test

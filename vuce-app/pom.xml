@@ -11,8 +11,8 @@
     </parent>
 
     <groupId>org.joinfaces</groupId>
-    <artifactId>vuce-app</artifactId>
-    <version>3.2.3-SNAPSHOT</version>
+    <artifactId>servicio-consola-monitoreo</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
 
     <name>VuceAPP</name>

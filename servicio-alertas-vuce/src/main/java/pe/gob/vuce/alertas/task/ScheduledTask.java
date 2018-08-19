@@ -16,7 +16,7 @@ public class ScheduledTask {
 	@Autowired
 	InformeIncidentesComponent incidenteComponent;
 
-	@Scheduled(fixedRate = 60000)
+	@Scheduled(fixedRate = 600000)
 	public void enviarAlertas() {
 		incidenteComponent.enviarInformeIncidentes(true);
 	}

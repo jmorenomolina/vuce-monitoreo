@@ -23,7 +23,7 @@
 		<java-version>1.8</java-version>
 	</properties>
 
-	<name>VUCE :: Servicio Intermediario</name>
+	<name>servicio-intermediario-vuce</name>
 	<packaging>bundle</packaging>
 
 	<dependencies>
