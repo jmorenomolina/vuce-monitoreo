@@ -1,0 +1,143 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    template="master.xhtml">
+    
+    
+    <ui:define name="pnl-jquery">
+         <h:outputScript name="bower_components/jquery/dist/jquery.min.js"/> 
+     </ui:define>
+    
+    
+    <ui:define name="content">
+
+    
+        <h:outputScript name="js/vuce-chart.js"/> 
+        <h:outputScript name="js/monitoreoOperaciones.js"/> 
+
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+               Monitoreo de Operaciones   
+            </h1>           
+        </section>
+
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+
+
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid">
+                        <div class="box-header">
+                            <i class="fa fa-bar-chart"></i>
+                            <h3 class="box-title text-danger">Cantidad de lecturas por dia</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body text-center" id="parent-distribucion-peticiones">
+                            <canvas id="distribucion-peticiones"></canvas>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- /.col -->
+
+                <div class="col-md-6">
+                    <div class="box box-solid">
+                        <div class="box-header">
+                            <i class="fa fa-bar-chart"></i>
+                            <h3 class="box-title text-warning">Tiempo promedio de respuesta</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body text-center" id="parent-distribucion-fallas">
+                            <canvas id="distribucion-fallas"></canvas>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="box box-solid">
+                        <div class="box-header">
+                            <i class="fa  fa-table"></i>
+                            <h3 class="box-title text-warning">Operaciones</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body text-center">
+
+                            <div class="col-sm-12">
+                                <table id="tb-operaciones" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-operaciones">
+                                    <thead>
+                                        <tr role="row">               
+                                        
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Operacion</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Fecha</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Hora</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Peticiones</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Cant. Fallas</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Fiabilidad(%)</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Tpo. Resp Promedio</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Tpo. Resp Minimo</th>
+                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-operaciones" rowspan="1" colspan="1">Tpo. Resp Maximo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+
+                <!-- /.col -->
+            </div>
+
+        </section>
+
+        <script>
+
+
+
+        </script>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+
+
+
+    </ui:define>
+</ui:composition>

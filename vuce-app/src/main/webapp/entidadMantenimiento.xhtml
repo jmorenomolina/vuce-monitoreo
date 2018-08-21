@@ -1,0 +1,137 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    template="master.xhtml">
+    <ui:define name="content">
+
+
+
+
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Programacion de Mantenimientos
+            </h1>           
+        </section>
+
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+
+
+
+
+            <h:form id="form-update">
+
+                <p:messages id="msgs" />
+
+                
+                <div class="col-md-12" style="padding-right: 1px; padding-left: 1px;">
+                    <!-- general form elements -->
+                    <div class="box box-danger">
+                        <div class="box-body">
+                            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                                <label for="entidad" style="display: block;">Entidad</label>
+                                <p:selectOneMenu  
+                                      converter="omnifaces.SelectItemsConverter" id="entidad"  styleClass="form-registro-perfil-organo"
+                                      value="#{entidadMantenimientoBean.entidad}" >   
+                                      <f:selectItem itemLabel=" - Seleccione un Entidad - " />
+                                      <f:selectItems var="entidad" value="#{entidadMantenimientoBean.entidades}" itemLabel="#{entidad.entidad}"  />
+                                </p:selectOneMenu>
+                                
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                                <label for="desde" style="display: block;">Fecha desde</label>
+                                <p:calendar  showOn="button" id="desde" value="#{entidadMantenimientoBean.mantenimiento.fechaInicio}" pattern="dd-MM-yyyy" mindate="#{entidadMantenimientoBean.currentDate}" />
+                                     
+                              
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4 col-lg-3">
+                                <label for="hasta" style="display: block;">Fecha hasta</label>
+                                <p:calendar  showOn="button" id="hasta" value="#{entidadMantenimientoBean.mantenimiento.fechaFin}"  pattern="dd-MM-yyyy" mindate="#{entidadMantenimientoBean.currentDate}" />
+                                   
+                            </div>
+                            
+                            <div class="form-group col-sm-12 col-md-4 col-lg-3 ">
+                              
+                                <p:commandButton update="form-update" process="entidad,desde,hasta,@this"  actionListener="#{entidadMantenimientoBean.addMantenimiento}" icon="fa fa-plus" id="btn-agregar" value="Agregar" styleClass="btn btn-primary btn-lg"   />    
+                             
+                               <div class="form-group col-sm-12 col-md-4 col-lg-3 ">
+                                
+                                <p:commandButton   update="form-update" disabled="#{entidadMantenimientoBean.disabledForm}" actionListener="#{entidadMantenimientoBean.updateMantenimiento}" icon="fa fa-refresh" id="btn-actualizar" value="Actualizar" styleClass="btn btn-primary"  />    
+                                </div> 
+                                
+                            </div> 
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding-right: 1px; padding-left: 1px;">
+                    <!-- general form elements -->
+                    <div class="box box-danger">
+
+                        <div class="box-body">
+
+                            <p:dataTable styleClass="table table-bordered" id="tb-entidades" 
+                                         var="item"
+                                         rowIndexVar="rowIndex"
+                                         value="#{entidadMantenimientoBean.mantenimientos}"
+                                         selection="#{entidadMantenimientoBean.mantenimiento}"
+                                         rowKey="#{item.idEntidadMantenimiento}" 
+                                         emptyMessage="Lista Vacia" 
+                                         selectionMode="single"
+                                         scrollable="true">
+
+                                <p:ajax event="rowSelect" listener="#{entidadMantenimientoBean.activateForm}" update=":form-update" />
+
+                                
+                                <p:column style="width: 10%" headerText="Entidad" filterBy="#{item.idEntidad.entidad}">
+                                    <h:outputText value="#{item.idEntidad.entidad}" />                                       
+                                </p:column>
+                                
+                                
+                                <p:column style="width: 20%" headerText="Fecha inicio">
+                                    <h:outputText value="#{item.fechaInicio}" >
+                                         <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>                                       
+                                </p:column>
+                                
+                                <p:column style="width: 20%" headerText="Fecha fin">
+                                    <h:outputText value="#{item.fechaFin}" >  
+                                         <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>                                     
+                                </p:column>
+
+                               
+                                
+                            
+
+                            </p:dataTable> 
+
+
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+
+
+        </section>
+
+
+
+
+
+
+
+
+
+
+    </ui:define>
+</ui:composition>
