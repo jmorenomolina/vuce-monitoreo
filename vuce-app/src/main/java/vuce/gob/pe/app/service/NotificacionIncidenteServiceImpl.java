@@ -15,6 +15,7 @@
  */
 package vuce.gob.pe.app.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +56,7 @@ public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteSe
     }
 
     @Override
-    public List<NotificacionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento) {
+    public List<NotificacionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento,List<String> tipoNotificacion) {
         
         logger.info("{}", entidades);
         logger.info("{}", tipoMensajes);
@@ -76,6 +77,9 @@ public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteSe
             sql += "( g.tipoDocumento in (:tipoDocumentos) ) AND ";
         }
         
+        if (tipoNotificacion != null && !tipoNotificacion.isEmpty()) {
+            sql += "( g.tipo in (:tipoNotificacion) ) AND ";
+        }
         
         sql += " 1=1 ";
 
@@ -89,6 +93,15 @@ public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteSe
         }
         if (tipoDocumentos != null) {
             query.setParameter("tipoDocumentos", tipoDocumentos);
+        }        
+       
+        if (tipoNotificacion != null && !tipoNotificacion.isEmpty()) {  
+            List<BigInteger> tipos = new ArrayList<>();
+            tipoNotificacion.forEach(t->{          
+                tipos.add(new BigInteger(t));
+            });            
+            query.setParameter("tipoNotificacion", tipos);
+  
         }
         
         return query.getResultList();

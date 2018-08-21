@@ -29,7 +29,7 @@ public interface NotificacionIncidenteService {
     
     public List<NotificacionIncidente> findAll();
      
-    public List<NotificacionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento);  
+    public List<NotificacionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento,List<String> tipoNotificacion);  
      
     public List<AnularNotificacionResponse> anularNotificacion(List<String> vcIds );
     

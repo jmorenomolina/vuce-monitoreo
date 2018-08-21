@@ -15,6 +15,7 @@
  */
 package vuce.gob.pe.app.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +64,7 @@ public class TransaccionIncidenteServiceImpl implements TransaccionIncidenteServ
     }
 
     @Override
-    public List<TransaccionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento) {
+    public List<TransaccionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento,List<String> tipoTransaccion) {
 
         logger.info("{}", entidades);
         logger.info("{}", tipoMensajes);
@@ -91,6 +92,10 @@ public class TransaccionIncidenteServiceImpl implements TransaccionIncidenteServ
         if (fechahasta != null) {
             sql += "( :p_fecha_hasta IS NULL OR ( :p_fecha_hasta IS NOT NULL AND to_date(g.fechaCreacion,'dd/mm/yyyy') <= TO_DATE(:p_fecha_hasta,'dd/mm/yyyy'))) AND ";
         }*/
+        
+        if (tipoTransaccion != null && !tipoTransaccion.isEmpty()) {
+            sql += "( g.tipo in (:tipoTransaccion) ) AND ";
+        }
 
         sql += " 1=1 ";
 
@@ -104,7 +109,17 @@ public class TransaccionIncidenteServiceImpl implements TransaccionIncidenteServ
         }
         if (tipoDocumentos != null) {
             query.setParameter("tipoDocumentos", tipoDocumentos);
-        }/*
+        }
+        if (tipoTransaccion != null && !tipoTransaccion.isEmpty()) {
+            
+            List<BigInteger> tipos = new ArrayList<>();
+            tipoTransaccion.forEach(t->{          
+                tipos.add(new BigInteger(t));
+            });            
+            query.setParameter("tipoTransaccion", tipos);
+        }
+        
+        /*
         if (fechadesde != null) {
             query.setParameter("p_fecha_desde", fechadesde);
         }

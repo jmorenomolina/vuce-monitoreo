@@ -15,7 +15,7 @@
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <name>servicio-consola-monitoreo</name>
+    <name>servicio-consola-ui-vuce</name>
     <description>Servicio Consola Vuce</description>
 
     <properties>

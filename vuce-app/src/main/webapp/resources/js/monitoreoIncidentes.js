@@ -1,5 +1,8 @@
 var contextApi = "http://localhost:9000/api";
-
+var editor = "";
+var xmlTransacciones = [];                           
+var ebXmlTransacciones = [];    
+var xmlNotificaciones = [];                           
 
         $(document).ready(function () {            
             
@@ -43,10 +46,8 @@ var contextApi = "http://localhost:9000/api";
                 action.executeReProcesarNotificacion();
             };
             
-            
-            
             $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
+                $('[data-toggle="tooltip"]').tooltip();
             });
             
             
@@ -57,6 +58,18 @@ var contextApi = "http://localhost:9000/api";
             action.executeTransaccionIncidentesTable(true);
             action.executeNotificacionIncidentesTable(true);
             action.executeFrecuenciaLectura(true);
+            
+            
+            
+            editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                mode: "application/xml",
+                styleActiveLine: true,
+                lineNumbers: true,
+                lineWrapping: true
+            });
+            
+            
+            
             /*
              setInterval(function(){ 
                         console.log("refresh");
@@ -167,9 +180,13 @@ var contextApi = "http://localhost:9000/api";
                        if(xhr.status===200){                            
                              
                             var dataSet = [];
+                            xmlTransacciones = [];
+                            ebXmlTransacciones = [];
                             $.each(data, function (key, value)
                             {
-                                var row = [];                            
+                                var row = [];   
+                                var rowTransaccionXml = []; 
+                                var rowTransaccionEbXml = []; 
                                 row.push((value.tipo===3)? "<input type='checkbox' name='transaccion' value='"+value.idTransmision+"'/>":"");                            
                                 row.push("<div class='tipo-transacciones-" + value.tipo + "'></div>");
                                 row.push(value.entidad);
@@ -183,8 +200,23 @@ var contextApi = "http://localhost:9000/api";
                                 row.push(value.fechaConfirmacion);
                                 row.push(value.antiguedad+ " min");
                                 row.push(value.cantidadLecturas);
-                                row.push("Ver");
-                                row.push("Ver");
+                                if(value.mensajexml  !== null){
+                                  row.push("<a href='javascript:action.showXmlTransaccion("+value.idTransmision+");'>Ver</a>");  
+                                  rowTransaccionXml.push(value.idTransmision);
+                                  rowTransaccionXml.push(value.mensajexml);
+                                  xmlTransacciones.push(rowTransaccionXml);
+                                }else{
+                                   row.push("");    
+                                }    
+                                
+                                if(value.ebxml  !== null){
+                                  row.push("<a href='javascript:action.showEbXmlTransaccion("+value.idTransmision+");'>Ver</a>");  
+                                  rowTransaccionEbXml.push(value.idTransmision);
+                                  rowTransaccionEbXml.push(value.ebxml);
+                                  ebXmlTransacciones.push(rowTransaccionEbXml);
+                                }else{
+                                   row.push("");    
+                                }    
                                 dataSet.push(row);
                             });
                             if(isNew){
@@ -201,7 +233,27 @@ var contextApi = "http://localhost:9000/api";
                                                  
                     });
                 },
-                executeReenviarTransacciones: function(){                                        
+                showXmlTransaccion: function(idTransaccion){
+                    for(var i=0;i<xmlTransacciones.length;i++){
+                        if(xmlTransacciones[i][0]===idTransaccion){
+                           $('#modal-xml').modal('show');
+                           setTimeout(function(){  editor.setValue(xmlTransacciones[i][1]); }, 1000);
+                           return;
+                        }
+                    }                    
+                },                
+                showEbXmlTransaccion: function(idTransaccion){
+                    for(var i=0;i<ebXmlTransacciones.length;i++){
+                        if(ebXmlTransacciones[i][0]===idTransaccion){
+                           $('#modal-xml').modal('show');
+                           setTimeout(function(){  editor.setValue(ebXmlTransacciones[i][1]); }, 1000);
+                           return;
+                        }
+                    }                    
+                },                
+                executeReenviarTransacciones: function(){  
+                    
+                    
                     $.ajax({
                         url: contextApi + "/reporte/transaccion/reenviar",
                         data: $('input[name="transaccion"]:checked').serialize()
@@ -220,13 +272,18 @@ var contextApi = "http://localhost:9000/api";
                         
                         $('#modal-reenviar-transacciones').modal('toggle');
                         
+                        $('#modal-reenviar-transacciones-response').modal('toggle');  
+                        
+                        
                         if ( !$.fn.DataTable.isDataTable( '#tb-respuesta-transaccion' ) ) {
-                            graphic.createTable("tb-respuesta-transaccion",dataSet,false); 
+                            graphic.createSimpleTable("tb-respuesta-transaccion",dataSet,false); 
                         }else{
-                            graphic.updateTable("tb-respuesta-transaccion",dataSet,false);   
+                            graphic.updateTable("tb-respuesta-transaccion",dataSet);   
                         }                        
-                        $('#modal-reenviar-transacciones-response').modal('toggle');                        
-                    });                    
+                                             
+                    }).always(function() {
+                       
+                    });                   
                 },
                 executeAnularNotificacion: function(){                                        
                     $.ajax({
@@ -245,13 +302,14 @@ var contextApi = "http://localhost:9000/api";
                         
                         $("#span-text").html("Anular");
                         $('#modal-anular-notificacion').modal('toggle');
-                        
+                        $('#modal-notificacion-response').modal('toggle');    
+                           
                         if ( !$.fn.DataTable.isDataTable( '#tb-respuesta-notificacion' ) ) {
-                            graphic.createTable("tb-respuesta-notificacion",dataSet,false); 
+                            graphic.createSimpleTable("tb-respuesta-notificacion",dataSet); 
                         }else{
-                            graphic.updateTable("tb-respuesta-notificacion",dataSet,false);   
+                            graphic.updateTable("tb-respuesta-notificacion",dataSet);   
                         }                        
-                        $('#modal-notificacion-response').modal('toggle');                        
+                                         
                     });                    
                 },
                 executeReProcesarNotificacion: function(){                                        
@@ -286,9 +344,12 @@ var contextApi = "http://localhost:9000/api";
                     }).done(function (data, textStatus, xhr) {
                         if(xhr.status===200){    
                           var dataSet = [];
+                          xmlNotificaciones = [];
+                          
                             $.each(data, function (key, value)
-                            {
-                                var row = [];                            
+                            {                                
+                                var row = [];  
+                                var rowNotificacionXml = [];                                  
                                 row.push((value.tipo===2)? "<input type='checkbox' name='notificacion' value='"+value.vcId+"' />":"");                            
                                 row.push("<div class='tipo-transacciones-" + value.tipo + "'></div>");
                                 row.push(value.entidad);
@@ -299,9 +360,17 @@ var contextApi = "http://localhost:9000/api";
                                 row.push(value.numeroDocumento);
                                 row.push(value.fechaRecepcion);
                                 row.push(value.fechaProcesamiento);                              
-                                row.push(value.antiguedad + " min");                        
-                                row.push("Ver");
+                                row.push(value.antiguedad + " min");                                 
+                                if(value.ebxml  !== null){
+                                  row.push("<a href='javascript:action.showXmlNotificacion("+value.idTransmision+");'>Ver</a>");  
+                                  rowNotificacionXml.push(value.idTransmision);
+                                  rowNotificacionXml.push(value.xml);
+                                  xmlNotificaciones.push(rowNotificacionXml);
+                                }else{
+                                   row.push("");    
+                                }    
                                 dataSet.push(row);
+                                                             
                             });
                             if(isNew){
                                 graphic.createTable("tb-notificacion-incidente",dataSet,true); 
@@ -338,6 +407,15 @@ var contextApi = "http://localhost:9000/api";
                         }
                            
                     });
+                },
+                showXmlNotificacion: function(idTransaccion){
+                    for(var i=0;i<xmlNotificaciones.length;i++){
+                        if(xmlNotificaciones[i][0]===idTransaccion){
+                           $('#modal-xml').modal('show');
+                           setTimeout(function(){  editor.setValue(xmlNotificaciones[i][1]); }, 1000);
+                           return;
+                        }
+                    }                    
                 }
                 
 

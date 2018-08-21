@@ -1,10 +1,6 @@
 var contextApi = "http://localhost:9000/api";
         $(document).ready(function () {
-            
-           
-            
-                        
-            actionOperaciones.executeEntidades();
+          
             actionOperaciones.executeAllReport();
             
             /*
@@ -27,60 +23,50 @@ var contextApi = "http://localhost:9000/api";
                         actionOperaciones.executeOperacionesLineBarFallas();
                
                 },
-                executeEntidades: function () {
-                        $.ajax({
-                                url: contextApi + "/entidades",
-                                complete: function () {
-                                    var selectDemo = $('#entidades');
-                                    selectDemo.selectpicker('refresh');
-                                }
-                        }).done(function (data) {
-                            var $select = $('#entidades');
-                            $select.find('option').remove();
-                            $select.append('<option value="-1" selected="selected">Todas</option>');
-                            $.each(data, function (key, value)
-                            {
-                                $select.append('<option value=' + value.idEntidad + '>' + value.entidad + '</option>');
-                            });
-                        });
-                },
+               
                 executeOperacionesTable: function (isNew) {
                     $.ajax({
                         url: contextApi + "/reporte/operaciones",
                         data: $("#form-search").serialize()
-                    }).done(function (data) {
-                        var dataSet = [];
-                        $.each(data, function (key, value)
-                        {
-                            var row = [];                             
-                            row.push(value.nombreOperacion);
-                            row.push(value.fechaSolicitud);
-                            row.push(value.horaSolicitud);                            
-                            row.push(value.cantidadPeticiones);
-                            row.push(value.cantidadFallas);
-                            
-                            if(value.fiabilidad<90){
-                              row.push("<span class='operaciones-red'>"+value.fiabilidad+"</span>");
-                            }else{
-                              row.push("<span>"+value.fiabilidad+"</span>");  
-                            }
-                            
-                             if(value.tiempoRespuestaProm>60000){
-                              row.push("<span class='operaciones-red'>"+value.tiempoRespuestaProm+"</span>");
-                            }else{
-                              row.push("<span>"+value.tiempoRespuestaProm+"</span>");  
-                            }
+                    }).done(function (data, textStatus, xhr) {
                         
-                            row.push(value.tiempoRespuestaMin);                              
-                            row.push(value.tiempoRespuestaMax);     
-                            dataSet.push(row);
-                        });
-                        if(isNew){
-                            graphic.createTable("tb-operaciones",dataSet,true); 
+                        if(xhr.status===200){  
+                            var dataSet = [];
+                            $.each(data, function (key, value)
+                            {
+                                var row = [];                             
+                                row.push(value.nombreOperacion);
+                                row.push(value.fechaSolicitud);
+                                row.push(value.horaSolicitud);                            
+                                row.push(value.cantidadPeticiones);
+                                row.push(value.cantidadFallas);
+
+                                if(value.fiabilidad<90){
+                                  row.push("<span class='operaciones-red'>"+value.fiabilidad+"</span>");
+                                }else{
+                                  row.push("<span>"+value.fiabilidad+"</span>");  
+                                }
+
+                                 if(value.tiempoRespuestaProm>60000){
+                                  row.push("<span class='operaciones-red'>"+value.tiempoRespuestaProm+"</span>");
+                                }else{
+                                  row.push("<span>"+value.tiempoRespuestaProm+"</span>");  
+                                }
+
+                                row.push(value.tiempoRespuestaMin);                              
+                                row.push(value.tiempoRespuestaMax);     
+                                dataSet.push(row);
+                            });
+                            if(isNew){
+                                graphic.createTable("tb-operaciones",dataSet,true); 
+                            }else{
+                                graphic.updateTable("tb-operaciones",dataSet,true);  
+                            }
                         }else{
-                            graphic.updateTable("tb-operaciones",dataSet,true);  
+                               var dataSet = [];
+                               graphic.cleanTable("tb-operaciones");  
                         }
-                           
+                                                   
                     });
                 },
                 executeOperacionesLineBarPeticiones: function () {

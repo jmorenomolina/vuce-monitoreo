@@ -129,6 +129,19 @@ var graphic = {
             }
         });
     },
+    createSimpleTable: function (idTable,dataSet) {            
+        $('#'+idTable).DataTable({        
+            "pageLength": 10,
+            'paging': false,
+             data: dataSet,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': false,
+            'info': false,
+            'autoWidth': false,
+            "scrollX": false            
+        });
+    },
     updateTable : function(idTable,dataSet){
         $('#'+idTable).dataTable().fnClearTable();
         $('#'+idTable).dataTable().fnAddData(dataSet);        

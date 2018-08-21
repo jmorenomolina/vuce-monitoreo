@@ -28,7 +28,7 @@ public interface TransaccionIncidenteService {
     
     public List<TransaccionIncidente> findAll();
      
-    public List<TransaccionIncidente> findByEntitidades(List<Integer> entidades,List<String> tipoMensajes,List<String> tipoDocumentos,Date fechadesde,Date fechaHasta,String nroDocumento);  
+    public List<TransaccionIncidente> findByEntitidades(List<Integer> entidades,List<String> tipoMensajes,List<String> tipoDocumentos,Date fechadesde,Date fechaHasta,String nroDocumento,List<String> tipoTransaccion);  
     
     public List<ReenviarTransaccionResponse> reenviarTransaccion(List<String> trasmisiones);
      

@@ -18,6 +18,15 @@
 }
 
 
+.tipo-transacciones-0{
+    width: 20px;
+    height: 20px;
+    background-color: #60f394;
+    border: 2px solid #60f394;
+    border-radius: 50px;
+    margin: 0px auto;
+}
+
 .tipo-transacciones-1{
     width: 20px;
     height: 20px;

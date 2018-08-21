@@ -173,7 +173,8 @@ public class RestApiController {
             @RequestParam(name = "tipodocumentos", required = false) List<String> tipodocumentos,
             @RequestParam(name = "fechadesde", required = false) String fechadesde,
             @RequestParam(name = "fechahasta", required = false) String fechahasta,
-            @RequestParam(name = "nrodocumento", required = false) String nrodocumento) {
+            @RequestParam(name = "nrodocumento", required = false) String nrodocumento,                    
+            @RequestParam(name = "tipotransacciones", required = false) List<String> tipotransacciones) {
 
           
         if(tipomensajes != null && !tipomensajes.isEmpty()){
@@ -195,9 +196,6 @@ public class RestApiController {
                 }
             }
         }
-      
-        
-        
 
         if ( (entidadesInteger!=null &&  entidadesInteger.isEmpty()) && ( tipomensajes!=null && tipomensajes.isEmpty()) && (tipodocumentos!=null &&  tipodocumentos.isEmpty()) && fechadesde == null && fechahasta == null && nrodocumento == null) {
             transacciones = repositoryTransaccionIncidente.findAll();
@@ -222,7 +220,7 @@ public class RestApiController {
                 
                 
                 
-                transacciones = repositoryTransaccionIncidente.findByEntitidades(entidadesInteger, tipomensajes, tipodocumentos, fechaDesde, fechaHasta, nrodocumento);
+                transacciones = repositoryTransaccionIncidente.findByEntitidades(entidadesInteger, tipomensajes, tipodocumentos, fechaDesde, fechaHasta, nrodocumento,tipotransacciones);
             } catch (ParseException ex) {
                 logger.error(ex.getMessage(), ex);
                 transacciones = null;
@@ -243,12 +241,11 @@ public class RestApiController {
             @RequestParam(name = "tipodocumentos", required = false) List<String> tipodocumentos,
             @RequestParam(name = "fechadesde", required = false) String fechadesde,
             @RequestParam(name = "fechahasta", required = false) String fechahasta,
-            @RequestParam(name = "nrodocumento", required = false) String nrodocumento
-    ) {
-
+            @RequestParam(name = "nrodocumento", required = false) String nrodocumento,
+            @RequestParam(name = "tiponotificaciones", required = false) List<String> tiponotificaciones) {
+  
         
-        
-         if(tipomensajes != null && !tipomensajes.isEmpty()){
+        if(tipomensajes != null && !tipomensajes.isEmpty()){
             tipomensajes.remove(ALL_DATA);
         }
         if(tipodocumentos != null && !tipodocumentos.isEmpty()){
@@ -293,7 +290,7 @@ public class RestApiController {
                 
                 
                 
-                noticaciones = repositoryNotificacionIncidente.findByEntitidades(entidadesInteger, tipomensajes, tipodocumentos, fechaDesde, fechaHasta, nrodocumento);
+                noticaciones = repositoryNotificacionIncidente.findByEntitidades(entidadesInteger, tipomensajes, tipodocumentos, fechaDesde, fechaHasta, nrodocumento,tiponotificaciones);
             } catch (ParseException ex) {
                 logger.error(ex.getMessage(), ex);
                 noticaciones = null;

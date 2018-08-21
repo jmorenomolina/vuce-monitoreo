@@ -101,9 +101,9 @@ public class TransaccionIncidente implements Serializable {
     @Column(name = "TAMANO_ADJUNTOS")
     private BigInteger tamanoAdjuntos;
     @Size(max = 16)
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FECHA_CREACION")
-    private Date fechaCreacion;
+    private String fechaCreacion;
     @Size(max = 16)
     @Column(name = "FECHA_PRIMERA_LECTURA")
     private String fechaPrimeraLectura;
@@ -188,11 +188,11 @@ public class TransaccionIncidente implements Serializable {
         this.tamanoAdjuntos = tamanoAdjuntos;
     }
 
-    public Date getFechaCreacion() {
+    public String getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
