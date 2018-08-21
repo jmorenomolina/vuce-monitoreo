@@ -43,7 +43,7 @@ import static vuce.gob.pe.app.service.TransaccionIncidenteServiceImpl.logger;
 public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteService {
 
     public static final Logger logger = LoggerFactory.getLogger(NotificacionIncidenteServiceImpl.class);
-    
+
     @Autowired
     private NotificacionIncidenteRepository notificacionIncidenteRepository;
 
@@ -56,8 +56,8 @@ public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteSe
     }
 
     @Override
-    public List<NotificacionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento,List<String> tipoNotificacion) {
-        
+    public List<NotificacionIncidente> findByEntitidades(List<Integer> entidades, List<String> tipoMensajes, List<String> tipoDocumentos, Date fechadesde, Date fechahasta, String nroDocumento, List<String> tipoNotificacion) {
+
         logger.info("{}", entidades);
         logger.info("{}", tipoMensajes);
         logger.info("{}", tipoDocumentos);
@@ -76,11 +76,16 @@ public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteSe
         if (tipoDocumentos != null) {
             sql += "( g.tipoDocumento in (:tipoDocumentos) ) AND ";
         }
-        
+
         if (tipoNotificacion != null && !tipoNotificacion.isEmpty()) {
-            sql += "( g.tipo in (:tipoNotificacion) ) AND ";
+            if (tipoNotificacion.size() < 2) {
+                if (!tipoNotificacion.get(0).equals("0")) {
+                    sql += "( g.tipo in (:tipoNotificacion) ) AND ";
+
+                }
+            }
         }
-        
+
         sql += " 1=1 ";
 
         Query query = this.entityManager.createQuery(sql, NotificacionIncidente.class);
@@ -93,20 +98,23 @@ public class NotificacionIncidenteServiceImpl implements NotificacionIncidenteSe
         }
         if (tipoDocumentos != null) {
             query.setParameter("tipoDocumentos", tipoDocumentos);
-        }        
-       
-        if (tipoNotificacion != null && !tipoNotificacion.isEmpty()) {  
-            List<BigInteger> tipos = new ArrayList<>();
-            tipoNotificacion.forEach(t->{          
-                tipos.add(new BigInteger(t));
-            });            
-            query.setParameter("tipoNotificacion", tipos);
-  
         }
-        
+
+        if (tipoNotificacion != null && !tipoNotificacion.isEmpty()) {
+            if (tipoNotificacion.size() < 2) {
+                if (!tipoNotificacion.get(0).equals("0")) {
+                    List<BigInteger> tipos = new ArrayList<>();
+                    tipoNotificacion.forEach(t -> {
+                        tipos.add(new BigInteger(t));
+                    });
+                    query.setParameter("tipoNotificacion", tipos);
+                }
+
+            }
+        }
+
         return query.getResultList();
-        
-       
+
     }
 
     @Override

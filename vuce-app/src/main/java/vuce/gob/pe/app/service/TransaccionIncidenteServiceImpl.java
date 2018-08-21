@@ -94,7 +94,12 @@ public class TransaccionIncidenteServiceImpl implements TransaccionIncidenteServ
         }*/
         
         if (tipoTransaccion != null && !tipoTransaccion.isEmpty()) {
-            sql += "( g.tipo in (:tipoTransaccion) ) AND ";
+             if(tipoTransaccion.size()<2){
+                 if(!tipoTransaccion.get(0).equals("0")){
+                     sql += "( g.tipo in (:tipoTransaccion) ) AND ";
+                 }               
+             }
+            
         }
 
         sql += " 1=1 ";
@@ -113,10 +118,14 @@ public class TransaccionIncidenteServiceImpl implements TransaccionIncidenteServ
         if (tipoTransaccion != null && !tipoTransaccion.isEmpty()) {
             
             List<BigInteger> tipos = new ArrayList<>();
-            tipoTransaccion.forEach(t->{          
-                tipos.add(new BigInteger(t));
-            });            
-            query.setParameter("tipoTransaccion", tipos);
+            if(tipoTransaccion.size()<2){
+                if(!tipoTransaccion.get(0).equals("0")){
+                    tipoTransaccion.forEach(t->{          
+                        tipos.add(new BigInteger(t));
+                    });
+                   query.setParameter("tipoTransaccion", tipos);
+                }
+            } 
         }
         
         /*
