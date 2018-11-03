@@ -10,11 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "NOTIFICACION")
-public class Notificacion {
+@Table(name = "TRANSMISION_ENTRADA")
+public class TransmisionEntrada {
 
 	@EmbeddedId
-	private NotificacionPK id;
+	private TransmisionEntradaPK id;
 
 	@Column(name = "NUMERO_DOCUMENTO")
 	private String numeroDocumento;
@@ -30,9 +30,9 @@ public class Notificacion {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_MENSAJE")
-	private SolicitudEntidad solicitudEntidad;
+	private TransmisionSalida solicitudEntidad;
 
-	public Notificacion() {
+	public TransmisionEntrada() {
 	}
 
 	public String getNumeroDocumento() {
@@ -59,11 +59,11 @@ public class Notificacion {
 		this.tipoMensaje = tipoMensaje;
 	}
 
-	public SolicitudEntidad getSolicitudEntidad() {
+	public TransmisionSalida getSolicitudEntidad() {
 		return solicitudEntidad;
 	}
 
-	public void setSolicitudEntidad(SolicitudEntidad solicitudEntidad) {
+	public void setSolicitudEntidad(TransmisionSalida solicitudEntidad) {
 		this.solicitudEntidad = solicitudEntidad;
 	}
 
@@ -75,11 +75,11 @@ public class Notificacion {
 		this.xml = xml;
 	}
 
-	public NotificacionPK getId() {
+	public TransmisionEntradaPK getId() {
 		return id;
 	}
 
-	public void setId(NotificacionPK id) {
+	public void setId(TransmisionEntradaPK id) {
 		this.id = id;
 	}
 

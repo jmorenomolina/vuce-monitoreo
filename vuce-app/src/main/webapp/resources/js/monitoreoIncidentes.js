@@ -111,7 +111,7 @@ var xmlNotificaciones = [];
                                 complete: function () {
                                     var selectDemo = $('#entidades');
                                     selectDemo.selectpicker('refresh');
-                                }
+                                 }
                         }).done(function (data) {
                             var $select = $('#entidades');
                             $select.find('option').remove();

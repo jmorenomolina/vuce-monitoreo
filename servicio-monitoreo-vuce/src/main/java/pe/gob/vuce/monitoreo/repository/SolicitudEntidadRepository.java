@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import pe.gob.vuce.monitoreo.entity.SolicitudEntidad;
+import pe.gob.vuce.monitoreo.entity.TransmisionSalida;
 
 @Repository
-public interface SolicitudEntidadRepository extends JpaRepository<SolicitudEntidad, Long>{
+public interface SolicitudEntidadRepository extends JpaRepository<TransmisionSalida, Long>{
 	@Procedure(name = "reenviarTransaccion")
 	String reenviarTransaccion(@Param("id_transmision") String id_transmision);
 	@Procedure(name = "anularNotificacion")

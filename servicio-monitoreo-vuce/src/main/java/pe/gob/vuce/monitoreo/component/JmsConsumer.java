@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pe.gob.vuce.monitoreo.entity.SolicitudEntidad;
+import pe.gob.vuce.monitoreo.entity.TransmisionSalida;
 
 @Component
 public class JmsConsumer {
@@ -28,7 +28,7 @@ public class JmsConsumer {
 	@JmsListener(destination = TRANSACCION_QUEUE, containerFactory = "myFactory")
 	public void receiveMessage(Message message) {
 		try {
-		    SolicitudEntidad solicitudEntidad = new ObjectMapper().readValue((String) message.getPayload(), SolicitudEntidad.class);
+		    TransmisionSalida solicitudEntidad = new ObjectMapper().readValue((String) message.getPayload(), TransmisionSalida.class);
 		    transaccionComponent.registrarSolicitud(solicitudEntidad);	
 		} catch (Exception e) {			
 			logger.error(e.getMessage());

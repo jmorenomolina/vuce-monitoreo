@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import pe.gob.vuce.monitoreo.entity.SolicitudEntidad;
+import pe.gob.vuce.monitoreo.entity.TransmisionSalida;
 import pe.gob.vuce.monitoreo.repository.SolicitudEntidadRepository;
 
 @Component
@@ -19,7 +19,7 @@ public class SolicitudEntidadComponent {
 		this.solicitudEntidadRepository = solicitudEntidadRepository;
 	}
 
-	public void registrarSolicitud(SolicitudEntidad solicitudEntidad) {
+	public void registrarSolicitud(TransmisionSalida solicitudEntidad) {
 
 		try {
 			

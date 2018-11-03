@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 
  */
 @Embeddable
-public class NotificacionPK implements Serializable {
+public class TransmisionEntradaPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class NotificacionPK implements Serializable {
 	@Column(name="ID_ENTIDAD")
 	private long idEntidad;
 
-	public NotificacionPK() {
+	public TransmisionEntradaPK() {
 	}
 	public long getVeId() {
 		return this.veId;
@@ -37,10 +37,10 @@ public class NotificacionPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof NotificacionPK)) {
+		if (!(other instanceof TransmisionEntradaPK)) {
 			return false;
 		}
-		NotificacionPK castOther = (NotificacionPK)other;
+		TransmisionEntradaPK castOther = (TransmisionEntradaPK)other;
 		return 
 			(this.veId == castOther.veId)
 			&& (this.idEntidad == castOther.idEntidad);

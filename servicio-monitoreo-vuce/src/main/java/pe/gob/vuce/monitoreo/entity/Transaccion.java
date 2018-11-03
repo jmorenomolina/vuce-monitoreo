@@ -25,13 +25,13 @@ public class Transaccion {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_MENSAJE")
-	private SolicitudEntidad solicitudEntidad;
+	private TransmisionSalida solicitudEntidad;
 
-	public SolicitudEntidad getSolicitudEntidad() {
+	public TransmisionSalida getSolicitudEntidad() {
 		return solicitudEntidad;
 	}
 
-	public void setSolicitudEntidad(SolicitudEntidad solicitudEntidad) {
+	public void setSolicitudEntidad(TransmisionSalida solicitudEntidad) {
 		this.solicitudEntidad = solicitudEntidad;
 	}
 

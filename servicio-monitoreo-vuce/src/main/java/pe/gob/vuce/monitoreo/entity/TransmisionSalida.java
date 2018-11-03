@@ -16,7 +16,7 @@ import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;;
 
 @Entity
-@Table(name = "SOLICITUDENTIDAD")
+@Table(name = "TRANSMISION_SALIDA")
 @NamedStoredProcedureQueries({
 		@NamedStoredProcedureQuery(name = "reenviarTransaccion", procedureName = "REENVIAR_TRANSACCION", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "id_transmision", type = String.class),
@@ -27,7 +27,7 @@ import javax.persistence.Table;;
 		@NamedStoredProcedureQuery(name = "reprocesarNotificacion", procedureName = "REPROCESAR_NOTIFICACION", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
 				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }) })
-public class SolicitudEntidad {
+public class TransmisionSalida {
 
 	@Id
 	private String idMensaje;
@@ -40,7 +40,7 @@ public class SolicitudEntidad {
 	private String version;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
-	private List<Notificacion> notificaciones;
+	private List<TransmisionEntrada> notificaciones;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
 	private List<RecepcionTransaccion> recepcionTransacciones;
@@ -48,7 +48,7 @@ public class SolicitudEntidad {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
 	private List<Transaccion> transacciones;
 
-	public SolicitudEntidad() {
+	public TransmisionSalida() {
 		super();
 	}
 
@@ -116,14 +116,14 @@ public class SolicitudEntidad {
 		this.nombreUsuario = nombreUsuario;
 	}
 
-	public List<Notificacion> getNotificaciones() {
+	public List<TransmisionEntrada> getNotificaciones() {
 		return notificaciones;
 	}
 
-	public void setNotificaciones(List<Notificacion> notificaciones) {
+	public void setNotificaciones(List<TransmisionEntrada> notificaciones) {
 		this.notificaciones = notificaciones;
-		for (Iterator<Notificacion> iterator = notificaciones.iterator(); iterator.hasNext();) {
-			Notificacion notificacion = (Notificacion) iterator.next();
+		for (Iterator<TransmisionEntrada> iterator = notificaciones.iterator(); iterator.hasNext();) {
+			TransmisionEntrada notificacion = (TransmisionEntrada) iterator.next();
 			notificacion.setSolicitudEntidad(this);
 		}
 	}

@@ -109,7 +109,8 @@ var graphic = {
             }
         });
     },
-    createTable: function (idTable,dataSet,pagingParam) {            
+    createTable: function (idTable,dataSet,pagingParam) {     
+        console.log("create table...");
         $('#'+idTable).DataTable({        
             "pageLength": 10,
              data: dataSet,
