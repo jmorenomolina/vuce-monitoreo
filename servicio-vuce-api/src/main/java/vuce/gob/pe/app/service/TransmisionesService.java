@@ -18,7 +18,10 @@ package vuce.gob.pe.app.service;
 import java.util.Date;
 import java.util.List;
 
+import vuce.gob.pe.app.dto.MensajeSalidaDTO;
+import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
+import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 
 /**
  *
@@ -26,8 +29,13 @@ import vuce.gob.pe.app.dto.TrasmisionDTO;
  */
 public interface TransmisionesService {
     
-    public List<TrasmisionDTO> obtenerTransmisionesConIncidente(Date fechaInicio,Date fechaFin);
+    public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio,Date fechaFin);
      
-     
+    public List<TrasmisionDTO> filtrarTransmisiones(RequestFiltrarTransmisionesDTO request);
+    
+    public MensajeSalidaDTO reenviarTransaccionSalidaConError(Integer vcId,String vcTransaccion,Integer veId, String veTransaccion); 
+    
+    public MensajeSalidaDTO habilitarTransmision(Integer veId);
+    
     
 }
