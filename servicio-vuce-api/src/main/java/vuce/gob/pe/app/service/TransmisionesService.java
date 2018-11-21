@@ -22,6 +22,7 @@ import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
+import vuce.gob.pe.app.util.RestAppException;
 
 /**
  *
@@ -29,13 +30,21 @@ import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
  */
 public interface TransmisionesService {
     
-    public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio,Date fechaFin);
+    public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio,Date fechaFin) throws RestAppException;
      
-    public List<TrasmisionDTO> filtrarTransmisiones(RequestFiltrarTransmisionesDTO request);
+    public List<TrasmisionDTO> filtrarTransmisiones(RequestFiltrarTransmisionesDTO request)  throws RestAppException;
     
-    public MensajeSalidaDTO reenviarTransaccionSalidaConError(Integer vcId,String vcTransaccion,Integer veId, String veTransaccion); 
+    public MensajeSalidaDTO reenviarTransaccionSalidaConError(Integer vcId,String vcTransaccion,Integer veId, String veTransaccion)  throws RestAppException; 
     
-    public MensajeSalidaDTO habilitarTransmision(Integer veId);
+    public MensajeSalidaDTO habilitarTransmision(Integer veId)  throws RestAppException;    
+    
+    public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer veId,Integer vcId)  throws RestAppException;
+    
+    public MensajeSalidaDTO anularTransaccionEntradaConError(Integer veId, String veTransaccion,Integer vcId,String vcTransaccion)  throws RestAppException;
+        
+    public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId,String fechaInicio,String fechaFin)  throws RestAppException;
+    
+    public void actualizarConfiguracionMonitoreo(Integer entidadId,String slaNombre, Integer slaValor,String estado)  throws RestAppException;
     
     
 }
