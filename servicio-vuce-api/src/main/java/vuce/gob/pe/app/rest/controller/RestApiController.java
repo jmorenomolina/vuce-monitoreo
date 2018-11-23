@@ -69,7 +69,8 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(transmisiones, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return this.crearMensajeRespuestaError(e);
+			return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
+			//return this.crearMensajeRespuestaError(e);
 		}
 
 	}
@@ -114,7 +115,8 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(transmisiones, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return this.crearMensajeRespuestaError(e);
+			return new ResponseEntity<List<TrasmisionDTO>>(HttpStatus.NO_CONTENT);
+			//return this.crearMensajeRespuestaError(e);
 		}
 	}
 
@@ -136,7 +138,8 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return this.crearMensajeRespuestaError(e);
+			return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
+			//return this.crearMensajeRespuestaError(e);
 		}
 	}
 
@@ -151,7 +154,8 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return this.crearMensajeRespuestaError(e);
+			return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
+			//return this.crearMensajeRespuestaError(e);
 		}
 	}
 
@@ -169,7 +173,8 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return this.crearMensajeRespuestaError(e);
+			return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
+			//return this.crearMensajeRespuestaError(e);
 		}
 	}
 
@@ -194,7 +199,7 @@ public class RestApiController {
 		}
 	}
 
-	@RequestMapping(value = "/transmision/reprocesar/entrada/conerror", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/reprocesar/entrada/n8/conerror", method = RequestMethod.GET)
 	public ResponseEntity<MensajeSalidaDTO> trasmisionReprocesarEntradaN8ConError(
 			@RequestParam(required = false, value = "entidadId") Integer entidadId,
 			@RequestParam(required = false, value = "fechaInicio") String fechaInicio,
@@ -214,7 +219,7 @@ public class RestApiController {
 		}
 	}
 
-	@RequestMapping(value = "/transmision/reprocesar/entrada/conerror", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/actualizar/configuracion/monitoreo", method = RequestMethod.GET)
 	public ResponseEntity<MensajeSalidaDTO> actualizarConfiguracionMonitoreo(
 			@RequestParam(required = false, value = "entidadId") Integer entidadId,
 			@RequestParam(required = false, value = "slaNombre") String slaNombre,
