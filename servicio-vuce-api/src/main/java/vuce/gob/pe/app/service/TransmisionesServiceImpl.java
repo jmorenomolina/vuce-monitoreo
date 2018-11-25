@@ -46,6 +46,8 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCall;
+	
+	private final String PACKAGE="PROYECTO_BUS";
 
 	private final String FUN_OBTENER_TX_CON_INCIDENTE = "OBTENER_TX_CON_INCIDENTE";
 	private final String FUN_OBTENER_TX_CON_INCIDENTE_RETURN = "resp_cursor";
@@ -56,8 +58,9 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName(FUN_OBTENER_TX_CON_INCIDENTE)
+					.withCatalogName(PACKAGE)
 					.returningResultSet(FUN_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionIncidenteRowMapper());
-			SqlParameterSource in = new MapSqlParameterSource().addValue("fecha_incio", fechaInicio)
+			SqlParameterSource in = new MapSqlParameterSource().addValue("fecha_inicio", fechaInicio)
 					.addValue("fecha_fin", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(FUN_OBTENER_TX_CON_INCIDENTE_RETURN);
@@ -76,6 +79,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_FILTRAR_TRANSMISIONES)
+					 .withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionRowMapper());
 			SqlParameterSource in = new MapSqlParameterSource().addValue("CODIGO_ENTIDAD", request.getCodigoEntidad())
 					.addValue("FECHA_INICIO", request.getFechaFin()).addValue("FECHA_FIN", request.getFechaFin())
@@ -89,6 +93,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(PC_OBTENER_TX_CON_INCIDENTE_RETURN);
 		} catch (Exception e) {
+			
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
 		}
@@ -102,7 +107,9 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR)
+					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VC_ID", vcId)
 					.addValue("VC_TRANSACCION", vcTransaccion).addValue("VE_ID", veId)
 					.addValue("VE_TRANSACCION", veTransaccion);
@@ -125,7 +132,9 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	public MensajeSalidaDTO habilitarTransmision(Integer veId) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(HABILITAR_TRANSMISIONES);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(HABILITAR_TRANSMISIONES)
+					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID", veId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
@@ -143,11 +152,17 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private final String REPROC_TX_ENTRADA_CON_ERROR = "REPROC_TX_ENTRADA_CON_ERROR";
 
 	@Override
-	public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer veId, Integer vcId) throws RestAppException {
+	public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer vcId,String vcTransaccion,Integer veId,String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(REPROC_TX_ENTRADA_CON_ERROR);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID", veId).addValue("VC_ID", vcId);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(REPROC_TX_ENTRADA_CON_ERROR)
+					.withCatalogName(PACKAGE);
+			SqlParameterSource in = new MapSqlParameterSource()
+					.addValue("VC_ID", veId)
+					.addValue("VC_TRANSACCION", veId)
+					.addValue("VE_ID", veId)
+					.addValue("VE_TRANSACCION", vcId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
@@ -167,9 +182,11 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String vcTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(ANULAR_TX_ENTRADA_CON_ERROR);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID", veId)
-					.addValue("VE_TRANSACCION", veTransaccion).addValue("VC_ID", vcId)
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(ANULAR_TX_ENTRADA_CON_ERROR)
+					.withCatalogName(PACKAGE);
+			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID_IN", veId)
+					.addValue("VE_TRANSACCION", veTransaccion).addValue("VC_ID_IN", vcId)
 					.addValue("VC_TRANSACCION", vcTransaccion);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
@@ -186,11 +203,13 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private final String REPROC_TX_ENTRADA_N8_CON_ERROR = "REPROC_TX_ENTRADA_N8_CON_ERROR";
 
 	@Override
-	public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId, String fechaInicio,
-			String fechaFin) throws RestAppException {
+	public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId, Date fechaInicio,
+			Date fechaFin) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR)
+					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
 					.addValue("FECHA_INICIO", fechaInicio).addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
@@ -208,14 +227,37 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private final String ACTUALIZAR_CONFIG_MONITOREO = "ACTUALIZAR_CONFIG_MONITOREO";
 
 	@Override
-	public void actualizarConfiguracionMonitoreo(Integer entidadId, String slaNombre, Integer slaValor, String estado)
+	public void actualizarConfiguracionMonitoreo(Integer entidadId,String correoSoporte, String slaNombre, Integer slaValor, String estado)
 			throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(ACTUALIZAR_CONFIG_MONITOREO);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("ID_ENTIDAD", entidadId)
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(ACTUALIZAR_CONFIG_MONITOREO)
+					.withCatalogName(PACKAGE);
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ID_ENTIDAD", entidadId).addValue("CORREO_SOPORTE", correoSoporte)
 					.addValue("SLA_NOMBRE", slaNombre).addValue("SLA_VALOR", slaValor).addValue("ESTADO", estado);
 			simpleJdbcCall.execute(in);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+		}
+	}
+
+	private final String DETENER_TRANSMISIONES = "DETENER_TRANSMISIONES";
+	@Override
+	public MensajeSalidaDTO detenerTrasmision(Integer entidadId) throws RestAppException {
+		try {
+			jdbcTemplate = new JdbcTemplate(dataSource);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withProcedureName(DETENER_TRANSMISIONES)
+					.withCatalogName(PACKAGE);
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);
+			Map<String, Object> result = simpleJdbcCall.execute(in);
+			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
+			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
+			mensaje.setResultadoValor(resultadoValor.intValueExact());
+			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);

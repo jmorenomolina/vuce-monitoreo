@@ -1,19 +1,18 @@
 package vuce.gob.pe.app.rest.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
@@ -21,7 +20,13 @@ import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 import vuce.gob.pe.app.model.Entidad;
 import vuce.gob.pe.app.repository.EntidadRepository;
+import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitorioInput;
+import vuce.gob.pe.app.rest.parameter.HabilitarInput;
+import vuce.gob.pe.app.rest.parameter.TransmisionDetenerInput;
+import vuce.gob.pe.app.rest.parameter.TransmisonEntradaN8Input;
+import vuce.gob.pe.app.rest.parameter.TrasmisionInput;
 import vuce.gob.pe.app.service.TransmisionesService;
+import vuce.gob.pe.app.util.Converter;
 import vuce.gob.pe.app.util.RestAppException;
 
 /**
@@ -40,6 +45,9 @@ public class RestApiController {
 	@Autowired
 	private final TransmisionesService repositoryTransmisionesService = null;
 
+	private final String FORMAT_DATE = "yyyy-MM-dd";
+	
+	
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Entidad>> entidades() {
 
@@ -51,26 +59,29 @@ public class RestApiController {
 	}
 
 	private ResponseEntity crearMensajeRespuestaError(RestAppException e) {
+		logger.info("crearMensajeRespuestaError: [{}]",e.getDeveloperMessage());
 		MensajeSalidaDTO response = new MensajeSalidaDTO();
 		response.setResultadoMensaje(e.getDeveloperMessage());
 		response.setResultadoValor(500);
-		return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
 
 	@RequestMapping(value = "/transmisionesconincidentes", method = RequestMethod.GET)
-	public ResponseEntity<List<TrasmisionIncidenteDTO>> trasmisionesConIncidente() {
+	public ResponseEntity<List<TrasmisionIncidenteDTO>> trasmisionesConIncidente(
+			@RequestParam(required = false, value = "fechaIncio") String fechaIncio,
+			@RequestParam(required = false, value = "fechaFin") String fechaFin) {
 		List<TrasmisionIncidenteDTO> transmisiones;
 		try {
 			transmisiones = (List<TrasmisionIncidenteDTO>) repositoryTransmisionesService
-					.obtenerTransmisionesConIncidente(new Date(), new Date());
+					.obtenerTransmisionesConIncidente(Converter.convertToDate(fechaIncio, FORMAT_DATE), Converter.convertToDate(fechaFin, FORMAT_DATE));
 			if (transmisiones.isEmpty()) {
 				return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(transmisiones, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
-			//return this.crearMensajeRespuestaError(e);
+			//return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
+			return this.crearMensajeRespuestaError(e);
 		}
 
 	}
@@ -79,8 +90,8 @@ public class RestApiController {
 	public ResponseEntity<List<TrasmisionDTO>> trasmisiones(
 
 			@RequestParam(required = false, value = "codigoEntidad") String codigoEntidad,
-			@RequestParam(required = false, value = "fechaInicio") Date fechaInicio,
-			@RequestParam(required = false, value = "fechaFin") Date fechaFin,
+			@RequestParam(required = false, value = "fechaInicio") String fechaInicio,
+			@RequestParam(required = false, value = "fechaFin") String fechaFin,
 			@RequestParam(required = false, value = "tipoMensaje") String tipoMensaje,
 			@RequestParam(required = false, value = "tipoDocumento") String tipoDocumento,
 			@RequestParam(required = false, value = "numeroDocumento") String numeroDocumento,
@@ -89,12 +100,14 @@ public class RestApiController {
 			@RequestParam(required = false, value = "estadoVc") String estadoVc,
 			@RequestParam(required = false, value = "estadoVe") String estadoVe,
 			@RequestParam(required = false, value = "vcId") String vcId,
-			@RequestParam(required = false, value = "veId") String veId) {
+			@RequestParam(required = false, value = "veId") String veId
+			
+			) {
 
 		RequestFiltrarTransmisionesDTO request = new RequestFiltrarTransmisionesDTO();
 		request.setCodigoEntidad(codigoEntidad);
-		request.setFechaInicio(fechaInicio);
-		request.setFechaFin(fechaFin);
+		request.setFechaInicio(Converter.convertToDate(fechaInicio, FORMAT_DATE));
+		request.setFechaFin(Converter.convertToDate(fechaFin, FORMAT_DATE));
 		request.setTipoMensaje(tipoMensaje);
 		request.setTipoDocumento(tipoDocumento);
 		request.setNumeroDocumento(numeroDocumento);
@@ -115,81 +128,72 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(transmisiones, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return new ResponseEntity<List<TrasmisionDTO>>(HttpStatus.NO_CONTENT);
-			//return this.crearMensajeRespuestaError(e);
+			//return new ResponseEntity<List<TrasmisionDTO>>(HttpStatus.NO_CONTENT);
+			return this.crearMensajeRespuestaError(e);
 		}
 	}
 
-	@RequestMapping(value = "/transmision/reenviar/salida/conerror", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/reenviar/salida/conerror", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> trasmisionReenviarSalidaConError(
-			@RequestParam(required = false, value = "vcId") Integer vcId,
-			@RequestParam(required = false, value = "vcTransaccion") String vcTransaccion,
-			@RequestParam(required = false, value = "veId") Integer veId,
-			@RequestParam(required = false, value = "veTransaccion") String veTransaccion) {
+			@RequestBody TrasmisionInput trasmisionInput) {
 
 		logger.info("TrasmisionReenviarSalidaConError vcId: [{}] vcTransaccion: [{}] veId: [{}] veTransaccion: [{}]",
-				vcId, vcTransaccion, veId, veTransaccion);
+				trasmisionInput.getVcId(), trasmisionInput.getVcTransaccion(), trasmisionInput.getVeId(), trasmisionInput.getVeTransaccion());
 
 		try {
 			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService
-					.reenviarTransaccionSalidaConError(vcId, vcTransaccion, veId, veTransaccion);
+					.reenviarTransaccionSalidaConError(trasmisionInput.getVcId(), trasmisionInput.getVcTransaccion(), trasmisionInput.getVeId(), trasmisionInput.getVeTransaccion());
 			if (!Optional.ofNullable(response).isPresent()) {
 				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
-			//return this.crearMensajeRespuestaError(e);
+			//return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
+			return this.crearMensajeRespuestaError(e);
 		}
 	}
 
-	@RequestMapping(value = "/transmision/habilitar", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/habilitar", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> transmisionHabilitar(
-			@RequestParam(required = false, value = "veId") Integer veId) {
-		logger.info("transmisionHabilitar  veId: [{}] ", veId);
+			@RequestBody HabilitarInput input) {
+		logger.info("transmisionHabilitar  veId: [{}] ", input.getVeId());
 		try {
-			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService.habilitarTransmision(veId);
+			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService.habilitarTransmision(input.getVeId());
 			if (!Optional.ofNullable(response).isPresent()) {
 				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
-			//return this.crearMensajeRespuestaError(e);
+			//return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
+			return this.crearMensajeRespuestaError(e);
 		}
 	}
 
-	@RequestMapping(value = "/transmision/reprocesar/entrada/conerror", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/reprocesar/entrada/conerror", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> trasmisionReprocesarEntradaConError(
-			@RequestParam(required = false, value = "veId") Integer veId,
-			@RequestParam(required = false, value = "vcId") Integer vcId) {
+			@RequestBody TrasmisionInput trasmisionInput) {
 
-		logger.info("TrasmisionReprocesarEntradaConError veId: [{}]  vcId: [{}]", veId, vcId);
+		logger.info("TrasmisionReprocesarEntradaConError vcId: [{}]  vcTransaccion: [{}]", trasmisionInput.getVcId(), trasmisionInput.getVcTransaccion());
 		try {
-			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService
-					.reprocesarTransaccionEntradaConError(veId, vcId);
+			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService.reprocesarTransaccionEntradaConError(trasmisionInput.getVcId(), trasmisionInput.getVcTransaccion(), trasmisionInput.getVeId(), trasmisionInput.getVeTransaccion());
 			if (!Optional.ofNullable(response).isPresent()) {
 				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (RestAppException e) {
-			return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
-			//return this.crearMensajeRespuestaError(e);
+		} catch (RestAppException e) {			
+			return this.crearMensajeRespuestaError(e);
 		}
 	}
 
-	@RequestMapping(value = "/transmision/anular/entrada/conerror", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/anular/entrada/conerror", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> trasmisionAnularEntradaConError(
-			@RequestParam(required = false, value = "veId") Integer veId,
-			@RequestParam(required = false, value = "veTransaccion") String veTransaccion,
-			@RequestParam(required = false, value = "vcId") Integer vcId,
-			@RequestParam(required = false, value = "vcTransaccion") String vcTransaccion) {
+			@RequestBody TrasmisionInput trasmisionInput) {
 
 		logger.info("TrasmisionAnularEntradaConError veId: [{}] veTransaccion: [{}] vcId: [{}] vcTransaccion: [{}] ",
-				veId, veTransaccion, vcId, vcTransaccion);
+				trasmisionInput.getVeId(), trasmisionInput.getVeTransaccion(), trasmisionInput.getVcId(), trasmisionInput.getVcTransaccion());
 		try {
 			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService
-					.anularTransaccionEntradaConError(veId, veTransaccion, vcId, vcTransaccion);
+					.anularTransaccionEntradaConError(trasmisionInput.getVeId(), trasmisionInput.getVeTransaccion(), trasmisionInput.getVcId(), trasmisionInput.getVcTransaccion());
 			if (!Optional.ofNullable(response).isPresent()) {
 				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			}
@@ -199,17 +203,16 @@ public class RestApiController {
 		}
 	}
 
-	@RequestMapping(value = "/transmision/reprocesar/entrada/n8/conerror", method = RequestMethod.GET)
-	public ResponseEntity<MensajeSalidaDTO> trasmisionReprocesarEntradaN8ConError(
-			@RequestParam(required = false, value = "entidadId") Integer entidadId,
-			@RequestParam(required = false, value = "fechaInicio") String fechaInicio,
-			@RequestParam(required = false, value = "fechaFin") String fechaFin) {
+	@RequestMapping(value = "/transmision/reprocesar/entrada/n8/conerror", method = RequestMethod.PUT)
+	public ResponseEntity<MensajeSalidaDTO> trasmisionReprocesarEntradaN8ConError(@RequestBody TransmisonEntradaN8Input input) {
 
-		logger.info("TrasmisionReprocesarEntradaConError entidadId: [{}]  fechaInicio: [{}]  fechaFin: [{}]", entidadId,
-				fechaInicio, fechaFin);
+		logger.info("TrasmisionReprocesarEntradaConError entidadId: [{}]  fechaInicio: [{}]  fechaFin: [{}]", input.getEntidadId(),
+				input.getFechaInicio(), input.getFechaFin());
 		try {
 			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService
-					.reporcesarTransaccionEntradaN8ConError(entidadId, fechaInicio, fechaFin);
+					.reporcesarTransaccionEntradaN8ConError(input.getEntidadId(),
+							Converter.convertToDate(input.getFechaInicio(), FORMAT_DATE), 
+							Converter.convertToDate(input.getFechaFin(), FORMAT_DATE));
 			if (!Optional.ofNullable(response).isPresent()) {
 				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			}
@@ -219,20 +222,33 @@ public class RestApiController {
 		}
 	}
 
-	@RequestMapping(value = "/transmision/actualizar/configuracion/monitoreo", method = RequestMethod.GET)
+	@RequestMapping(value = "/transmision/actualizar/configuracion/monitoreo", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> actualizarConfiguracionMonitoreo(
-			@RequestParam(required = false, value = "entidadId") Integer entidadId,
-			@RequestParam(required = false, value = "slaNombre") String slaNombre,
-			@RequestParam(required = false, value = "slaValor") Integer slaValor,
-			@RequestParam(required = false, value = "estado") String estado) {
+			@RequestBody ConfiguracionMonitorioInput input) {
 
-		logger.info(
-				"TrasmisionReprocesarEntradaConError entidadId: [{}]  slaNombre: [{}]  slaValor: [{}]   estado: [{}]",
-				entidadId, slaNombre, slaValor, estado);
+		logger.info("actualizarConfiguracionMonitoreo entidadId: [{}]  correoSoporte: [{}]  slaNombre: [{}]  slaValor: [{}]   estado: [{}]",input.getEntidadId(),input.getCorreoSoporte(), input.getSlaNombre(), input.getSlaValor(), input.getEstado());
+		
 		try {
-			repositoryTransmisionesService.actualizarConfiguracionMonitoreo(entidadId, slaNombre, slaValor, estado);
+			repositoryTransmisionesService.actualizarConfiguracionMonitoreo(input.getEntidadId(),input.getCorreoSoporte(), input.getSlaNombre(), input.getSlaValor(), input.getEstado());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (RestAppException e) {
+			return this.crearMensajeRespuestaError(e);
+		}
+	}
+	
+	
+	@RequestMapping(value = "/transmision/detener", method = RequestMethod.PUT)
+	public ResponseEntity<MensajeSalidaDTO> transmisionDetener(
+			@RequestBody TransmisionDetenerInput input) {
+		logger.info("transmisionHabilitar  entidadId: [{}] ", input.getEntidadId());
+		try {
+			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService.detenerTrasmision(input.getEntidadId());
+			if (!Optional.ofNullable(response).isPresent()) {
+				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (RestAppException e) {
+			//return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			return this.crearMensajeRespuestaError(e);
 		}
 	}

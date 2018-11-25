@@ -38,13 +38,14 @@ public interface TransmisionesService {
     
     public MensajeSalidaDTO habilitarTransmision(Integer veId)  throws RestAppException;    
     
-    public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer veId,Integer vcId)  throws RestAppException;
+    public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer vcId,String vcTransaccion,Integer veId,String veTransaccion)  throws RestAppException;
     
     public MensajeSalidaDTO anularTransaccionEntradaConError(Integer veId, String veTransaccion,Integer vcId,String vcTransaccion)  throws RestAppException;
         
-    public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId,String fechaInicio,String fechaFin)  throws RestAppException;
+    public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId,Date fechaInicio,Date fechaFin)  throws RestAppException;
     
-    public void actualizarConfiguracionMonitoreo(Integer entidadId,String slaNombre, Integer slaValor,String estado)  throws RestAppException;
+    public void actualizarConfiguracionMonitoreo(Integer entidadId,String correoSoporte,String slaNombre, Integer slaValor,String estado)  throws RestAppException;
     
+    public MensajeSalidaDTO detenerTrasmision(Integer entidadId)  throws RestAppException;   
     
 }
