@@ -94,10 +94,10 @@ public class EntidadMantenimientoBean implements Serializable {
     public void activateForm() {
         logger.info("EntidadMantenimientoBean [{}]", "activateForm");        
         disabledForm = Boolean.FALSE;
-        if(Optional.ofNullable(this.getMantenimiento()).isPresent()){
+       /* if(Optional.ofNullable(this.getMantenimiento()).isPresent()){
             Entidad entidadTemp = this.getEntidades().stream().filter(e->Objects.equals(e.getIdEntidad(), this.getMantenimiento().getIdEntidad().getIdEntidad())).findAny().orElse(null);
             this.setEntidad(entidadTemp);
-        }
+        }*/
     }
     
     public void addMantenimiento() {

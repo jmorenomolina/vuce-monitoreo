@@ -25,7 +25,8 @@
         <h:outputScript name="js/bootstrap-select.js"/> 
 
         <h:outputScript name="js/vuce-chart.js"/> 
-        <h:outputScript name="js/monitoreoIncidentes.js"/> 
+        <h:outputScript name="js/monitoreoIncidentes.js"/>
+        <h:outputScript name="js/vuce-api-rest.js"/>  
         <h:outputScript name="js/lib/Chart.min.js"/> 
 
         <h:outputScript name="js/lib/codemirror.js"/> 
@@ -44,8 +45,50 @@
         <!-- Main content -->
         <section class="content container-fluid">
 
+			   
 
 
+				<div class="col-md-12"
+					style="padding-right: 1px; padding-left: 1px;">
+					<!-- general form elements -->
+					<div class="box box-danger">
+						<div class="box-header with-border">
+							 <form id="form-tramisiones-incidentes" method="GET">
+
+							  <label for="desde" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Desde</label>
+                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" name="fechadesde" id="dp-fechadesde-tra-inc"/>
+                                    </div>
+                                </div>
+
+                                <label for="tipo-mensaje" class="col-sm-3 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Hasta</label>
+                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" name="fechahasta" id="dp-fechahasta-tra-inc"/>
+                                    </div>
+                                </div>
+
+
+							 </form>
+						</div>
+						<div class="box-body">
+							<div style="width: 75%">
+								<canvas id="canvas"></canvas>
+								
+								<a href="javascript:api.callTransmisionesConIncidentes();">call</a>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			
 
             <form id="form-search" method="GET">
 
@@ -63,83 +106,13 @@
 
                         </div>                  
                         <div class="box-body">
-                            <div class="form-group">
-
-                                <label for="entidades" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Entidad</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <select name="entidades" class="selectpicker show-menu-arrow form-control" multiple="multiple" data-max-options="10" id="entidades"/>
-                                </div>
-
-                                <label for="tipo-mensaje" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Tipo deMensaje</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <select name="tipomensajes" class="selectpicker show-menu-arrow form-control" multiple="multiple" data-max-options="10" id="tipomensajes"/>
-                                </div>
-
-                                <label for="tipo-documento" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Tipo de documento</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <select name="tipodocumentos" class="selectpicker show-menu-arrow form-control" multiple="multiple" data-max-options="10" id="tipodocumentos">
-                                        <option value="-1" selected="selected">Todos</option>
-                                        <option value="O" >Orden</option>
-                                        <option value="MTO" >Modificacion Temporal de la Orden</option>
-                                        <option value="S" >SUCE</option>
-                                        <option value="DR" >Documento Resolutivo</option>
-                                        <option value="CDA" >CDA</option>
-                                        <option value="T" >Ticket Notificacion</option>
-                                    </select>
-                                </div>   
-
-
-
-                                <label for="desde" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Desde</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input type="text" class="form-control pull-right" name="fechadesde" id="datepickerDesde"/>
-                                    </div>
-                                </div>
-
-                                <label for="tipo-mensaje" class="col-sm-3 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Hasta</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input type="text" class="form-control pull-right" name="fechahasta" id="datepickerHasta"/>
-                                    </div>
-                                </div>
-
-                                <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Numero de documento</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10" >
-                                    <input type="text" class="form-control" id="nrodocumento" name="nrodocumento" />
-                                </div> 
-
-
-                                <label for="tipo-transacciones" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Tipo de transacciones</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <select name="tipotransacciones" class="selectpicker show-menu-arrow form-control" multiple="multiple" data-max-options="10" id="tipotransacciones">
-                                        <option value="1" selected="selected">Con Incidentes</option>
-                                        <option value="0" >Sin Incidentes</option>
-                                     
-                                    </select>
-                                </div>    
-
-                                <label for="tipo-notificaciones" class="col-sm-12 col-md-3 col-lg-2 control-label text-right top-5 padding-bottom-10">Tipo de notificaciones</label>
-                                <div class="col-sm-12 col-md-3 col-lg-2 padding-bottom-10">
-                                    <select name="tiponotificaciones" class="selectpicker show-menu-arrow form-control" multiple="multiple" data-max-options="10" id="tiponotificaciones">
-                                        <option value="1" selected="selected">Con Incidentes</option>
-                                        <option value="0" >Sin Incidentes</option>
-                               
-                                    </select>
-                                </div>     
-                            </div>
+                           
 
                         </div>
 
                         <div class="box-footer" style="text-align: right;">
                             
-                            <button type="button" class="btn btn-primary pull-righ" style="margin-right: 20px;margin-bottom:10px;"  id="filtrar-incidentes">Filtrar Incidentes</button>
+                            <button type="button" class="btn btn-primary pull-righ" onclick="" style="margin-right: 20px;margin-bottom:10px;"  id="filtrar-incidentes">Filtrar Incidentes</button>
                             
                             <button type="button" class="btn btn-primary pull-righ" style="margin-right: 20px;margin-bottom:10px;">Enviar Informe de Incidentes</button>
                             
@@ -151,414 +124,73 @@
                 </div>
             </form>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box box-solid">
-                        <div class="box-header">
-                            <i class="fa fa-bar-chart"></i>
-                            <h3 class="box-title text-danger">Transacciones</h3>
-
-
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body text-center" id="parent-transacciones-procesadas">
-                            <canvas id="transacciones-procesadas"></canvas>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- /.col -->
-
-                <div class="col-md-6">
-                    <div class="box box-solid">
-                        <div class="box-header">
-                            <i class="fa fa-bar-chart"></i>
-                            <h3 class="box-title text-warning">Notificaciones</h3>
-
-
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body text-center" id="parent-notificaciones-incidencias">
-                            <canvas id="notificaciones-incidencias"></canvas>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box box-solid">
-                        <div class="box-header">
-                            <i class="fa  fa-table"></i>
-                            <h3 class="box-title text-warning">Transacciones con incidentes</h3>
-
-
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body text-center">
-                            <div class="form-group" style="margin: 10px 0px 45px 0px;float: left;width: 100%;">
-                                <div>
-
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-1" data-toggle="tooltip"></div>
-                                        <label style="font-size: 12px;">Incumplimiento del tiempo de disponibilidad de la transaccion</label>
-
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-2" data-toggle="tooltip"></div>
-                                        <label style="font-size: 12px;">Incumplimiento del tiempo de confirmacion de la transaccion</label>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-3" data-toggle="tooltip"></div>
-                                        <label style="font-size: 12px;">Transaccion procesada incorrectamente en la entidad</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="form-group" style="margin: 10px 0px 45px 0px;">
-                                <div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4 text-left " style="padding-left: 20px;">                                     
-                                        <input type="checkbox" id="check-transacciones-all"   />
-                                        <label>Seleccionar todas </label>
-                                    </div>                                   
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-12">
-                                <table id="tb-transaccion-incidente" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-transaccion-incidente">
-                                    <thead>
-                                        <tr role="row">
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1"></th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Tipo</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Entidad</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Id</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Mensaje</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Tipo Doc.</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Nro Doc.</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Tamaño</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Creaci&#243;n</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Lectura</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Confirmaci&#243;n</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Antiguedad</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Cant. Lectura</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">XML</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">EbXML</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-
-
-                            </div>
-
-                            <div>
-                                
-
-                                <div class="modal fade" id="modal-reenviar-transacciones">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">x</span></button>
-                                                <h4 class="modal-title">Confirmacion</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Esta Seguro de Reenviar las Tramisiones?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary" id="btn-renviar-trasmisiones">Enviar</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-
-                                <div class="modal fade" id="modal-reenviar-transacciones-response">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">x</span></button>
-                                                <h4 class="modal-title">Respuesta Transaccion</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table id="tb-respuesta-transaccion" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-respuesta-transaccion">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-transaccion">Trasmisi&#243;n</th>
-                                                            <th  style="text-align: center;" class="sorting" tabindex="1" aria-controls="tb-respuesta-transaccion">Resultado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-
-                                                <button type="button" class="btn btn-primary" id="btn-renviar-trasmisiones" data-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-
-
-                            </div>
-                        </div>
-                        
-                       <div class="box-footer" style="text-align: right;">
-                            <div class="col-sm-12 col-md-12 col-lg-2 pull-right" style="margin-bottom: 8px;margin-top: 25px;">
-                                    <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#modal-reenviar-transacciones">Reenviar transacciones</button>                                
-                            </div>
-                        </div>
-
-                        
-                        
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box box-solid">
-                        <div class="box-header">
-                            <i class="fa  fa-table"></i>
-                            <h3 class="box-title text-warning">Notificaci&#243;n con incidentes</h3>
-
-
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body text-center">
-                             <div class="form-group" style="margin: 10px 0px 45px 0px;float: left;width: 100%;">
-                                <div>
-
-                                    <div class="col-sm-12 col-md-12 col-lg-6">
-                                        <div title="Breve explicaci&#243;n sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-1" data-toggle="tooltip"></div>
-                                        <label style="font-size: 12px;">Incumplimiento del tiempo de procesamiento de la notificaci&#243;n</label>
-
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-6">
-                                        <div title="Breve explicaci&#243;n sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-2" data-toggle="tooltip"></div>
-                                        <label style="font-size: 12px;">Notificaci&#243;n procesada con errores</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group" style="margin: 10px 0px 45px 0px;">
-                                <div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4 text-left " style="padding-left: 20px;">                                     
-                                        <input type="checkbox" id="check-notificaciones-all"   />
-                                        <label>Seleccionar todas</label>
-                                    </div>                                   
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <table id="tb-notificacion-incidente" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-notificacion-incidente">
-                                    <thead>
-                                        <tr role="row">
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1"></th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Tipo</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Entidad</th>
-                                            <th  style="text-align: center;width: 60px;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1" >VE Id</th>
-                                            <th  style="text-align: center;width: 60px;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">VC Id</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Mensaje</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Documento</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Nro Documento</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Recepci&#243;n</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Fec. Procesamiento</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">Antiguedad</th>
-                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">XML</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div>
-                               
-
-                                <div class="modal fade" id="modal-anular-notificacion">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">x</span></button>
-                                                <h4 class="modal-title">Confirmacion</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Esta Seguro de Anular las Notificaciones?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary" id="btn-anular-notificacion">Enviar</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <div class="modal fade" id="modal-reprocesar-notificacion">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">x</span></button>
-                                                <h4 class="modal-title">Confirmacion</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Esta Seguro de Reprocesar las Notificaciones?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary" id="btn-reprocesar-notificacion">Enviar</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-
-                                <div class="modal fade" id="modal-notificacion-response">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">x</span></button>
-                                                <h4 class="modal-title">Respuesta Notificaci&#243;n</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table id="tb-respuesta-notificacion" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-respuesta-notificacion">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-notificacion" rowspan="1" colspan="1">Notificacion</th>
-                                                            <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-notificacion" rowspan="1" colspan="1">Resultado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-
-                                                <button type="button" class="btn btn-primary" id="btn-renviar-trasmisiones" data-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-
-
-
-
-                                <div class="modal fade" id="modal-xml">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">x</span></button>
-                                                <h4 class="modal-title">Mensaje XML</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <textarea id="code" name="code"></textarea>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>                                           
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-
-
-                            </div>
-                        </div>
-                        
-                         <div class="box-footer" style="text-align: right;">
-                          
-                                <button style="margin-right: 20px;margin-bottom:10px;" type="button" class="btn btn-primary pull-righ" data-toggle="modal" data-target="#modal-reprocesar-notificacion">Reprocesar notificaciones</button>
-                     
-                            
-                                <button style="margin-right: 20px;margin-bottom:10px;" type="button" class="btn btn-primary pull-righ" data-toggle="modal" data-target="#modal-anular-notificacion">Anular notificaciones</button>
-                          
-                        </div>
-                        
-                   
-                        
-                        
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box box-solid">
-                        <div class="box-header">
-                            <i class="fa  fa-table"></i>
-                            <h3 class="box-title text-warning">Frecuencia de Lectura de Transacciones</h3>
-
-
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body text-center">
-
-
-                            <div class="col-sm-12">
-                                <table id="tb-frecuencia-transacciones" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-frecuencia-transacciones">
-                                    <thead>
-                                        <tr role="row">                                 
-                                            <th style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-frecuencia-transacciones" rowspan="1" colspan="1">Entidad</th>
-                                            <th style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-frecuencia-transacciones" rowspan="1" colspan="1">Activo</th>
-                                            <th style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-frecuencia-transacciones" rowspan="1" colspan="1">Fec. Lectura Esperada</th>
-                                            <th style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-frecuencia-transacciones" rowspan="1" colspan="1">Fec. Lectura Actual</th>
-                                            <th style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-frecuencia-transacciones" rowspan="1" colspan="1">Cumplimiento</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        
-                        </div>
-                           <div class="box-footer" style="text-align: right;">
-                          
-                           <a href="/entidadMantenimiento.jsf"  class="btn btn-primary">Programacion de Mantenimientos</a>
-                         
-                  
-                     </div>
-
-
-                        <!-- /.box-body -->
-                    </div>
-                    
-                  
-                        
-                    
-                    <!-- /.box -->
-                </div>
-
-
-
-
-
-                <!-- /.col -->
-            </div>
-
+        
         </section>
 
+			<script>
+			
+			window.chartColors = {
+					red: 'rgb(255, 99, 132)',
+					orange: 'rgb(255, 159, 64)',
+					yellow: 'rgb(255, 205, 86)',
+					green: 'rgb(75, 192, 192)',
+					blue: 'rgb(54, 162, 235)',
+					purple: 'rgb(153, 102, 255)',
+					grey: 'rgb(201, 203, 207)'
+				};
+			
+			
+			
+		var barChartData = {
+				
+			labels: ['APN', 'SENASA', 'VUCE', 'SERFOR', 'IPEN', 'SUCAMEC', 'AGN'],
+			
+			datasets: [{
+				label: 'Salida',
+				backgroundColor: window.chartColors.red,
+				data: [
+					1,2,3,4,5,6,7
+				]
+			}, 
+			{
+				label: 'Entrada',
+				backgroundColor: window.chartColors.green,
+				data: [
+					1,7,2,3,6,5,4
+				]
+			}]
 
+		};
+		
+		
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					title: {
+						display: true,
+						text: 'Total de Transmisiones con incidentes por entidad'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false
+					},
+					responsive: true,
+					scales: {
+						xAxes: [{
+							stacked: true,
+						}],
+						yAxes: [{
+							stacked: true
+						}]
+					}
+				}
+			});
+		};
+
+	</script>
 
 
 

@@ -71,6 +71,10 @@ public class RestApiController {
 	public ResponseEntity<List<TrasmisionIncidenteDTO>> trasmisionesConIncidente(
 			@RequestParam(required = false, value = "fechaIncio") String fechaIncio,
 			@RequestParam(required = false, value = "fechaFin") String fechaFin) {
+		
+		logger.info("trasmisionesConIncidente  fechaIncio: [{}] fechaFin: [{}]",
+				fechaIncio,fechaFin);
+		
 		List<TrasmisionIncidenteDTO> transmisiones;
 		try {
 			transmisiones = (List<TrasmisionIncidenteDTO>) repositoryTransmisionesService

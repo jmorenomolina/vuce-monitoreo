@@ -4,8 +4,23 @@ var xmlTransacciones = [];
 var ebXmlTransacciones = [];    
 var xmlNotificaciones = [];                           
 
-        $(document).ready(function () {            
+        $(document).ready(function () {    
+        	
+
+            $('#dp-fechadesde-tra-inc').datepicker({
+                autoclose: true,
+                dateFormat: 'dd/mm/yyyy'
+            });
             
+            $('#dp-fechahasta-tra-inc').datepicker({
+                autoclose: true,
+                dateFormat: 'dd/mm/yyyy'
+            });
+        	
+        	
+        	
+        	
+            /*
             $('#check-transacciones-all').change(function() {
                 var checkboxes = $('input[name="transaccion"]');
                 checkboxes.prop('checked', $(this).is(':checked'));
@@ -68,7 +83,7 @@ var xmlNotificaciones = [];
                 lineWrapping: true
             });
             
-            
+            */
             
             /*
              setInterval(function(){ 
