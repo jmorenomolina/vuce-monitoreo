@@ -4,20 +4,28 @@ var xmlTransacciones = [];
 var ebXmlTransacciones = [];    
 var xmlNotificaciones = [];                           
 
+
+
         $(document).ready(function () {    
         	
-
+        	
+        	
             $('#dp-fechadesde-tra-inc').datepicker({
                 autoclose: true,
-                dateFormat: 'dd/mm/yyyy'
+                format: 'dd/mm/yyyy'
             });
             
             $('#dp-fechahasta-tra-inc').datepicker({
                 autoclose: true,
-                dateFormat: 'dd/mm/yyyy'
+                format: 'dd/mm/yyyy'
             });
         	
-        	
+            
+            setInterval(function(){ 
+                       console.log("refresh");
+                       api.callTransmisionesConIncidentes();                    
+                   }, 5000);
+            
         	
         	
             /*

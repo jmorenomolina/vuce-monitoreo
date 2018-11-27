@@ -1,47 +1,82 @@
 var contextApi = "http://localhost:9000/api";
 
 
-
-function localJsonpCallback(json) {
-	console.log("......xD");
-    if (!json.Error) {
-    	  alert("error");
-    }
-    else {
-        alert(json);
-    }
+var resetCanvas = function (canvasId) {
+    $('#' + canvasId).prev().remove();
+    $('#' + canvasId).remove();
+    $('#parent-' + canvasId).html('<canvas id="' + canvasId + '"></canvas>');
 };
 
-var api = {
-		
-	callTransmisionesConIncidentes : function () {
-		
-		  console.log("callTransmisionesConIncidentes.....");
+var api = {		
+	callTransmisionesConIncidentes : function () {		
+		    var labels = [];
+		    var dataEntrada =[];
+		    var dataSalida =[];
 			$.ajax({
-				 url: contextApi + "/transmisionesconincidentes",
-			 
-			    // Tell jQuery we're expecting JSONP
-			    dataType: "jsonp",
-			    jsonpCallback: 'msgsJsonCallback', 
-			    // Tell YQL what we want and that we want JSON
+				 url: contextApi + "/transmisionesconincidentes",			 
+			    dataType: "json",
 			    data: {
-			    	fechaIncio:"2018-11-25",
-	            	fechaFin:"2018-11-26"
+			    	fechaIncio:$("#dp-fechadesde-tra-inc").val(),
+	            	fechaFin:$("#dp-fechahasta-tra-inc").val()
 			    },
-			    success: function(json) {
-			        console.log("Success") ;
-			        console.dir(json) ;
-			    },
-			    complete: function(jqXHR, textStatus){
-			    	
-			        console.log(textStatus) ;
-			    	console.log(jqXHR) ;
-			    },
-			   
-			});
-			    
-		    
-		    
+			    error:function(e){
+			    	console.log(e);			    	
+			    }		   
+			}).done(function(response) {
+				 for(var i=0;i<response.length;i++){
+					 labels.push(response[i].siglaEntidad);					 
+				 }				 
+				 for(var j=0;j<response.length;j++){
+					 dataEntrada.push(response[j].cantidadTrasmisionEntrada);	
+					 dataSalida.push(response[j].cantidadTrasmisionSalida);							 
+				 }
+				 chart.transmisionesConIncidencia(labels,dataEntrada,dataSalida)
+			});		    
 		}
-		
 };
+
+var chart={
+	transmisionesConIncidencia : function(labelsParam,dataEntrada,dataSalida){
+		resetCanvas("transmisiones-incidentes-entidad");
+		var barChartData = {
+				labels : labelsParam,
+				datasets : [ {
+					label : 'Salida',
+					backgroundColor : 'rgb(255, 99, 132)',
+					data : dataSalida
+				}, {
+					label : 'Entrada',
+					backgroundColor : 'rgb(75, 192, 192)',
+					data : dataEntrada
+				} ]
+			};		
+		
+		var ctx = document.getElementById('transmisiones-incidentes-entidad').getContext('2d');
+		window.myBar = new Chart(ctx,
+			{
+				type : 'bar',
+				data : barChartData,
+				options : {
+					title : {
+						display : true,
+						text : 'Total de Transmisiones con incidentes por entidad'
+					},
+					tooltips : {
+						mode : 'index',
+						intersect : false
+					},
+					responsive : true,
+					scales : {
+						xAxes : [ {
+							stacked : true,
+						} ],
+						yAxes : [ {
+							stacked : true
+						} ]
+					}
+				}
+			});
+	}			
+}
+
+

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,7 @@ import vuce.gob.pe.app.util.RestAppException;
  *
  * @author cquevedo
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class RestApiController {
@@ -45,7 +47,7 @@ public class RestApiController {
 	@Autowired
 	private final TransmisionesService repositoryTransmisionesService = null;
 
-	private final String FORMAT_DATE = "yyyy-MM-dd";
+	private final String FORMAT_DATE = "dd/MM/yyyy";
 	
 	
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
@@ -67,6 +69,7 @@ public class RestApiController {
 
 	}
 
+	
 	@RequestMapping(value = "/transmisionesconincidentes", method = RequestMethod.GET)
 	public ResponseEntity<List<TrasmisionIncidenteDTO>> trasmisionesConIncidente(
 			@RequestParam(required = false, value = "fechaIncio") String fechaIncio,
