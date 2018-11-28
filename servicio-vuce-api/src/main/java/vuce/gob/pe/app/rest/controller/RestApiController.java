@@ -20,7 +20,9 @@ import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 import vuce.gob.pe.app.model.Entidad;
+import vuce.gob.pe.app.model.Parametro;
 import vuce.gob.pe.app.repository.EntidadRepository;
+import vuce.gob.pe.app.repository.ParametroRepository;
 import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitorioInput;
 import vuce.gob.pe.app.rest.parameter.HabilitarInput;
 import vuce.gob.pe.app.rest.parameter.TransmisionDetenerInput;
@@ -43,12 +45,34 @@ public class RestApiController {
 
 	@Autowired
 	private final EntidadRepository repositoryEntidad = null;
+	
+	@Autowired
+	private final ParametroRepository repositoryParametro = null;	
+	
 
 	@Autowired
 	private final TransmisionesService repositoryTransmisionesService = null;
 
 	private final String FORMAT_DATE = "dd/MM/yyyy";
 	
+	
+	@RequestMapping(value = "/tipodocumentos", method = RequestMethod.GET)
+	public ResponseEntity<List<Parametro>> tipodocumentos() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("TIPODOC");
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<Parametro>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/tipomensaje", method = RequestMethod.GET)
+	public ResponseEntity<List<Parametro>> tipomensajes() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("TIPOMSJ");
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<Parametro>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Entidad>> entidades() {

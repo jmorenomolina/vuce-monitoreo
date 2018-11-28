@@ -7,13 +7,67 @@ var resetCanvas = function (canvasId) {
     $('#parent-' + canvasId).html('<canvas id="' + canvasId + '"></canvas>');
 };
 
-var api = {		
-	callTransmisionesConIncidentes : function () {		
+var api = {	
+	callEntidades: function () {
+              $.ajax({
+                      url: contextApi + "/entidades",
+                      dataType: "json",
+                      complete: function () {
+                          var selectDemo = $('#entidades');
+                          selectDemo.selectpicker('refresh');
+                       }
+              }).done(function (data) {
+                  var $select = $('#entidades');
+                  $select.find('option').remove();
+                  $select.append('<option value="%" selected="selected">Todas</option>');
+                  $.each(data, function (key, value)
+                  {
+                      $select.append('<option value=' + value.idEntidad + '>' + value.descripcion + '</option>');
+                  });
+              });
+      },	
+      callTipoMensajes: function () {
+	          $.ajax({
+	                  url: contextApi + "/tipomensaje",
+	                  dataType: "json",
+	                  complete: function () {
+	                      var selectDemo = $('#tipomensajes');
+	                      selectDemo.selectpicker('refresh');
+	                   }
+	          }).done(function (data) {
+	              var $select = $('#tipomensajes');
+	              $select.find('option').remove();
+	              $select.append('<option value="%" selected="selected">Todas</option>');
+	              $.each(data, function (key, value)
+	              {
+	                  $select.append('<option value=' + value.valorParametro + '>' + value.valorParametro + '</option>');
+	              });
+	          });
+	  },	
+	  callTipoDocumentos: function () {
+	          $.ajax({
+	                  url: contextApi + "/tipodocumentos",
+	                  dataType: "json",
+	                  complete: function () {
+	                      var selectDemo = $('#tipodocumentos');
+	                      selectDemo.selectpicker('refresh');
+	                   }
+	          }).done(function (data) {
+	              var $select = $('#tipodocumentos');
+	              $select.find('option').remove();
+	              $select.append('<option value="%" selected="selected">Todas</option>');
+	              $.each(data, function (key, value)
+	              {
+	                  $select.append('<option value=' + value.valorParametro + '>' + value.valorParametro + '</option>');
+	              });
+	          });
+	  },	
+	  callTransmisionesConIncidentes : function () {		
 		    var labels = [];
 		    var dataEntrada =[];
 		    var dataSalida =[];
 			$.ajax({
-				 url: contextApi + "/transmisionesconincidentes",			 
+				url: contextApi + "/transmisionesconincidentes",			 
 			    dataType: "json",
 			    data: {
 			    	fechaIncio:$("#dp-fechadesde-tra-inc").val(),

@@ -6,25 +6,48 @@ var xmlNotificaciones = [];
 
 
 
-        $(document).ready(function () {    
+        $(document).ready(function () {  
         	
-        	
+        	api.callEntidades();
+        	api.callTipoMensajes();
+        	api.callTipoDocumentos();
         	
             $('#dp-fechadesde-tra-inc').datepicker({
                 autoclose: true,
                 format: 'dd/mm/yyyy'
+            }).on('changeDate',function(e){
+                api.callTransmisionesConIncidentes();
             });
+          
             
             $('#dp-fechahasta-tra-inc').datepicker({
                 autoclose: true,
                 format: 'dd/mm/yyyy'
+            }).on('changeDate',function(e){
+            	api.callTransmisionesConIncidentes();
             });
+            
+            $('#dp-fechadesde-tra').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            });          
+            
+            $('#dp-fechahasta-tra').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            });
+            
+           
+            $("#dp-fechadesde-tra-inc").val(util.getDate());
+            $("#dp-fechahasta-tra-inc").val(util.getDate());
+            $("#dp-fechadesde-tra").val(util.getDate());
+            $("#dp-fechahasta-tra").val(util.getDate());
         	
             
-            setInterval(function(){ 
+            /*setInterval(function(){ 
                        console.log("refresh");
                        api.callTransmisionesConIncidentes();                    
-                   }, 5000);
+                   }, 5000);*/
             
         	
         	
@@ -49,9 +72,7 @@ var xmlNotificaciones = [];
                 autoclose: true,
                 dateFormat: 'dd/mm/yyyy'
             });
-            
-            $("#datepickerDesde").val(action.getDate());
-            $("#datepickerHasta").val(action.getDate());
+   
             
             
             document.getElementById("filtrar-incidentes").onclick = function () {
