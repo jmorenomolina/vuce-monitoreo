@@ -15,6 +15,7 @@ public class TrasmisionDTO {
 	private String ebxml;
 	private String error;
 	private Integer vcId;
+	private Integer estadoVc;
 	private Integer veId;
 	private String nombreEstadoVc;
 	private Integer estadoVe;
@@ -31,6 +32,13 @@ public class TrasmisionDTO {
 	private Integer antiguedadEntrada;
 	
 	
+	
+	public Integer getEstadoVc() {
+		return estadoVc;
+	}
+	public void setEstadoVc(Integer estadoVc) {
+		this.estadoVc = estadoVc;
+	}
 	public String getTipo() {
 		return tipo;
 	}

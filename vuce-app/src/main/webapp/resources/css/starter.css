@@ -12,50 +12,54 @@
   height: auto !important;
 }
 */
+
+
+ul.head-list-table{
+	
+	
+}
+
+ul.head-list-table li {
+	display: inline-block;
+	padding-right: 15px;
+	margin-top: 10px;
+	
+}
+
 .tipo-transacciones{
     display: inline-block;
     vertical-align: top;
+    width: 20px;
+    height: 20px;
+    margin: 0px auto;
+    border-radius: 50px;
 }
 
 
-.tipo-transacciones-0{
-    width: 20px;
-    height: 20px;
+.tipo-transacciones-0{  
     background-color: #60f394;
     border: 2px solid #60f394;
-    border-radius: 50px;
-    margin: 0px auto;
-    display: block;
 }
 
+
 .tipo-transacciones-1{
-    width: 20px;
-    height: 20px;
-    background-color: #f53d3d;
-    border: 2px solid #f53d3d;
-    border-radius: 50px;
-    margin: 0px auto;
-    display: block;
+    background-color: #524cb1;
+    border: 2px solid #524cb1; 
 }
 
 .tipo-transacciones-2{
-    width: 20px;
-    height: 20px;
-    background-color: #1c5ec1;
-    border: 2px solid #1c5ec1;
-    border-radius: 50px;
-    margin: 0px auto;
-    display: block;
+    background-color: #d60451;
+    border: 2px solid #d60451;
 }
 
 .tipo-transacciones-3{
-    width: 20px;
-    height: 20px;
-    background-color: #3e414e;
-    border: 2px solid #3e414e;
-    border-radius: 50px;
-    margin: 0px auto;
-    display: block;
+    background-color: #393b3e;
+    border: 2px solid #393b3e;
+}
+
+.tipo-transacciones-4{
+    background-color: #99ffb8;
+    border: 2px solid #99ffb8;
 }
 
 
@@ -156,3 +160,17 @@
     border-color: #ddd;
 }
 
+
+.d-flex{
+	display: flex;
+	
+}
+
+
+.margin-left-10{
+  margin-left: 10px;
+}
+
+.margin-top-10{
+  margin-top: 10px;
+}

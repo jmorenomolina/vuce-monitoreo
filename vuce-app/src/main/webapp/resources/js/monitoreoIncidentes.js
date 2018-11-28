@@ -11,6 +11,10 @@ var xmlNotificaciones = [];
         	api.callEntidades();
         	api.callTipoMensajes();
         	api.callTipoDocumentos();
+        	api.callTipoTransmision();
+        	api.callTipoIncidente();
+        	api.callEstadoVuceCentral();
+        	api.callEstadoVuceEntidad();
         	
             $('#dp-fechadesde-tra-inc').datepicker({
                 autoclose: true,
@@ -38,10 +42,21 @@ var xmlNotificaciones = [];
             });
             
            
+            
+           
             $("#dp-fechadesde-tra-inc").val(util.getDate());
             $("#dp-fechahasta-tra-inc").val(util.getDate());
             $("#dp-fechadesde-tra").val(util.getDate());
             $("#dp-fechahasta-tra").val(util.getDate());
+            
+            
+            document.getElementById("btn-filtrar-transmisiones").onclick = function () {
+            	console.log("click....")
+            	api.callTransmisiones();
+            };
+            
+            table.create("tb-transmisiones-salida",[]);
+            
         	
             
             /*setInterval(function(){ 
@@ -263,6 +278,8 @@ var xmlNotificaciones = [];
                                 }    
                                 dataSet.push(row);
                             });
+                            
+                            
                             if(isNew){
                                 graphic.createTable("tb-transaccion-incidente",dataSet,true); 
                             }else{

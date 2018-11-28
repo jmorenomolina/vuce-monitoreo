@@ -74,6 +74,48 @@ public class RestApiController {
 		return new ResponseEntity<>(parametros, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/tipotransmision", method = RequestMethod.GET)
+	public ResponseEntity<List<Parametro>> tipotransmision() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("TIPOTRAN");
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<Parametro>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/tipoincidente", method = RequestMethod.GET)
+	public ResponseEntity<List<Parametro>> tipoincidente() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("TIPOINCI");
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<Parametro>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/estado/vucecentral", method = RequestMethod.GET)
+	public ResponseEntity<List<Parametro>> estadoVuceCentral() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("ESTVUCCENT");
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<Parametro>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/estado/vuceentidad", method = RequestMethod.GET)
+	public ResponseEntity<List<Parametro>> estadoVuceEntidad() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("ESTVUCENT");
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<Parametro>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Entidad>> entidades() {
 

@@ -10,13 +10,13 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 	@Override
 	public TrasmisionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TrasmisionDTO transmision = new TrasmisionDTO();
-		transmision.setTipo(rs.getString(1));	
-		transmision.setTieneIncidente(rs.getInt(2));
-		transmision.setTipoIncidente(rs.getInt(3));
-		transmision.setEntidadId(rs.getInt(4));
-		transmision.setEntidadSigla(rs.getString(5));
-		transmision.setTipoMensaje(rs.getString(6));
-		transmision.setNombreMensaje(rs.getString(7));
+		transmision.setTipo(rs.getString("TIPO"));	
+		transmision.setTieneIncidente(rs.getInt("TIENE_INCIDENTE"));
+		transmision.setTipoIncidente(rs.getInt("TIPO_INCIDENTE"));
+		transmision.setEntidadId(rs.getInt("ENTIDAD_ID"));
+		transmision.setEntidadSigla(rs.getString("ENTIDAD_ID"));
+		transmision.setTipoMensaje(rs.getString("TIPO_MENSAJE"));
+		transmision.setNombreMensaje(rs.getString("NOM_MENSAJE"));
 		//transmision.setXml(rs.getString(8));
 		//transmision.setEbxml(rs.getString(9));
 		transmision.setError(rs.getString(10));
@@ -34,7 +34,10 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		transmision.setFormato(rs.getString(22));
 		transmision.setFechaRegistroEntrada(rs.getDate(23));
 		transmision.setFechaActualizacionEntrada(rs.getDate(24));
-		transmision.setAntiguedadEntrada(rs.getInt(25));	
+		transmision.setAntiguedadEntrada(rs.getInt(25));
+		
+		transmision.setEstadoVc(rs.getInt("ESTADO_VC"));
+		
 		
 		return transmision;
 	}
