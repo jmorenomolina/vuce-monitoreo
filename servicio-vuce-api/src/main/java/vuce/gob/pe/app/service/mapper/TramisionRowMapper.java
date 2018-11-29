@@ -14,31 +14,28 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		transmision.setTieneIncidente(rs.getInt("TIENE_INCIDENTE"));
 		transmision.setTipoIncidente(rs.getInt("TIPO_INCIDENTE"));
 		transmision.setEntidadId(rs.getInt("ENTIDAD_ID"));
-		transmision.setEntidadSigla(rs.getString("ENTIDAD_ID"));
+		transmision.setEntidadSigla(rs.getString("SIGLA_ENTIDAD"));
 		transmision.setTipoMensaje(rs.getString("TIPO_MENSAJE"));
 		transmision.setNombreMensaje(rs.getString("NOM_MENSAJE"));
 		//transmision.setXml(rs.getString(8));
 		//transmision.setEbxml(rs.getString(9));
-		transmision.setError(rs.getString(10));
-		transmision.setVcId(rs.getInt(11));
-		transmision.setVeId(rs.getInt(12));
-		transmision.setNombreEstadoVc(rs.getString(13));
-		transmision.setEstadoVe(rs.getInt(14));
-		transmision.setNombreEstadoVe(rs.getString(15));
-		transmision.setTipoDocumento(rs.getString(16));
-		transmision.setNombreDocumento(rs.getString(17));
-		transmision.setNumeroDocumento(rs.getString(18));
-		transmision.setFechaRegistroSalida(rs.getDate(19));
-		transmision.setFechaActualizacionSalida(rs.getDate(20));
-		transmision.setAntiguedadSalida(rs.getInt(21));
-		transmision.setFormato(rs.getString(22));
-		transmision.setFechaRegistroEntrada(rs.getDate(23));
-		transmision.setFechaActualizacionEntrada(rs.getDate(24));
-		transmision.setAntiguedadEntrada(rs.getInt(25));
-		
-		transmision.setEstadoVc(rs.getInt("ESTADO_VC"));
-		
-		
+		transmision.setError(rs.getString("ERROR"));
+		transmision.setVcId(rs.getInt("VC_ID"));
+		transmision.setVeId(rs.getInt("VE_ID"));
+		transmision.setEstadoVc(rs.getInt("ESTADO_VC"));		
+		transmision.setNombreEstadoVc(rs.getString("NOM_ESTADO_VC"));		
+		transmision.setEstadoVe(rs.getInt("ESTADO_VE"));
+		transmision.setNombreEstadoVe(rs.getString("NOM_ESTADO_VE"));
+		transmision.setTipoDocumento(rs.getString("TIPO_DOC"));
+		transmision.setNombreDocumento(rs.getString("NOM_DOC"));
+		transmision.setNumeroDocumento(rs.getString("NUM_DOC"));		
+		transmision.setFechaRegistroSalida(rs.getDate("FECHA_REGISTRO_SALIDA"));
+		transmision.setFechaActualizacionSalida(rs.getDate("FECHA_ACTUALIZACION_SALIDA"));
+		transmision.setAntiguedadSalida(rs.getInt("ANTIGUEDAD_SALIDA"));
+		transmision.setFormato(rs.getString("FORMATO"));
+		transmision.setFechaRegistroEntrada(rs.getDate("FECHA_REGISTRO_ENTRADA"));
+		transmision.setFechaActualizacionEntrada(rs.getDate("FECHA_ACTUALIZACION_ENTRADA"));
+		transmision.setAntiguedadEntrada(rs.getInt("ANTIGUEDAD_ENTRADA"));		
 		return transmision;
 	}
 

@@ -1,5 +1,7 @@
 var contextApi = "http://localhost:9000/api";
 
+var tableSalida = null;
+var tableEntrada = null;
 
 var resetCanvas = function (canvasId) {
     $('#' + canvasId).prev().remove();
@@ -73,10 +75,10 @@ var api = {
           }).done(function (data) {
               var $select = $('#tipo-transmision');
               $select.find('option').remove();
-              $select.append('<option value="1" selected="selected">Todos</option>');
+              $select.append('<option value="1" >Todos</option>');
               $.each(data, function (key, value)
               {
-                  $select.append('<option value=' + value.valorParametro + '>' + value.descParametro + '</option>');
+                  $select.append('<option selected="selected" value=' + value.valorParametro + '>' + value.descParametro + '</option>');
               });
           });
 	  },	
@@ -135,6 +137,7 @@ var api = {
 	              });
 	          });
 	  },
+	  
 	  callTransmisionesConIncidentes : function () {		
 		    var labels = [];
 		    var dataEntrada =[];
@@ -159,12 +162,47 @@ var api = {
 				 }
 				 chart.transmisionesConIncidencia(labels,dataEntrada,dataSalida)
 			});		    
-		},	  
+		},	
+		handleTransmisionesSalidaConError: function(){			
+			$('#modal-reenviar-transmisiones').modal('toggle');			
+			if (!$.fn.DataTable.isDataTable( '#tb-salida-log' ) ) {
+				table.createSimpleTable("tb-salida-log");				
+            }else{
+            	table.cleanTable("tb-salida-log");
+            }			
+			var checkboxes = $('input[name="ck-salida"]');
+			$.each(checkboxes, function()
+            {
+				if ($(this).prop('checked')) {				
+					api.callTransmisionReenviarSalidaConError($(this).attr("row"),$(this).attr("vcid"),$(this).attr("vctransaccion"),$(this).attr("veid"),$(this).attr("vetransaccion"));
+				}				
+            });			
+			$('#modal-tb-salida-log').modal('toggle');
+			
+		},
+		callTransmisionReenviarSalidaConError : function (id,vc_id,vc_transaccion,ve_id,ve_transaccion) {
+				var parameter = {vcId:vc_id,vcTransaccion:vc_transaccion,veId:ve_id,veTransaccion:ve_transaccion};				
+				$.ajax({
+					url: contextApi + "/transmision/reenviar/salida/conerror",			 
+				    dataType: "json",
+				    contentType: "application/json; charset=utf-8",
+				    type: 'PUT',
+				    data: JSON.stringify(parameter),
+				    error:function(e){
+				    	console.log(e);			    	
+				    }		   
+				}).done(function(response) {					
+					$("#tb-salida-log").DataTable().row.add([id,response.resultadoMensaje]).draw();	
+				});		    
+		},			
 		callTransmisiones: function () {
+			
+			 util.activateReenviarTransmisionesIncorrectamente(false);
+			
 	          $.ajax({
 	              url: contextApi + "/transmisiones",
 	              dataType: "json",
-	              data: $("#form-search").serialize()
+	              data: util.createRequestFiltro()
 	          }).done(function (data, textStatus, xhr) {
 	              
 	             if(xhr.status===200){                            
@@ -184,15 +222,25 @@ var api = {
 	                      
 	                      /*Si tipo es de Salida*/
 	                      if(value.tipo==="2"){
-	                    	  var rowSalida = [];   
-	                    	
+	                    	  
+	                    	  if(value.tipoIncidente===2){
+	                    		  util.activateReenviarTransmisionesIncorrectamente(true);
+	                    	  }
+	                    	  
+	                    	  var rowSalida = [];   	                    	
 	                    	  rowSalida.push(cantidadSalida);
 	                    	  if(value.tieneIncidente===1){
-	                    		  rowSalida.push("<input type='checkbox' name='vcid' value='"+value.vcId+"'/>");
+	                    		  rowSalida.push("<input type='checkbox' row='"+cantidadSalida+"' vcid='"+value.vcId+"' vctransaccion='"+value.tipoMensaje+"' veid='"+value.veId+"' vetransaccion='"+value.tipoMensaje+"' name='ck-salida' />");
 	                    	  }else{
 	                    		  rowSalida.push("");
+	                    	  }	   
+	                    	  
+	                    	  if(value.tieneIncidente===1){
+	                    		  rowSalida.push("<div class='border-radius tipo-transacciones-" + value.tipoIncidente + "'></div>");  
+	                    	  }else{
+	                    		  rowSalida.push("<div class='border-radius tipo-transacciones-0'></div>"); 
 	                    	  }	                    	  
-	                    	  rowSalida.push("<div class='tipo-transacciones-" + value.tipoIncidente + "'></div>");
+	                    	  
 	                    	  rowSalida.push(value.entidadSigla);
 	                    	  rowSalida.push(value.formato);
 	                    	  rowSalida.push(value.vcId);
@@ -212,8 +260,8 @@ var api = {
 	                    	  dataSetSalida.push(rowSalida);
 	                     }else{
 	                          var rowEntrada = [];   
-	                    	  rowEntrada.push(value.cantidadEntrada);
-	                    	  if(value.tieneIncidente==="1"){
+	                    	  rowEntrada.push(cantidadEntrada);
+	                    	  if(value.tieneIncidente===1){
 	                    		  rowEntrada.push("<input type='checkbox' name='vcid' value='"+value.vcId+"'/>");
 	                    	  }else{
 	                    		  rowEntrada.push("");
@@ -234,24 +282,20 @@ var api = {
 	                    	  rowEntrada.push(value.xml);
 	                    	  rowEntrada.push(value.ebxml);
 	                    	  rowEntrada.push(value.error);
+	                    	  rowEntrada.push("");
 	                    	  cantidadEntrada++;
 	                    	  dataSetEntrada.push(rowEntrada);
 	                     }
-	                      
-	                     
-	                      
-	                     
 	                    
 	                  });
 	                  
-	                  console.log(dataSetSalida);
-	                  
-	                  table.update("tb-transmisiones-salida",dataSetSalida);  
+	           	                  
+	                  table.update("tb-transmisiones-salida",dataSetSalida); 
+	                  //table.update("tb-transmisiones-entrada",dataSetEntrada); 
 	                  
 	                  
 	              }else{
-	                     var dataSet = [];
-	                     graphic.cleanTable("tb-transaccion-incidente");  
+	                    
 	              }
 	          
 	                                       
@@ -309,28 +353,53 @@ var chart={
 }
 
 var table={
-	   	 create: function (idTable,dataSet,pagingParam) { 
-	        $('#'+idTable).DataTable({        
-	            "pageLength": 10,	         
-	            'paging': pagingParam,
+		 optionTable : function(){
+			var option = {    
+		        	'lengthChange': false,
+		            'searching': false,
+		            'ordering': false,
+		            'info': true,
+		            'autoWidth': false,
+		            "scrollX": true,	
+		            
+		            'language': {
+		                'lengthMenu': "Mostrar _MENU_ registros por pagina",
+		                'zeroRecords': "No encontrado.",
+		                'info': "Mostrar pagina _PAGE_ de _PAGES_",
+		                'infoEmpty': " ",
+		                'infoFiltered': "(filtered from _MAX_ total records)"
+		            }
+		        };
+			return option; 
+		 },
+	   	 create: function (idTable,salida) {
+	   		 if(salida){
+	   			tableSalida = $('#'+idTable).DataTable(table.optionTable());
+	   		 }else{
+	   			tableEntrada = $('#'+idTable).DataTable(table.optionTable());
+	   		 }
+	   	
+	   	 },
+	   	 createSimpleTable: function (idTable) {
+	   		 $('#'+idTable).DataTable({        
+	            "pageLength": 25,
+	            'paging': false,
 	            'lengthChange': false,
 	            'searching': false,
 	            'ordering': false,
-	            'info': true,
+	            'info': false,
 	            'autoWidth': false,
-	            "scrollX": true,	            
-	            'language': {
-	                'lengthMenu': "Mostrar _MENU_ registros por pagina",
-	                'zeroRecords': "No encontrado.",
-	                'info': "Mostrar pagina _PAGE_ de _PAGES_",
-	                'infoEmpty': "Registros no disponibles",
-	                'infoFiltered': "(filtered from _MAX_ total records)"
-	            }
-	        });
-	   	 },
+	            "scrollX": false            
+	         });	   	
+		   	
+		 },
 		 update : function(idTable,dataSet){
 		    $('#'+idTable).dataTable().fnClearTable();
-		    $('#'+idTable).dataTable().fnAddData(dataSet);        
+		    $('#'+idTable).dataTable().fnAddData(dataSet); 
+		    util.setTamanoTableSalida();		
+		 },
+		 cleanTable : function(idTable){
+		     $('#'+idTable).dataTable().fnClearTable();      
 		 }
 }
 

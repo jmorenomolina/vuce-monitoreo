@@ -51,11 +51,25 @@ var xmlNotificaciones = [];
             
             
             document.getElementById("btn-filtrar-transmisiones").onclick = function () {
-            	console.log("click....")
             	api.callTransmisiones();
             };
+            document.getElementById("btn-restablecer-fitro").onclick = function () {
+            	util.resetPanelFiltro();
+            };
+            document.getElementById("btn-execute-reenviar-transmisiones").onclick = function () {
+            	api.handleTransmisionesSalidaConError();
+            };
             
-            table.create("tb-transmisiones-salida",[]);
+            
+            
+            table.create("tb-transmisiones-salida",true);
+            table.create("tb-transmisiones-entrada",false);
+            
+            $('#ck-transmisiones-salida-error').change(function() {
+                var checkboxes = $('input[name="ck-salida"]');
+                checkboxes.prop('checked', $(this).is(':checked'));
+            });
+  
             
         	
             

@@ -221,8 +221,7 @@
 			<form id="form-search" method="GET">
 
 
-				<div class="col-md-12"
-					style="padding-right: 1px; padding-left: 1px;">
+				<div class="col-md-12" style="padding-right: 1px; padding-left: 1px;">
 					<!-- general form elements -->
 					<div class="box box-danger">
 						<div class="box-header with-border">
@@ -243,7 +242,7 @@
 							
 								<ul class="head-list-table">
 								  <li>
-								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-4" data-toggle="tooltip"></div>
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-0" data-toggle="tooltip"></div>
 								  	 <label style="font-size: 12px;">Transmisi&#243;n sin errores</label>								  	 
 								  </li>
 								  <li>
@@ -255,16 +254,16 @@
                                         <label style="font-size: 12px;">Incumplimiento del tiempo de confirmacion de la transacci&#243;n</label>					  	 
 								  </li>
 								  <li>
-								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-3" data-toggle="tooltip"></div>
-                                        <label style="font-size: 12px;">Transaccion procesada incorrectamente en la entidad</label>				  	 
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-5" data-toggle="tooltip"></div>
+                                        <label style="font-size: 12px;">Transacci&#243;n procesada incorrectamente en la entidad</label>				  	 
 								  </li>
 								</ul>
                               
                             </div>
                             
                             
-                               <div class="col-sm-12">
-                                <table id="tb-transmisiones-salida" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-transmisiones-salida">
+                            <div class="col-sm-12">
+                                <table id="tb-transmisiones-salida" class="table table-striped table-bordered" role="grid" aria-describedby="tb-transmisiones-salida">
                                     <thead>
                                         <tr role="row">
                                             <th  style="text-align: center;" tabindex="0" aria-controls="tb-transaccion-incidente" rowspan="1" colspan="1">#</th>
@@ -290,17 +289,181 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-
-
                             </div>
+                            
+                            <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10" style="margin-top: 10px;">Cantidad de filas a mostrar</label>
+                            <div class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
+                                  <input type="text" class="form-control" id="cantidad-filas-mostrar" name="cantidad-filas-mostrar" value="10" onkeyup="util.setTamanoTableSalida();" />
+                            </div> 
+                            
+                            <br/>
+                            
+                            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            
+	                            <div class="checkbox col-sm-12 col-md-6 col-lg-5 padding-bottom-10">
+				                  <label class="col-sm-12 col-md-12 col-lg-12"  >
+				                    <input style="position: relative;top: 0px;cursor:pointer;" type="checkbox" id="ck-transmisiones-salida-error" name="ck-transmisiones-salida-error" disabled="disabled" /> <b>Seleccionar todas las transmiones procesadas incorrectamente en la entidad</b>
+				                  </label>
+				                </div>
+	                                                     
+								<div class="form-group col-sm-12 col-md-12 col-lg-7">								
+									<button type="button" class="btn btn-primary margin-top-10" id="btn-reenviar-transmisiones" disabled="disabled"  data-toggle="modal" data-target="#modal-reenviar-transmisiones">Reenviar transmisiones procesadas incorrectamente en la entidad</button>
+									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-habilitar-trabsmisiones">Habilitar transmisiones</button>
+								</div>
+                            </div>
+                            
 						
 						</div>
 
-						
+					</div>
+				</div>
+				
+				
+                <div class="modal fade" id="modal-reenviar-transmisiones">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span></button>
+                                    <h4 class="modal-title">Confirmaci&#243;n</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Esta seguro de reenviar transmisiones procesadas incorrectamente en la entidad?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" id="btn-execute-reenviar-transmisiones">Enviar</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                </div>
+                <div class="modal fade" id="modal-tb-salida-log">
+                         <div class="modal-dialog">
+                             <div class="modal-content">
+                                 <div class="modal-header">
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">x</span></button>
+                                     <h4 class="modal-title">Resultados Operaci&#243;n</h4>
+                                 </div>
+                                 <div class="modal-body">
+                                     <table id="tb-salida-log" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-salida-log">
+                                         <thead>
+                                             <tr role="row">
+                                                 <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-notificacion" rowspan="1" colspan="1">#</th>
+                                                 <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-notificacion" rowspan="1" colspan="1">Resultado</th>
+                                             </tr>
+                                         </thead>
+                                         <tbody>
+                                         </tbody>
+                                     </table>
+                                 </div>
+                                 <div class="modal-footer">
 
+                                     <button type="button" class="btn btn-primary" id="btn-renviar-trasmisiones" data-dismiss="modal">Cerrar</button>
+                                 </div>
+                             </div>
+                             <!-- /.modal-content -->
+                         </div>
+                         <!-- /.modal-dialog -->
+                  </div>
+                
+				
+				
+				
+				<div class="col-md-12" style="padding-right: 1px; padding-left: 1px;">
+					<!-- general form elements -->
+					<div class="box box-danger">
+						<div class="box-header with-border">
+							<h3 class="box-title">
+								Transmisiones de Entrada
+							</h3>
+
+							
+
+						</div>
+						<div class="box-body">
+							<div class="form-group" style="float: left;width: 100%;">
+							
+								<ul class="head-list-table">
+								  <li>
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-4" data-toggle="tooltip"></div>
+								  	 <label style="font-size: 12px;">Transmisi&#243;n sin errores</label>								  	 
+								  </li>
+								  <li>
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-1" data-toggle="tooltip"></div>
+								  	 <label style="font-size: 12px;">Incumplimiento del tiempo de disponibilidad de la notificaci&#243;n</label>								  	 
+								  </li>
+								 
+								  <li>
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-3" data-toggle="tooltip"></div>
+                                        <label style="font-size: 12px;">Transmisi&#243;n procesada con errores</label>				  	 
+								  </li>
+								</ul>
+                              
+                            </div>
+                            
+                            
+                            <div class="col-sm-12">
+                                <table id="tb-transmisiones-entrada" class="table table-striped table-bordered" role="grid" aria-describedby="tb-transmisiones-entrada">
+                                    <thead>
+                                        <tr role="row">
+                                            <th  style="text-align: center;" tabindex="0" rowspan="1" colspan="1">#</th>
+                                            <th  style="text-align: center;" tabindex="1" rowspan="1" colspan="1"></th>
+                                            <th  style="text-align: center;" tabindex="2" rowspan="1" colspan="1">Tipo</th>
+                                            <th  style="text-align: center;" tabindex="3" rowspan="1" colspan="1">Entidad</th>                                            
+                                            <th  style="text-align: center;" tabindex="4" rowspan="1" colspan="1">Tramite</th>                                            
+                                            <th  style="text-align: center;" tabindex="5" rowspan="1" colspan="1">CV Id</th>
+                                            <th  style="text-align: center;" tabindex="6" rowspan="1" colspan="1">Estado VC</th>
+                                            <th  style="text-align: center;" tabindex="7" rowspan="1" colspan="1">VE Id</th>
+                                            <th  style="text-align: center;" tabindex="8" rowspan="1" colspan="1">Estado VE</th>
+                                            <th  style="text-align: center;" tabindex="9" rowspan="1" colspan="1">Mensaje</th>
+                                            <th  style="text-align: center;" tabindex="10" rowspan="1" colspan="1">Documento</th>
+                                            <th  style="text-align: center;" tabindex="11" rowspan="1" colspan="1">Nro Documento</th>                                            
+                                            <th  style="text-align: center;" tabindex="12" rowspan="1" colspan="1">Fec. Registro</th>
+                                            <th  style="text-align: center;" tabindex="13" rowspan="1" colspan="1">Fec. Actualizaci&#243;n</th>
+                                            <th  style="text-align: center;" tabindex="14" rowspan="1" colspan="1">Antiguedad</th>                                        
+                                            <th  style="text-align: center;" tabindex="15" rowspan="1" colspan="1">XML</th>
+                                            <th  style="text-align: center;" tabindex="16" rowspan="1" colspan="1">EbXML</th>
+                                            <th  style="text-align: center;" tabindex="17" rowspan="1" colspan="1">Error</th>
+                                            <th  style="text-align: center;" tabindex="17" rowspan="1" colspan="1">Adicional</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10" style="margin-top: 10px;">Cantidad de filas a mostrar</label>
+                            <div class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
+                                  <input type="text" class="form-control" id="cantidad-filas-mostrar-entrada" name="cantidad-filas-mostrar-entrada" value="10" onkeyup="util.setTamanoTableSalida();" />
+                            </div> 
+                            
+                            <br/>
+                            
+                            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                            
+	                            <div class="checkbox col-sm-12 col-md-6 col-lg-3 padding-bottom-10">
+				                  <label class="col-sm-12 col-md-12 col-lg-12" >
+				                    <input style="position: relative;top: 0px;cursor:pointer;" type="checkbox" id="ck-transmisiones-salida-error" name="ck-transmisiones-salida-error" /> <b>Seleccionar todas las transmiones con errores</b>
+				                  </label>
+				                </div>
+	                                                     
+								<div class="form-group col-sm-12 col-md-12 col-lg-9">								
+									<button type="button" class="btn btn-primary margin-top-10" id="btn-reeprocesar-transmision">Reeprocesar trasmisi&#243;n</button>
+									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-anular-trabsmision">Anular trasmisi&#243;n</button>
+								</div>
+                            </div>
+                            
+						
+						</div>
 
 					</div>
 				</div>
+				
+				
+				
 			</form>
 
 

@@ -36,9 +36,15 @@ ul.head-list-table li {
 }
 
 
+.border-radius{  
+    border-radius: 50px;
+    width: 17px;
+    height: 17px;
+}
+
 .tipo-transacciones-0{  
-    background-color: #60f394;
-    border: 2px solid #60f394;
+    background-color: #99ffb8;
+    border: 2px solid #99ffb8;
 }
 
 
@@ -52,15 +58,11 @@ ul.head-list-table li {
     border: 2px solid #d60451;
 }
 
-.tipo-transacciones-3{
+.tipo-transacciones-5{
     background-color: #393b3e;
     border: 2px solid #393b3e;
 }
 
-.tipo-transacciones-4{
-    background-color: #99ffb8;
-    border: 2px solid #99ffb8;
-}
 
 
 

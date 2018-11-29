@@ -162,7 +162,7 @@ public class RestApiController {
 	@RequestMapping(value = "/transmisiones", method = RequestMethod.GET)
 	public ResponseEntity<List<TrasmisionDTO>> trasmisiones(
 
-			@RequestParam(required = false, value = "codigoEntidad") String codigoEntidad,
+			@RequestParam(required = false, value = "entidades") String entidades,
 			@RequestParam(required = false, value = "fechaInicio") String fechaInicio,
 			@RequestParam(required = false, value = "fechaFin") String fechaFin,
 			@RequestParam(required = false, value = "tipoMensaje") String tipoMensaje,
@@ -178,7 +178,7 @@ public class RestApiController {
 			) {
 
 		RequestFiltrarTransmisionesDTO request = new RequestFiltrarTransmisionesDTO();
-		request.setCodigoEntidad(codigoEntidad);
+		request.setCodigoEntidad(entidades);
 		request.setFechaInicio(Converter.convertToDate(fechaInicio, FORMAT_DATE));
 		request.setFechaFin(Converter.convertToDate(fechaFin, FORMAT_DATE));
 		request.setTipoMensaje(tipoMensaje);
