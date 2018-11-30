@@ -55,19 +55,23 @@ var xmlNotificaciones = [];
             	util.resetPanelFiltro();
             };
             document.getElementById("btn-execute-reenviar-transmisiones").onclick = function () {
-            	api.handleTransmisionesSalidaConError();
+            	api.handleTransmisionesSalidaConError();           	
+            	api.callTransmisiones();
             };
             
             document.getElementById("btn-execute-habilitar-transmisiones").onclick = function () {
             	api.handleTransmisionHabilitar();
+            	api.callTransmisiones();
             };
             
             document.getElementById("btn-execute-reeprocesar-transmisiones").onclick = function () {
             	api.handleTransmisionesReeprocesar();
+            	api.callTransmisiones();
             };
             
             document.getElementById("btn-execute-anular-transmisiones").onclick = function () {
             	api.handleTransmisionesAnular();
+            	api.callTransmisiones();
             };
             
             document.getElementById("btn-detener-transmisiones").onclick = function () {
