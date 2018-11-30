@@ -307,8 +307,8 @@
 				                </div>
 	                                                     
 								<div class="form-group col-sm-12 col-md-12 col-lg-7">								
-									<button type="button" class="btn btn-primary margin-top-10" id="btn-reenviar-transmisiones" disabled="disabled"  data-toggle="modal" data-target="#modal-reenviar-transmisiones">Reenviar transmisiones procesadas incorrectamente en la entidad</button>
-									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-habilitar-trabsmisiones">Habilitar transmisiones</button>
+									<button type="button" class="btn btn-primary margin-top-10" id="btn-reenviar-transmisiones" disabled="disabled"  >Reenviar transmisiones procesadas incorrectamente en la entidad</button>
+									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-habilitar-transmisiones" disabled="disabled" >Habilitar transmisiones</button>
 								</div>
                             </div>
                             
@@ -318,8 +318,27 @@
 					</div>
 				</div>
 				
-				
-                <div class="modal fade" id="modal-reenviar-transmisiones">
+				<div class="modal fade" id="modal-habilitar-transmisiones">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span></button>
+                                    <h4 class="modal-title">Confirmaci&#243;n</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Esta seguro de habilitar transmisiones seleccionadas?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" id="btn-execute-habilitar-transmisiones">Enviar</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+               </div>
+               <div class="modal fade" id="modal-reenviar-transmisiones">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -351,8 +370,8 @@
                                      <table id="tb-salida-log" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="tb-salida-log">
                                          <thead>
                                              <tr role="row">
-                                                 <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-notificacion" rowspan="1" colspan="1">#</th>
-                                                 <th  style="text-align: center;" class="sorting" tabindex="0" aria-controls="tb-respuesta-notificacion" rowspan="1" colspan="1">Resultado</th>
+                                                 <th  style="text-align: center;" class="sorting" tabindex="0" rowspan="1" colspan="1">#</th>
+                                                 <th  style="text-align: center;" class="sorting" tabindex="0" rowspan="1" colspan="1">Resultado</th>
                                              </tr>
                                          </thead>
                                          <tbody>
@@ -361,7 +380,7 @@
                                  </div>
                                  <div class="modal-footer">
 
-                                     <button type="button" class="btn btn-primary" id="btn-renviar-trasmisiones" data-dismiss="modal">Cerrar</button>
+                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                                  </div>
                              </div>
                              <!-- /.modal-content -->
@@ -388,11 +407,11 @@
 							
 								<ul class="head-list-table">
 								  <li>
-								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-4" data-toggle="tooltip"></div>
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-0" data-toggle="tooltip"></div>
 								  	 <label style="font-size: 12px;">Transmisi&#243;n sin errores</label>								  	 
 								  </li>
 								  <li>
-								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-1" data-toggle="tooltip"></div>
+								  	 <div title="Breve explicacion sobre el tipo de incidente" class="tipo-transacciones tipo-transacciones-4" data-toggle="tooltip"></div>
 								  	 <label style="font-size: 12px;">Incumplimiento del tiempo de disponibilidad de la notificaci&#243;n</label>								  	 
 								  </li>
 								 
@@ -437,22 +456,22 @@
                             
                             <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10" style="margin-top: 10px;">Cantidad de filas a mostrar</label>
                             <div class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
-                                  <input type="text" class="form-control" id="cantidad-filas-mostrar-entrada" name="cantidad-filas-mostrar-entrada" value="10" onkeyup="util.setTamanoTableSalida();" />
+                                  <input type="text" class="form-control" id="cantidad-filas-mostrar-entrada" name="cantidad-filas-mostrar-entrada" value="10" onkeyup="util.setTamanoTableEntrada();" />
                             </div> 
                             
                             <br/>
                             
                             <div class="form-group col-sm-12 col-md-12 col-lg-12">
                             
-	                            <div class="checkbox col-sm-12 col-md-6 col-lg-3 padding-bottom-10">
+	                            <div class="checkbox col-sm-12 col-md-6 col-lg-4 padding-bottom-10">
 				                  <label class="col-sm-12 col-md-12 col-lg-12" >
-				                    <input style="position: relative;top: 0px;cursor:pointer;" type="checkbox" id="ck-transmisiones-salida-error" name="ck-transmisiones-salida-error" /> <b>Seleccionar todas las transmiones con errores</b>
+				                    <input disabled="disabled" style="position: relative;top: 0px;cursor:pointer;" type="checkbox" id="ck-transmisiones-entrada-error" name="ck-transmisiones-entrada-error" /> <b>Seleccionar todas las transmiones con errores</b>
 				                  </label>
 				                </div>
 	                                                     
-								<div class="form-group col-sm-12 col-md-12 col-lg-9">								
-									<button type="button" class="btn btn-primary margin-top-10" id="btn-reeprocesar-transmision">Reeprocesar trasmisi&#243;n</button>
-									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-anular-trabsmision">Anular trasmisi&#243;n</button>
+								<div class="form-group col-sm-12 col-md-12 col-lg-8">								
+									<button type="button" class="btn btn-primary margin-top-10" id="btn-reeprocesar-transmision" disabled="disabled">Reeprocesar trasmisi&#243;n</button>
+									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-anular-transmision" disabled="disabled">Anular trasmisi&#243;n</button>
 								</div>
                             </div>
                             
@@ -461,6 +480,75 @@
 
 					</div>
 				</div>
+				
+				<div class="modal fade" id="modal-reprocesar-transmisiones">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span></button>
+                                    <h4 class="modal-title">Confirmaci&#243;n</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Esta seguro de reeprocesar transmisiones seleccionadas?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" id="btn-execute-reeprocesar-transmisiones">Reeprocesar</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+               </div>
+               
+               <div class="modal fade" id="modal-anular-transmisiones">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span></button>
+                                    <h4 class="modal-title">Confirmaci&#243;n</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Esta seguro de anular transmisiones seleccionadas?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" id="btn-execute-anular-transmisiones">Anular</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+               </div>
+               
+               
+               <div class="modal fade" id="modal-detener-transmisiones">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">x</span></button>
+                                    <h4 class="modal-title">Confirmaci&#243;n</h4>
+                                </div>
+                                <div class="modal-body">
+                                    
+		                                <label for="entidades-detener">Entidades</label>
+		                                <div>
+		                                    <select name="entidades-detener" class="selectpicker show-menu-arrow form-control" data-max-options="10" id="entidades-detener"/>
+		                                </div>
+		                            
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" id="btn-execute-detener">Detener</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+               </div>
 				
 				
 				

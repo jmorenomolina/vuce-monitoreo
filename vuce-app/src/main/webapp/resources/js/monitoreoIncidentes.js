@@ -41,9 +41,7 @@ var xmlNotificaciones = [];
                 format: 'dd/mm/yyyy'
             });
             
-           
-            
-           
+                      
             $("#dp-fechadesde-tra-inc").val(util.getDate());
             $("#dp-fechahasta-tra-inc").val(util.getDate());
             $("#dp-fechadesde-tra").val(util.getDate());
@@ -60,6 +58,74 @@ var xmlNotificaciones = [];
             	api.handleTransmisionesSalidaConError();
             };
             
+            document.getElementById("btn-execute-habilitar-transmisiones").onclick = function () {
+            	api.handleTransmisionHabilitar();
+            };
+            
+            document.getElementById("btn-execute-reeprocesar-transmisiones").onclick = function () {
+            	api.handleTransmisionesReeprocesar();
+            };
+            
+            document.getElementById("btn-execute-anular-transmisiones").onclick = function () {
+            	api.handleTransmisionesAnular();
+            };
+            
+            document.getElementById("btn-detener-transmisiones").onclick = function () {
+            	$('#modal-detener-transmisiones').modal('toggle');	
+            };
+            
+            
+            document.getElementById("btn-reenviar-transmisiones").onclick = function () {
+            	var checkboxes = $('input[name="ck-salida"]:checked');
+            	if(checkboxes.length>0){
+            		$('#modal-reenviar-transmisiones').modal('toggle');	
+            	}else{
+            		alert("Seleccionar al menos una fila.");
+            	}            	
+            };
+            
+            document.getElementById("btn-habilitar-transmisiones").onclick = function () {
+            	var checkboxes = $('input[name="ck-salida"]:checked');
+            	if(checkboxes.length>0){
+            		$('#modal-habilitar-transmisiones').modal('toggle');	
+            	}else{
+            		alert("Seleccionar al menos una fila.");
+            	}            	
+            };
+            
+            
+            document.getElementById("btn-execute-detener").onclick = function () {     
+            	var r = confirm("Se detendrán todas las transmisiones de la entidad seleccionada en el período indicado");
+            	if (r == true) {
+            		api.callTransmisionDetener($('#btn-execute-detener').val());
+            	}            	            	
+            };
+           
+            
+            
+            
+            
+            document.getElementById("btn-reeprocesar-transmision").onclick = function () {
+            	var checkboxes = $('input[name="ck-entrada"]:checked');
+            	if(checkboxes.length>0){
+            		$('#modal-reprocesar-transmisiones').modal('toggle');	
+            	}else{
+            		alert("Seleccionar al menos una fila.");
+            	}            	
+            };
+            
+            document.getElementById("btn-anular-transmision").onclick = function () {
+            	var checkboxes = $('input[name="ck-entrada"]:checked');
+            	if(checkboxes.length>0){
+            		$('#modal-anular-transmisiones').modal('toggle');	
+            	}else{
+            		alert("Seleccionar al menos una fila.");
+            	}            	
+            };
+            
+            
+            
+            
             
             
             table.create("tb-transmisiones-salida",true);
@@ -69,8 +135,11 @@ var xmlNotificaciones = [];
                 var checkboxes = $('input[name="ck-salida"]');
                 checkboxes.prop('checked', $(this).is(':checked'));
             });
-  
             
+            $('#ck-transmisiones-entrada-error').change(function() {
+                var checkboxes = $('input[name="ck-entrada"]');
+                checkboxes.prop('checked', $(this).is(':checked'));
+            });
         	
             
             /*setInterval(function(){ 

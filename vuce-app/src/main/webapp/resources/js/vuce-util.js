@@ -24,6 +24,15 @@
         	}
         	
         },
+        setTamanoTableEntrada:function(){
+        	var cantidad = $("#cantidad-filas-mostrar-entrada").val();
+        	if(cantidad!==""){
+        	  tableEntrada.page.len( cantidad ).draw();        		
+        	}else{
+        		tableEntrada.page.len( 10 ).draw();	
+        	}
+        	
+        },
         showXmlNotificacion: function(idTransaccion){
             for(var i=0;i<xmlNotificaciones.length;i++){
                 if(xmlNotificaciones[i][0]===idTransaccion){
@@ -36,6 +45,14 @@
         activateReenviarTransmisionesIncorrectamente: function(activate){
         	$("#ck-transmisiones-salida-error").prop("disabled", !activate); 
         	$("#btn-reenviar-transmisiones").prop("disabled", !activate); 
+        },
+        activateHabilitarTransmisiones: function(activate){
+        	$("#btn-habilitar-transmisiones").prop("disabled", !activate); 
+        },
+        activateButtonFooter: function(activate){
+        	$("#ck-transmisiones-entrada-error").prop("disabled", !activate); 
+        	$("#btn-reeprocesar-transmision").prop("disabled", !activate); 
+        	$("#btn-anular-transmision").prop("disabled", !activate); 
         },
         resetPanelFiltro:function(){
         	 $("#entidades").val('%');
