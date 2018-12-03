@@ -3,10 +3,15 @@ package vuce.gob.pe.app.service.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
+import org.springframework.jdbc.support.lob.LobHandler;
+
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 
 public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
-
+	
+	LobHandler lobHandler = new DefaultLobHandler();
+	
 	@Override
 	public TrasmisionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TrasmisionDTO transmision = new TrasmisionDTO();
@@ -17,8 +22,17 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		transmision.setEntidadSigla(rs.getString("SIGLA_ENTIDAD"));
 		transmision.setTipoMensaje(rs.getString("TIPO_MENSAJE"));
 		transmision.setNombreMensaje(rs.getString("NOM_MENSAJE"));
-		//transmision.setXml(rs.getString(8));
-		//transmision.setEbxml(rs.getString(9));
+		
+		byte[] requestXmlData = lobHandler.getBlobAsBytes(rs,"XML");
+		if(requestXmlData!=null) {
+			transmision.setXml(new String(requestXmlData));
+		}
+	
+		byte[] requestEbxmlData = lobHandler.getBlobAsBytes(rs,"EBXML");
+		if(requestEbxmlData!=null) {
+			transmision.setEbxml(new String(requestEbxmlData));
+		}
+		
 		transmision.setError(rs.getString("ERROR"));
 		transmision.setVcId(rs.getInt("VC_ID"));
 		transmision.setVeId(rs.getInt("VE_ID"));

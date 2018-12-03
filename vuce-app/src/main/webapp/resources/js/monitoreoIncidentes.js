@@ -1,5 +1,7 @@
 var contextApi = "http://localhost:9000/api";
 var editor = "";
+var editorError = "";
+
 var xmlTransacciones = [];                           
 var ebXmlTransacciones = [];    
 var xmlNotificaciones = [];                           
@@ -115,9 +117,6 @@ var dateOption ={
             };
            
             
-            
-            
-            
             document.getElementById("btn-reeprocesar-transmision").onclick = function () {
             	var checkboxes = $('input[name="ck-entrada"]:checked');
             	if(checkboxes.length>0){
@@ -135,7 +134,7 @@ var dateOption ={
             		alert("Seleccionar al menos una fila.");
             	}            	
             };
-            
+                        
                         
             table.create("tb-transmisiones-salida",true);
             table.create("tb-transmisiones-entrada",false);      
@@ -154,6 +153,22 @@ var dateOption ={
                 checkboxes.prop('checked', $(this).is(':checked'));
             });
         	
+            
+            editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                mode: "application/xml",
+                styleActiveLine: true,
+                lineNumbers: true,
+                lineWrapping: true
+            });
+            
+            
+            editorError = CodeMirror.fromTextArea(document.getElementById("codeError"), {             
+                styleActiveLine: true,
+                lineNumbers: true,
+                lineWrapping: true
+            });
+            
+            
             
             /*setInterval(function(){ 
                        console.log("refresh");

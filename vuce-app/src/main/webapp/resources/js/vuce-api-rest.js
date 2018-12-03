@@ -3,6 +3,15 @@ var contextApi = "http://localhost:9000/api";
 var tableSalida = null;
 var tableEntrada = null;
 
+var xmlSalida = [];   
+var ebXmlSalida = [];  
+var errorSalida = [];  
+
+
+var xmlEntrada = [];   
+var ebXmlEntrada = [];  
+var errorEntrada = [];  
+
 var resetCanvas = function (canvasId) {
     $('#' + canvasId).prev().remove();
     $('#' + canvasId).remove();
@@ -374,16 +383,20 @@ var api = {
 	                   
 	                  var dataSetSalida = [];
 	                  var dataSetEntrada = [];
+	        
 	                  
-	                  xmlTransacciones = [];
-	                  ebXmlTransacciones = [];
 	                  var cantidadSalida = 1;
 	                  var cantidadEntrada = 1;
 	                  $.each(data, function (key, value)
 	                  {
 	                     	                      
-	                      var rowTransaccionXml = []; 
-	                      var rowTransaccionEbXml = []; 	          
+	                      var rowSalidaXml = []; 	                      
+	                      var rowSalidaEbXml = []; 	
+	                      var rowSalidaError = []; 	 
+	                      
+	                      var rowEntradaXml = []; 	                      
+	                      var rowEntradaEbXml = []; 	  
+	                      var rowEntradaError = []; 
 	                      
 	                      /*Si tipo es de Salida*/
 	                      if(value.tipo==="2"){
@@ -404,9 +417,9 @@ var api = {
 	                    	  }	   
 	                    	  
 	                    	  if(value.tieneIncidente===1){
-	                    		  rowSalida.push("<div class='border-radius tipo-transacciones-" + value.tipoIncidente + "'></div>");  
+	                    		  rowSalida.push("<div class='border-radius tipo-transacciones tipo-transacciones-" + value.tipoIncidente + "'></div>");  
 	                    	  }else{
-	                    		  rowSalida.push("<div class='border-radius tipo-transacciones-0'></div>"); 
+	                    		  rowSalida.push("<div class='border-radius tipo-transacciones tipo-transacciones-0'></div>"); 
 	                    	  }	                    	  
 	                    	  
 	                    	  rowSalida.push(value.entidadSigla);
@@ -421,9 +434,38 @@ var api = {
 	                    	  rowSalida.push(value.fechaRegistroSalida);
 	                    	  rowSalida.push(value.fechaActualizacionSalida);	                    	  
 	                    	  rowSalida.push(value.antiguedadSalida+ " min");
-	                    	  rowSalida.push(value.xml);
-	                    	  rowSalida.push(value.ebxml);
-	                    	  rowSalida.push(value.error);
+	                    	  
+	                    	  if(value.xml  !== null){
+	                    		  rowSalida.push("<a href='javascript:util.showXmlSalida("+cantidadSalida+");'>Ver</a>");  
+	                              rowSalidaXml.push(cantidadSalida);
+	                              rowSalidaXml.push(value.xml);
+	                              xmlSalida.push(rowSalidaXml);
+	                           }else{
+	                        	   rowSalida.push("");    
+	                           }
+	                    	  
+	                    	  
+	                    	  if(value.ebxml  !== null){
+	                    		  rowSalida.push("<a href='javascript:util.showEbXmlSalida("+cantidadSalida+");'>Ver</a>");  
+	                    		  rowSalidaEbXml.push(cantidadSalida);
+	                    		  rowSalidaEbXml.push(value.ebxml);	                              
+	                              ebXmlSalida.push(rowSalidaEbXml);
+	                           }else{
+	                        	   rowSalida.push("");    
+	                           }
+	                    	
+	                    	  
+	                    	  
+	                    	  if(value.error  !== null){
+	                    		  rowSalida.push("<a href='javascript:util.showErrorSalida("+cantidadSalida+");'>Ver</a>");  
+	                    		  rowSalidaError.push(cantidadSalida);
+	                    		  rowSalidaError.push(value.error);	                              
+	                    		  errorSalida.push(rowSalidaError);
+	                           }else{
+	                        	   rowSalida.push("");  
+	                           }
+	                    	  
+	                    	  
 	                    	  cantidadSalida++;	    
 	                    	  dataSetSalida.push(rowSalida);
 	                     }else{
@@ -443,9 +485,9 @@ var api = {
 	                    	  }	 
 	                    	  
 	                    	  if(value.tieneIncidente===1){
-	                    		  rowEntrada.push("<div class='border-radius tipo-transacciones-" + value.tipoIncidente + "'></div>");  
+	                    		  rowEntrada.push("<div class='border-radius tipo-transacciones tipo-transacciones-" + value.tipoIncidente + "'></div>");  
 	                    	  }else{
-	                    		  rowEntrada.push("<div class='border-radius tipo-transacciones-0'></div>"); 
+	                    		  rowEntrada.push("<div class='border-radius tipo-transacciones tipo-transacciones-0'></div>"); 
 	                    	  }	   
 	                    	  
 	           
@@ -460,10 +502,38 @@ var api = {
 	                    	  rowEntrada.push(value.numeroDocumento);
 	                    	  rowEntrada.push(value.fechaRegistroEntrada);
 	                    	  rowEntrada.push(value.fechaActualizacionEntrada);	                    	  
-	                    	  rowEntrada.push(value.antiguedadEntrada+ " min");
-	                    	  rowEntrada.push(value.xml);
-	                    	  rowEntrada.push(value.ebxml);
-	                    	  rowEntrada.push(value.error);
+	                    	  rowEntrada.push(value.antiguedadEntrada+ " min");	                    	  
+	                    	  
+	                    	  if(value.xml  !== null){
+	                    		  rowEntrada.push("<a href='javascript:util.showXmlEntrada("+cantidadEntrada+");'>Ver</a>");  
+	                              rowEntradaXml.push(cantidadEntrada);
+	                              rowEntradaXml.push(value.xml);
+	                              xmlEntrada.push(rowEntradaXml);
+	                           }else{
+	                        	   rowEntrada.push("");    
+	                           }
+	                    	  
+	                    	  
+	                    	  if(value.ebxml  !== null){
+	                    		  rowEntrada.push("<a href='javascript:util.showEbXmlEntrada("+cantidadEntrada+");'>Ver</a>");  
+	                    		  rowEntradaEbXml.push(cantidadEntrada);
+	                    		  rowEntradaEbXml.push(value.ebxml);	                              
+	                              ebXmlEntrada.push(rowEntradaEbXml);
+	                           }else{
+	                        	   rowEntrada.push("");    
+	                           }
+	                    	  
+	                    	  
+	                    	  if(value.error  !== null){
+	                    		  rowEntrada.push("<a href='javascript:util.showErrorEntrada("+cantidadEntrada+");'>Ver</a>");  
+	                    		  rowEntradaError.push(cantidadEntrada);
+	                    		  rowEntradaError.push(value.error);	                              
+	                    		  errorEntrada.push(rowEntradaError);
+	                           }else{
+	                        	   rowEntrada.push("");  
+	                           }
+	                    	  
+	                    	  
 	                    	  rowEntrada.push("");
 	                    	  cantidadEntrada++;
 	                    	  dataSetEntrada.push(rowEntrada);
@@ -496,22 +566,57 @@ var api = {
 					  }
 		          }).done(function (data, textStatus, xhr) {
 		             if(xhr.status===200){ 
-		                  var dataSet= [];	
+		                  var dataSet= [];		                 
 		                  $.each(data, function (key, value)
 		                  {	   
 	                    	  var row = [];   	                    	
 	                    	  row.push(value.entidad);
-	                    	  row.push(value.valorSla1);
-	                    	  row.push(value.valorSla2);
-	                    	  row.push(value.valorSla3);
-	                    	  row.push(value.valorSla4);	                    	  
-	                    	  row.push(value.valorSla5);
+	                    	  row.push("<input class='input-sla' type='text' id='"+value.entidadId+"-sla1' value='"+value.valorSla1+"' />");
+	                    	  row.push("<input class='input-sla' type='text' id='"+value.entidadId+"-sla2' value='"+value.valorSla2+"' />");
+	                    	  row.push("<input class='input-sla' type='text' id='"+value.entidadId+"-sla3' value='"+value.valorSla3+"' />");
+	                    	  row.push("<input class='input-sla' type='text' id='"+value.entidadId+"-sla4' value='"+value.valorSla4+"' />");
+	                    	  row.push("<input class='input-sla' type='text' id='"+value.entidadId+"-sla5' value='"+value.valorSla5+"' />");	                    	  
+	                    	  row.push("<button type='button' onclick='api.handleConfiguracionMonitoreoActualizar("+value.entidadId+")' class='btn btn-primary'>Guardar</button>");	                    	  
 	                    	  dataSet.push(row);
+	                    
 		                  });          
 		                  table.update("tb-configurar-sla",dataSet); 	
 		              }                       
 		          });
-		      }
+		      },
+		      handleConfiguracionMonitoreoActualizar: function(entidadId){		
+		    	  $("#sla-mensaje").html("");
+		    	  
+					var sla1 = $("#"+entidadId+"-sla1").val();
+					var sla2 = $("#"+entidadId+"-sla2").val();
+					var sla3 =  $("#"+entidadId+"-sla3").val();
+					var sla4 =  $("#"+entidadId+"-sla4").val();
+					var sla5 =  $("#"+entidadId+"-sla5").val();
+					
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA1",sla1);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA2",sla2);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA3",sla3);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA4",sla4);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA5",sla5);
+					
+					$("#sla-mensaje").html("Se actualizo correctamente los registros SLAs");
+					
+			 },
+		     callConfiguracionMonitoreoActualizar : function (entidad_id,sla_nombre,sla_valor) {								
+				
+				var parameter = {entidadId:entidad_id,correoSoporte:null,slaNombre:sla_nombre,slaValor:sla_valor,estado:null};				
+				$.ajax({
+					url: contextApi + "/transmision/actualizar/configuracion/monitoreo",			 
+				    dataType: "json",
+				    contentType: "application/json; charset=utf-8",
+				    type: 'PUT',
+				    data: JSON.stringify(parameter),
+				    error:function(e){
+				    	console.log(e);	
+				    	//$("#sla-mensaje").html("Error al actualizar los registros SLAs");
+				    }
+				});		    
+			}
 	  
 };
 
@@ -564,29 +669,62 @@ var chart={
 var table={
 		 optionTable : function(){
 			var option = {    
-					
+					dom: 'Bfrtip',
+			        buttons: [
+			        	{   extend: 'csv',
+	                        className: 'btn btn-primary',
+	                        title: 'Exportar CSV',
+	                        text: 'Exportar CSV',	 
+	                        exportOptions: {
+	                            columns: [0,3,4,5,6,7,8,10,11,12,13,14 ]
+	                        }
+	                    },
+	                    {   extend: 'pdfHtml5',
+	                    	orientation: 'landscape',
+	                        pageSize: 'LEGAL',
+	                        className: 'btn btn-primary',
+	                        title: 'Reporte de Transmisiones',
+	                        text: 'Exportar PDF',	  
+	                        exportOptions: {
+	                        	columns: [0,3,4,5,6,7,8,10,11,12,13,14 ]
+	                         
+	                        }
+	                    },
+			        	
+			        ],
+			        
 		        	'lengthChange': false,
 		            'searching': false,
 		            'ordering': false,
 		            'info': true,
 		            'autoWidth': false,
-		            "scrollX": true,	
+		            "scrollX": true,
+		            "scrollY":  '35vh',
+		            "scrollCollapse": true,
 		            
 		            'language': {
 		                'lengthMenu': "Mostrar _MENU_ registros por pagina",
 		                'zeroRecords': "No encontrado.",
 		                'info': "Mostrar pagina _PAGE_ de _PAGES_",
 		                'infoEmpty': " ",
-		                'infoFiltered': "(filtered from _MAX_ total records)"
+		                'infoFiltered': "(filtered from _MAX_ total records)",
+		                "paginate": {
+		                    "previous": "Anterior",
+		                     "next": "Siguiente"	
+		                  }
 		            }
 		        };
 			return option; 
 		 },
 	   	 create: function (idTable,salida) {
+	   		 var option = table.optionTable();
+	   		 
 	   		 if(salida){
-	   			tableSalida = $('#'+idTable).DataTable(table.optionTable());
+	   			option.buttons[1].title = "Reporte de Transmisiones Salida";
+	   			tableSalida = $('#'+idTable).DataTable(option);
 	   		 }else{
-	   			tableEntrada = $('#'+idTable).DataTable(table.optionTable());
+	   			option.buttons[1].title = "Reporte de Transmisiones Entrada";
+	   			tableEntrada = $('#'+idTable).DataTable(option);
 	   		 }
 	   	
 	   	 },

@@ -17,25 +17,15 @@
 
 
 		<h:outputStylesheet name="css/bootstrap-select.min.css" />
-		<h:outputStylesheet
-			name="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
+		<h:outputStylesheet name="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
 		<h:outputStylesheet name="css/codemirror.css" />
-
-		<h:outputScript
-			name="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
+		<h:outputScript name="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" />
 		<h:outputScript name="js/bootstrap-select.js" />
-
 		<h:outputScript name="js/vuce-chart.js" />
-
-
 		<h:outputScript name="js/vuce-util.js" />
 		<h:outputScript name="js/monitoreoIncidentes.js" />
 		<h:outputScript name="js/vuce-api-rest.js" />
-
-
-
 		<h:outputScript name="js/lib/Chart.min.js" />
-
 		<h:outputScript name="js/lib/codemirror.js" />
 		<h:outputScript name="js/lib/xml.js" />
 
@@ -205,7 +195,6 @@
 							<div class="form-group col-sm-12 col-md-12 col-lg-12">
 								
 								<button type="button" class="btn btn-primary margin-top-10" id="btn-restablecer-fitro">Restablecer filtro</button>
-								<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-exportar-transmisiones">Exportar transmisiones</button>
 								<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-configurar-slas" data-toggle="modal" data-target="#modal-configurar-sla">Configurar SLAs</button>
 								<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-detener-transmisiones">Detener transmisiones</button>
 								<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-reprocesar-n8-con-error">Reprocesar N8 con Errores</button>
@@ -639,8 +628,8 @@
                                     <h4 class="modal-title">CONFIGURAR SLAs</h4>
                                 </div>
                                 <div class="modal-body">
-                                    
-                                     <div class="col-sm-12">
+                                     <div id="sla-mensaje"></div>
+                                     <div>
 			                                <table id="tb-configurar-sla" class="table table-striped table-bordered" role="grid" aria-describedby="tb-configurar-sla">
 			                                    <thead>
 			                                        <tr role="row">
@@ -650,13 +639,16 @@
 			                                            <th  style="text-align: center;" tabindex="3" rowspan="1" colspan="1">SLA3</th>                                            
 			                                            <th  style="text-align: center;" tabindex="4" rowspan="1" colspan="1">SLA4</th>                                            
 			                                            <th  style="text-align: center;" tabindex="5" rowspan="1" colspan="1">SLA5</th>
+			                                            
+			                                            <th  style="text-align: center;" tabindex="5" rowspan="1" colspan="1"></th>
+			                                             
 			                                        </tr>
 			                                    </thead>
 			                                    <tbody>
 			                                    </tbody>
 			                                </table>
 			                            </div>
-                                    <div>
+                                    <div  style="margin-top: 15px;">
 	                                    <ul>
 	                                    	<li>SA1: Acuerdo de Tiempo disponibilidad de una transmision de salida (en minutos)</li>
 	                                    	<li>SA2: Acuerdo de Tiempo confirmacion de una transmision de salida (en minutos)</li>
@@ -671,8 +663,7 @@
 		                            
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary" id="btn-execute-sla-guardar">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 </div>
                             </div>
                             <!-- /.modal-content -->
@@ -680,7 +671,50 @@
                         <!-- /.modal-dialog -->
                </div>
                
-				
+			  <div class="modal fade" id="modal-xml">
+                      <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">x</span></button>
+                                  <h4 class="modal-title">Mensaje XML</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <form>
+                                      <textarea id="code" name="code"></textarea>
+                                  </form>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>                                           
+                              </div>
+                          </div>
+                          <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                  </div>
+                  
+                  
+                 <div class="modal fade" id="modal-error">
+                      <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">x</span></button>
+                                  <h4 class="modal-title">Mensaje de Error</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <form>
+                                      <textarea id="codeError" name="codeError"></textarea>
+                                  </form>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>                                           
+                              </div>
+                          </div>
+                          <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                  </div>  
 				
 				
 			</form>

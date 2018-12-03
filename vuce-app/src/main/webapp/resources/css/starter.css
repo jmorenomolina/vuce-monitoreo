@@ -187,3 +187,17 @@ ul.head-list-table li {
 .margin-top-10{
   margin-top: 10px;
 }
+
+.input-sla{
+	width: 60px;
+    height: 30px;
+    text-align: center;
+}
+
+
+table#tb-configurar-sla tbody tr td,
+table#tb-transmisiones-salida tbody tr td,
+table#tb-transmisiones-entrada tbody tr td{
+	text-align: center;
+}
+	

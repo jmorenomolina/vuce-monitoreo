@@ -123,5 +123,59 @@
         		$("#"+id).val(defaultValue);
         		$("#"+id).selectpicker("refresh"); 
         	}    		
-    	}
+    	},
+    	showXmlSalida: function(id){
+             for(var i=0;i<xmlSalida.length;i++){
+                 if(xmlSalida[i][0]===id){
+                    $('#modal-xml').modal('show');
+                    setTimeout(function(){  editor.setValue(xmlSalida[i][1]); }, 1000);
+                    return;
+                 }
+             }                    
+         },
+         showEbXmlSalida: function(id){
+             for(var i=0;i<ebXmlSalida.length;i++){
+                 if(ebXmlSalida[i][0]===id){
+                    $('#modal-xml').modal('show');
+                    setTimeout(function(){  editor.setValue(ebXmlSalida[i][1]); }, 1000);
+                    return;
+                 }
+             }                    
+         },
+     	showXmlEntrada: function(id){
+            for(var i=0;i<xmlEntrada.length;i++){
+                if(xmlEntrada[i][0]===id){
+                   $('#modal-xml').modal('show');
+                   setTimeout(function(){  editor.setValue(xmlEntrada[i][1]); }, 1000);
+                   return;
+                }
+            }                    
+        },
+        showEbXmlEntrada: function(id){
+            for(var i=0;i<ebXmlEntrada.length;i++){
+                if(ebXmlEntrada[i][0]===id){
+                   $('#modal-xml').modal('show');
+                   setTimeout(function(){  editor.setValue(ebXmlEntrada[i][1]); }, 1000);
+                   return;
+                }
+            }                    
+        },
+        showErrorSalida: function(id){
+            for(var i=0;i<errorSalida.length;i++){
+                if(errorSalida[i][0]===id){
+                   $('#modal-error').modal('show');
+                   setTimeout(function(){  editorError.setValue(errorSalida[i][1]); }, 1000);
+                   return;
+                }
+            }                    
+        },
+        showErrorEntrada: function(id){
+            for(var i=0;i<errorEntrada.length;i++){
+                if(errorEntrada[i][0]===id){
+                   $('#modal-error').modal('show');
+                   setTimeout(function(){  editorError.setValue(errorEntrada[i][1]); }, 1000);
+                   return;
+                }
+            }                    
+        }  
 }
