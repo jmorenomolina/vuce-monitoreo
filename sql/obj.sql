@@ -2,11 +2,6 @@
 -- Archivo creado  - lunes-diciembre-03-2018   
 --------------------------------------------------------
 --------------------------------------------------------
---  DDL for Sequence ENTIDADMANTENIMIENTO_SEQ
---------------------------------------------------------
-
-   CREATE SEQUENCE  "MTOBJ"."ENTIDADMANTENIMIENTO_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 120 CACHE 20 NOORDER  NOCYCLE ;
---------------------------------------------------------
 --  DDL for Table CONFIGURACION
 --------------------------------------------------------
 
@@ -242,7 +237,7 @@
 	"NOM_MENSAJE" VARCHAR2(20 BYTE), 
 	"XML" BLOB, 
 	"EBXML" BLOB, 
-	"ERROR" VARCHAR2(20 BYTE), 
+	"ERROR" VARCHAR2(3999 BYTE), 
 	"VC_ID" NUMBER, 
 	"VE_ID" NUMBER, 
 	"NOM_ESTADO_VC" VARCHAR2(20 BYTE), 
@@ -288,6 +283,11 @@
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_LOB" ;
+--------------------------------------------------------
+--  DDL for Sequence ENTIDADMANTENIMIENTO_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "MTOBJ"."ENTIDADMANTENIMIENTO_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 120 CACHE 20 NOORDER  NOCYCLE ;
 REM INSERTING into MTOBJ.CONFIGURACION
 SET DEFINE OFF;
 Insert into MTOBJ.CONFIGURACION (LLAVE,VALOR) values ('CORREO_VUCE','pcsijomo@upc.edu.pe');
@@ -459,7 +459,7 @@ Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values
 Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('2','SLA5','6');
 REM INSERTING into MTOBJ.TX_CON_INCIDENTE
 SET DEFINE OFF;
-Insert into MTOBJ.TX_CON_INCIDENTE (COD_ENTIDAD,SIGLA_ENTIDAD,CANTIDAD_TRANS_ENTRADA,CANTIDAD_TRANS_SALIDA) values ('1','DIGESA','57','25');
+Insert into MTOBJ.TX_CON_INCIDENTE (COD_ENTIDAD,SIGLA_ENTIDAD,CANTIDAD_TRANS_ENTRADA,CANTIDAD_TRANS_SALIDA) values ('1','DIGESA','20','60');
 Insert into MTOBJ.TX_CON_INCIDENTE (COD_ENTIDAD,SIGLA_ENTIDAD,CANTIDAD_TRANS_ENTRADA,CANTIDAD_TRANS_SALIDA) values ('2','MTC','40','32');
 Insert into MTOBJ.TX_CON_INCIDENTE (COD_ENTIDAD,SIGLA_ENTIDAD,CANTIDAD_TRANS_ENTRADA,CANTIDAD_TRANS_SALIDA) values ('3','SENASA','120','10');
 Insert into MTOBJ.TX_CON_INCIDENTE (COD_ENTIDAD,SIGLA_ENTIDAD,CANTIDAD_TRANS_ENTRADA,CANTIDAD_TRANS_SALIDA) values ('4','SANIPES','44','74');
@@ -575,32 +575,29 @@ Insert into MTOBJ.TX_PARAMETRO (CODIGO,TIPO_PARAMETRO,VALOR_PARAMETRO,DESC_PARAM
 REM INSERTING into MTOBJ.TX_TRAMISIONES
 SET DEFINE OFF;
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','1','1','APN','N1','REGISTRO SOLICITUD',null,'200','234',null,'10',null,'1','DNI','20180000123',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','2','2','2','SENASA','N18','ENVIO OBSERVACIONES',null,'201','978',null,'1',null,'2','DNI','20180000486',to_date('22/11/18','DD/MM/RR'),to_date('22/11/18','DD/MM/RR'),'3','APN02',to_date('29/11/18','DD/MM/RR'),to_date('22/11/18','DD/MM/RR'),'3','4');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','1','1','MTC','N1','REGISTRO SOLICITUD',null,'352','144',null,'2',null,'1','DNI','20180000146',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'3','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','MTC','N1','ENVIO OBSERVACIONES',null,'897','42',null,'1',null,'1','DNI','20180000456',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'4','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','REGISTRO SOLICITUD',null,'200','897',null,'10',null,'2','DNI','20180000978',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'4','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','1','1','SENASA','N1','ENVIO OBSERVACIONES',null,'988','823',null,'2',null,'1','DNI','20180000921',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','REGISTRO SOLICITUD',null,'456','97',null,'2',null,'1','DNI','20180000566',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'5','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','REGISTRO SOLICITUD','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','456','97',null,'2',null,'1','DNI','20180000566',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'5','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','2','1','SANIPES','N1','REGISTRO SOLICITUD',null,'204','423',null,'2',null,'1','DNI','20180000374',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'5','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'6','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','5','1','APN','N1','REGISTRO SOLICITUD',null,'270','786',null,'1',null,'2','DNI','20180000782',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','PRODUCE','N1','ENVIO OBSERVACIONES',null,'734','58',null,'2',null,'1','DNI','20180000462',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'6','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'10','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','5','1','APN','N1','REGISTRO SOLICITUD',null,'988','732',null,'2',null,'2','DNI','20180000156',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','SENASA','N1','REGISTRO SOLICITUD',null,'253','251',null,'1',null,'1','DNI','20180000165',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','1','1','SUCAMEC','N1','ENVIO OBSERVACIONES',null,'662','422',null,'2',null,'1','DNI','20180000274',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'7','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'6','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','5','1','SANIPES','N1','REGISTRO SOLICITUD',null,'743','525',null,'2',null,'2','DNI','20180000486',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'12','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','REGISTRO SOLICITUD',null,'998','624',null,'2',null,'1','DNI','20180000511',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'8','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','5','1','APN','N1','ENVIO OBSERVACIONES',null,'897','345',null,'2',null,'1','DNI','20180000645',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','5','1','SANIPES','N1','REGISTRO SOLICITUD',null,'456','585',null,'2',null,'2','DNI','20180000856',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','1','1','APN','N1','REGISTRO SOLICITUD',null,'465','789',null,'2',null,'1','DNI','20180000124',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','ENVIO OBSERVACIONES',null,'789','631',null,'2',null,'1','DNI','20180000125',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'9','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'7','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','2','1','SENASA','N1','REGISTRO SOLICITUD',null,'456','564',null,'1',null,'2','DNI','20180000126',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','1','1','SUCAMEC','N1','REGISTRO SOLICITUD',null,'245','401',null,'2',null,'1','DNI','20180000127',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'9','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'8','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','5','1','PRODUCE','N1','REGISTRO SOLICITUD',null,'209','402',null,'2',null,'1','DNI','20180000128',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'0','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','APN','N1','REGISTRO SOLICITUD',null,'465','789',null,'2',null,'1','DNI','20180000124',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','4','1','MTC','N2','REGISTRO SOLICITUD',null,'322','756',null,'2',null,'1','DNI','20180000545',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'9','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','4','1','MTC','N8','REGISTRO SOLICITUD',null,'465','753',null,'2',null,'1','DNI','20180000745',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'4','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','APN','N4','REGISTRO SOLICITUD',null,'567','951',null,'2',null,'1','DNI','20180000763',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
-Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','4','1','SENASA','N18','REGISTRO SOLICITUD',null,'867','528',null,'2',null,'1','DNI','20180000532',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','APN','N17','REGISTRO SOLICITUD',null,'465','321',null,'2',null,'1','DNI','20180000757',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'5','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','SANIPES','N18','REGISTRO SOLICITUD',null,'154','789',null,'2',null,'1','DNI','20180000754',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','4','1','APN','N14','REGISTRO SOLICITUD',null,'798','593',null,'2',null,'1','DNI','20180000443',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
@@ -610,6 +607,87 @@ Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','4','1','PRODUCE','N8','REGISTRO SOLICITUD',null,'465','974',null,'2',null,'1','DNI','20180000744',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','PRODUCE','N21','REGISTRO SOLICITUD',null,'987','452',null,'2',null,'1','DNI','20180000423',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'8','3');
 Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','PRODUCE','N1','REGISTRO SOLICITUD',null,'845','567',null,'2',null,'1','DNI','20180000152',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN05',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'1','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','REGISTRO SOLICITUD',null,'200','897',null,'10',null,'2','DNI','20180000978',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'4','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','1','1','SENASA','N1','ENVIO OBSERVACIONES',null,'988','823',null,'2',null,'1','DNI','20180000921',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','2','2','2','SENASA','N18','ENVIO OBSERVACIONES','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','201','978',null,'1',null,'2','DNI','20180000486',to_date('22/11/18','DD/MM/RR'),to_date('22/11/18','DD/MM/RR'),'3','APN02',to_date('29/11/18','DD/MM/RR'),to_date('22/11/18','DD/MM/RR'),'3','4');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','MTC','N1','ENVIO OBSERVACIONES','2018-12-03 14:46:37.432  INFO 6500 --- [           main] v.gob.pe.app.ServicioVuceApiApplication  : Starting ServicioVuceApiApplication on MJ05D83V with PID 6500 (C:\vuce\servicio-vuce-api\target\classes started by consultor.oti4 in C:\vuce\servicio-vuce-api)
+2018-12-03 14:46:37.435  INFO 6500 --- [           main] v.gob.pe.app.ServicioVuceApiApplication  : No active profile set, falling back to default profiles: default
+2018-12-03 14:46:37.855  INFO 6500 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2018-12-03 14:46:37.923  INFO 6500 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63ms. Found 3 repository interfaces.
+2018-12-03 14:46:38.128  INFO 6500 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean ''org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration'' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$be38dab7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-12-03 14:46:38.346  INFO 6500 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9000 (http)
+2018-12-03 14:46:38.358  INFO 6500 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]','897','42',null,'1',null,'1','DNI','20180000456',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN01',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'4','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','5','1','APN','N1','REGISTRO SOLICITUD','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','270','786',null,'1',null,'2','DNI','20180000782',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','SENASA','N1','REGISTRO SOLICITUD','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','253','251',null,'1',null,'1','DNI','20180000165',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN03',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','2','5','1','SANIPES','N1','REGISTRO SOLICITUD','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','743','525',null,'2',null,'2','DNI','20180000486',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'12','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','5','1','APN','N1','ENVIO OBSERVACIONES','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','897','345',null,'2',null,'1','DNI','20180000645',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('2','1','2','1','APN','N1','ENVIO OBSERVACIONES','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','789','631',null,'2',null,'1','DNI','20180000125',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'9','APN04',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'7','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','3','1','APN','N1','REGISTRO SOLICITUD','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','465','789',null,'2',null,'1','DNI','20180000124',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
+Insert into MTOBJ.TX_TRAMISIONES (TIPO,TIENE_INCIDENTE,TIPO_INCIDENTE,ENTIDAD_ID,SIGLA_ENTIDAD,TIPO_MENSAJE,NOM_MENSAJE,ERROR,VC_ID,VE_ID,NOM_ESTADO_VC,ESTADO_VE,NOM_ESTADO_VE,TIPO_DOC,NOM_DOC,NUM_DOC,FECHA_REGISTRO_SALIDA,FECHA_ACTUALIZACION_SALIDA,ANTIGUEDAD_SALIDA,FORMATO,FECHA_REGISTRO_ENTRADA,FECHA_ACTUALIZACION_ENTRADA,ANTIGUEDAD_ENTRADA,ESTADO_VC) values ('1','1','4','1','SENASA','N18','REGISTRO SOLICITUD','java.lang.NullPointerException
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.processRequest(SessionServlet.java:42)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at ws.crossnet.apn.presentacion.adm.beans.SessionServlet.doGet(SessionServlet.java:66)[vfs:/content/apn-presentacion-adm-1.0.war/WEB-INF/classes:]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:687)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final.jar!/:1.0.0.Final]
+	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/core/main/undertow-core-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:292)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:81)[jar:file:/home/desarrollo/wildfly-10.1.0.Final/modules/system/layers/base/io/undertow/servlet/main/undertow-servlet-1.4.0.Final.jar!/:1.4.0.Final]
+	','867','528',null,'2',null,'1','DNI','20180000532',to_date('16/11/18','DD/MM/RR'),to_date('17/11/18','DD/MM/RR'),'2','APN02',to_date('25/11/18','DD/MM/RR'),to_date('20/11/18','DD/MM/RR'),'2','3');
 REM INSERTING into MTOBJ.USUARIO
 SET DEFINE OFF;
 Insert into MTOBJ.USUARIO (NOMBRE_USUARIO,ID_ENTIDAD) values ('WSAPN','75');
@@ -749,6 +827,7 @@ END HABILITAR_TRANSMISIONES;
 
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Package PROYECTO_BUS
@@ -814,7 +893,7 @@ PROCEDURE anular_tx_entrada_con_error  (
 
  PROCEDURE actualizar_config_monitoreo (
 		id_entidad		IN NUMBER,
-		coeo_soporte	IN  VARCHAR2,
+		correo_soporte	IN  VARCHAR2,
 		sla_nombre		IN VARCHAR2,
 		sla_valor		IN NUMBER,
 		estado		IN  VARCHAR2
@@ -827,7 +906,7 @@ PROCEDURE anular_tx_entrada_con_error  (
 		resultado_valor	OUT NUMBER,
 		resultado_mensaje	OUT VARCHAR2
   );
-  
+
    PROCEDURE REPROC_TX_ENTRADA_N8_CON_ERROR  (
 		entidad_id		IN	NUMBER,
         fecha_inicio	IN	DATE,
@@ -950,7 +1029,7 @@ END anular_tx_entrada_con_error;
 
 PROCEDURE actualizar_config_monitoreo (
 		id_entidad		IN NUMBER,
-		coeo_soporte	IN  VARCHAR2,
+		correo_soporte	IN  VARCHAR2,
 		sla_nombre		IN VARCHAR2,
 		sla_valor		IN NUMBER,
 		estado		IN  VARCHAR2
@@ -1028,166 +1107,166 @@ END PROYECTO_BUS;
 --  Constraints for Table PERIODO_MONITOREO
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."PERIODO_MONITOREO" MODIFY ("HORA" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."PERIODO_MONITOREO" ADD CONSTRAINT "PERIODO_MONITOREO_PK" PRIMARY KEY ("HORA")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."PERIODO_MONITOREO" MODIFY ("HORA" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table RECEPCIONTRANSACCION
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" MODIFY ("ID_TRANSMISION" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" MODIFY ("ERROR" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" ADD CONSTRAINT "RECEPCIONTRANSACCION_PK" PRIMARY KEY ("ID_TRANSMISION")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" MODIFY ("ERROR" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."RECEPCIONTRANSACCION" MODIFY ("ID_TRANSMISION" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TX_ENTIDAD
 --------------------------------------------------------
 
+  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("DESCRIPCION" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("COLOR" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("ESTADO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TX_ENTIDAD" ADD CONSTRAINT "TX_ENTIDAD_PK" PRIMARY KEY ("ID_ENTIDAD")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
-  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("ESTADO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("COLOR" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_ENTIDAD" MODIFY ("DESCRIPCION" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TRANSMISION_ENTRADA
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("VE_ID" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("TIPO_MENSAJE" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("TIPO_DOCUMENTO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("NUMERO_DOCUMENTO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("FECHA_RECEPCION" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" ADD CONSTRAINT "TRASMISIONENTRADA_PK" PRIMARY KEY ("VE_ID", "ID_ENTIDAD")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("FECHA_RECEPCION" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("NUMERO_DOCUMENTO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("TIPO_DOCUMENTO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("TIPO_MENSAJE" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_ENTRADA" MODIFY ("VE_ID" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TRANSACCION
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("TIPO_MENSAJE" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("TIPO_DOCUMENTO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("NUMERO_DOCUMENTO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("ID_TRANSMISION" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("CANTIDAD_LECTURAS" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("ESTADO" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TRANSACCION" ADD CONSTRAINT "TRANSACCION_PK" PRIMARY KEY ("ID_TRANSMISION")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("ESTADO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("CANTIDAD_LECTURAS" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("ID_TRANSMISION" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("NUMERO_DOCUMENTO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("TIPO_DOCUMENTO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("TIPO_MENSAJE" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSACCION" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table USUARIO
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."USUARIO" MODIFY ("NOMBRE_USUARIO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."USUARIO" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."USUARIO" ADD CONSTRAINT "USUARIO_PK" PRIMARY KEY ("NOMBRE_USUARIO")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."USUARIO" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."USUARIO" MODIFY ("NOMBRE_USUARIO" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TRANSMISION_SALIDA
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("FECHA_HORA_RESPUESTA" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("FECHA_HORA_SOLICITUD" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("HAY_FALLA" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("DESCRIPCION_FALLA" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("NOMBRE_OPERACION" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("NOMBRE_USUARIO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("VERSION" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" ADD CONSTRAINT "TRANSMISIONSALIDA_PK" PRIMARY KEY ("ID_MENSAJE")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("VERSION" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("NOMBRE_USUARIO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("NOMBRE_OPERACION" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("DESCRIPCION_FALLA" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("HAY_FALLA" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("FECHA_HORA_SOLICITUD" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("FECHA_HORA_RESPUESTA" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TRANSMISION_SALIDA" MODIFY ("ID_MENSAJE" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TX_PARAMETRO
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("CODIGO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("TIPO_PARAMETRO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("VALOR_PARAMETRO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("DESC_PARAMETRO" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TX_PARAMETRO" ADD CONSTRAINT "TX_PARAMETRO_PK" PRIMARY KEY ("CODIGO")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("DESC_PARAMETRO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("VALOR_PARAMETRO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("TIPO_PARAMETRO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_PARAMETRO" MODIFY ("CODIGO" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table ENTIDADMANTENIMIENTO
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("FECHA_INICIO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("FECHA_FIN" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("ID_ENTIDAD_MANTENIMIENTO" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" ADD CONSTRAINT "ENTIDADMANTENIMIENTO_PK" PRIMARY KEY ("ID_ENTIDAD_MANTENIMIENTO")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("ID_ENTIDAD_MANTENIMIENTO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("FECHA_FIN" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("FECHA_INICIO" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."ENTIDADMANTENIMIENTO" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table ENTIDAD
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."ENTIDAD" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."ENTIDAD" ADD CONSTRAINT "ENTIDAD_PK" PRIMARY KEY ("ID_ENTIDAD")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."ENTIDAD" MODIFY ("ID_ENTIDAD" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TX_CON_INCIDENTE
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."TX_CON_INCIDENTE" MODIFY ("COD_ENTIDAD" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TX_CON_INCIDENTE" MODIFY ("SIGLA_ENTIDAD" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TX_CON_INCIDENTE" ADD CONSTRAINT "TX_CON_INCIDENTE_PK" PRIMARY KEY ("COD_ENTIDAD")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."TX_CON_INCIDENTE" MODIFY ("SIGLA_ENTIDAD" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TX_CON_INCIDENTE" MODIFY ("COD_ENTIDAD" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table TIPOMENSAJE
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."TIPOMENSAJE" MODIFY ("CODIGO" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."TIPOMENSAJE" MODIFY ("DESCRIPCION" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."TIPOMENSAJE" ADD CONSTRAINT "TIPOMENSAJE_PK" PRIMARY KEY ("CODIGO")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."TIPOMENSAJE" MODIFY ("DESCRIPCION" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."TIPOMENSAJE" MODIFY ("CODIGO" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table CONFIGURACION
 --------------------------------------------------------
 
-  ALTER TABLE "MTOBJ"."CONFIGURACION" MODIFY ("LLAVE" NOT NULL ENABLE);
-  ALTER TABLE "MTOBJ"."CONFIGURACION" MODIFY ("VALOR" NOT NULL ENABLE);
   ALTER TABLE "MTOBJ"."CONFIGURACION" ADD CONSTRAINT "CONFIGURACION_PK" PRIMARY KEY ("LLAVE")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "MT_DAT"  ENABLE;
+  ALTER TABLE "MTOBJ"."CONFIGURACION" MODIFY ("VALOR" NOT NULL ENABLE);
+  ALTER TABLE "MTOBJ"."CONFIGURACION" MODIFY ("LLAVE" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Ref Constraints for Table ENTIDADMANTENIMIENTO
 --------------------------------------------------------
