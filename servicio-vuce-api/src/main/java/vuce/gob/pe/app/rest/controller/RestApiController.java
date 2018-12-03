@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import vuce.gob.pe.app.dto.ConfiguracionMonitoreoDTO;
+import vuce.gob.pe.app.dto.ConfiguracionMonitoreoResponseDTO;
 import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
@@ -23,12 +25,14 @@ import vuce.gob.pe.app.model.Entidad;
 import vuce.gob.pe.app.model.Parametro;
 import vuce.gob.pe.app.repository.EntidadRepository;
 import vuce.gob.pe.app.repository.ParametroRepository;
-import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitorioInput;
+import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoInput;
+import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoObtenerInput;
 import vuce.gob.pe.app.rest.parameter.HabilitarInput;
 import vuce.gob.pe.app.rest.parameter.TransmisionDetenerInput;
 import vuce.gob.pe.app.rest.parameter.TransmisonEntradaN8Input;
 import vuce.gob.pe.app.rest.parameter.TrasmisionInput;
 import vuce.gob.pe.app.service.TransmisionesService;
+import vuce.gob.pe.app.service.mapper.ConverterToConfiguracionMonitoreoResponseDTO;
 import vuce.gob.pe.app.util.Converter;
 import vuce.gob.pe.app.util.RestAppException;
 
@@ -112,10 +116,7 @@ public class RestApiController {
 		return new ResponseEntity<>(parametros, HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
+		
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Entidad>> entidades() {
 
@@ -295,9 +296,41 @@ public class RestApiController {
 		}
 	}
 
+	
+	@RequestMapping(value = "/transmision/obtener/configuracion/monitoreo", method = RequestMethod.PUT)
+	public ResponseEntity<List<ConfiguracionMonitoreoResponseDTO>> obtenerConfiguracionMonitoreo(
+			@RequestBody ConfiguracionMonitoreoObtenerInput input) {
+
+		logger.info("obtenerConfiguracionMonitoreo entidadId: [{}] ",input.getEntidadId());
+		
+		try {
+			List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAll();
+			if (!entidades.isEmpty()) {
+				logger.info("obtenerConfiguracionMonitoreo paso: [{}] Size[{}]",1,entidades.size());				
+				List<ConfiguracionMonitoreoDTO> responseConf = repositoryTransmisionesService.obtenerConfiguracionMonitoreo(input.getEntidadId());
+				
+				logger.info("obtenerConfiguracionMonitoreo paso: [{}] Size[{}]",2,responseConf.size());
+				
+				List<ConfiguracionMonitoreoResponseDTO> response = ConverterToConfiguracionMonitoreoResponseDTO.converter(entidades, responseConf);
+				
+				if (response.isEmpty()) {
+					logger.info("obtenerConfiguracionMonitoreo paso: [{}] ",3);
+					return new ResponseEntity<List<ConfiguracionMonitoreoResponseDTO>>(HttpStatus.NO_CONTENT);
+				}
+				return new ResponseEntity<>(response, HttpStatus.OK);				
+			}else {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}			
+			
+		} catch (RestAppException e) {
+			return this.crearMensajeRespuestaError(e);
+		}
+	}
+	
+	
 	@RequestMapping(value = "/transmision/actualizar/configuracion/monitoreo", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> actualizarConfiguracionMonitoreo(
-			@RequestBody ConfiguracionMonitorioInput input) {
+			@RequestBody ConfiguracionMonitoreoInput input) {
 
 		logger.info("actualizarConfiguracionMonitoreo entidadId: [{}]  correoSoporte: [{}]  slaNombre: [{}]  slaValor: [{}]   estado: [{}]",input.getEntidadId(),input.getCorreoSoporte(), input.getSlaNombre(), input.getSlaValor(), input.getEstado());
 		
@@ -313,9 +346,9 @@ public class RestApiController {
 	@RequestMapping(value = "/transmision/detener", method = RequestMethod.PUT)
 	public ResponseEntity<MensajeSalidaDTO> transmisionDetener(
 			@RequestBody TransmisionDetenerInput input) {
-		logger.info("transmisionHabilitar  entidadId: [{}] ", input.getEntidadId());
+		logger.info("transmisionHabilitar  entidadId: [{}] fechaIncio [{}]  fechaFin [{}]", input.getEntidadId(),input.getFechaInicio(),input.getFechaFin());
 		try {
-			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService.detenerTrasmision(input.getEntidadId());
+			MensajeSalidaDTO response = (MensajeSalidaDTO) repositoryTransmisionesService.detenerTrasmision(input.getEntidadId(),Converter.convertToDate(input.getFechaInicio(), FORMAT_DATE),Converter.convertToDate(input.getFechaFin(), FORMAT_DATE));
 			if (!Optional.ofNullable(response).isPresent()) {
 				return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			}

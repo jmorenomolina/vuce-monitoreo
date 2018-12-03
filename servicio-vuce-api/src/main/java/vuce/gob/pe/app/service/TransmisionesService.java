@@ -18,6 +18,7 @@ package vuce.gob.pe.app.service;
 import java.util.Date;
 import java.util.List;
 
+import vuce.gob.pe.app.dto.ConfiguracionMonitoreoDTO;
 import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
@@ -31,6 +32,8 @@ import vuce.gob.pe.app.util.RestAppException;
 public interface TransmisionesService {
     
     public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio,Date fechaFin) throws RestAppException;
+    
+    public List<ConfiguracionMonitoreoDTO> obtenerConfiguracionMonitoreo(Integer entidadId) throws RestAppException;
      
     public List<TrasmisionDTO> filtrarTransmisiones(RequestFiltrarTransmisionesDTO request)  throws RestAppException;
     
@@ -46,6 +49,6 @@ public interface TransmisionesService {
     
     public void actualizarConfiguracionMonitoreo(Integer entidadId,String correoSoporte,String slaNombre, Integer slaValor,String estado)  throws RestAppException;
     
-    public MensajeSalidaDTO detenerTrasmision(Integer entidadId)  throws RestAppException;   
+    public MensajeSalidaDTO detenerTrasmision(Integer entidadId,Date fechaInicio,Date fechaFin)  throws RestAppException;   
     
 }

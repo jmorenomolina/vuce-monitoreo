@@ -18,11 +18,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
+import vuce.gob.pe.app.dto.ConfiguracionMonitoreoDTO;
 import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 import vuce.gob.pe.app.repository.TransmisionesRepository;
+import vuce.gob.pe.app.service.mapper.ObtenerConfiguracionMonitoreoRowMapper;
 import vuce.gob.pe.app.service.mapper.TramisionIncidenteRowMapper;
 import vuce.gob.pe.app.service.mapper.TramisionRowMapper;
 import vuce.gob.pe.app.util.RestAppException;
@@ -68,8 +70,27 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
 		}
-
 	}
+	
+	private final String PC_OBTENER_CONF_MONITOREO = "OBTENER_CONFIG_MONITOREO";
+	private final String PC_OBTENER_CONF_MONITOREO_RETURN = "TCURSOR";
+	@Override
+	public List<ConfiguracionMonitoreoDTO> obtenerConfiguracionMonitoreo(Integer entidadId) throws RestAppException {
+		try {
+		
+			jdbcTemplate = new JdbcTemplate(dataSource);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_OBTENER_CONF_MONITOREO)
+					 .withCatalogName(PACKAGE)
+					.returningResultSet(PC_OBTENER_CONF_MONITOREO_RETURN, new ObtenerConfiguracionMonitoreoRowMapper());
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);				
+			Map<String, Object> result = simpleJdbcCall.execute(in);
+			return (List) result.get(PC_OBTENER_CONF_MONITOREO_RETURN);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+		}
+	}
+	
 
 	private final String PC_FILTRAR_TRANSMISIONES = "FILTRAR_TRANSMISIONES";
 	private final String PC_OBTENER_TX_CON_INCIDENTE_RETURN = "TCURSOR";
@@ -242,16 +263,20 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
 		}
 	}
+	
+	
 
 	private final String DETENER_TRANSMISIONES = "DETENER_TRANSMISIONES";
 	@Override
-	public MensajeSalidaDTO detenerTrasmision(Integer entidadId) throws RestAppException {
+	public MensajeSalidaDTO detenerTrasmision(Integer entidadId,Date fechaInicio,Date fechaFin) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
 					.withProcedureName(DETENER_TRANSMISIONES)
 					.withCatalogName(PACKAGE);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
+					.addValue("FECHA_INICIO", fechaInicio)
+					.addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");

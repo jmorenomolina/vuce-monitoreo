@@ -1,6 +1,6 @@
 package vuce.gob.pe.app.rest.parameter;
 
-public class ConfiguracionMonitorioInput {
+public class ConfiguracionMonitoreoInput {
 	
 	Integer entidadId;
 	private String correoSoporte;

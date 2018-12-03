@@ -20,6 +20,9 @@ var api = {
                           
                           var selectDetener= $('#entidades-detener');
                           selectDetener.selectpicker('refresh');
+                          
+                          var selectReprocesar= $('#entidades-reeprocesar-n8');
+                          selectReprocesar.selectpicker('refresh');
                        }
               }).done(function (data) {
                   var $select = $('#entidades');
@@ -27,13 +30,16 @@ var api = {
                   $select.append('<option value="%" selected="selected">Todas</option>');
                   
                   var $selectEntidadesDetener = $('#entidades-detener');
+                  var $selectEntidadesReeprocesar = $('#entidades-reeprocesar-n8');
                   
                   $selectEntidadesDetener.find('option').remove();
                   
                   $.each(data, function (key, value)
                   {
                       $select.append('<option value=' + value.idEntidad + '>' + value.descripcion + '</option>');                      
-                      $selectEntidadesDetener.append('<option value=' + value.idEntidad + '>' + value.descripcion + '</option>');                      
+                      $selectEntidadesDetener.append('<option value=' + value.idEntidad + '>' + value.descripcion + '</option>');
+                      $selectEntidadesReeprocesar.append('<option value=' + value.idEntidad + '>' + value.descripcion + '</option>');
+                      
                      
                   });
               });
@@ -302,7 +308,7 @@ var api = {
 					$("#tb-salida-log").DataTable().row.add([id,response.resultadoMensaje]).draw();	
 				});		    
 		},
-		callTransmisionDetener : function (entidad_id) {
+		callTransmisionDetener : function (entidad_id,fecha_incio,fecha_fin) {
 			
 			if (!$.fn.DataTable.isDataTable( '#tb-salida-log' ) ) {
 				table.createSimpleTable("tb-salida-log");				
@@ -310,7 +316,7 @@ var api = {
             	table.cleanTable("tb-salida-log");
             }
 			
-			var parameter = {entidadId:entidad_id};				
+			var parameter = {entidadId:entidad_id,fechaInicio:fecha_incio,fechaFin:fecha_fin};				
 			$.ajax({
 				url: contextApi + "/transmision/detener",			 
 			    dataType: "json",
@@ -322,6 +328,32 @@ var api = {
 			    },
 			    complete : function(){
 			    	$('#modal-detener-transmisiones').modal('toggle');	
+			    }
+			}).done(function(response) {					
+				$("#tb-salida-log").DataTable().row.add([response.resultadoValor,response.resultadoMensaje]).draw();	
+				$('#modal-tb-salida-log').modal('toggle');
+			});		    
+		},
+		callTransmisionReeprocesarN8 : function (entidad_id,fecha_incio,fecha_fin) {
+			
+			if (!$.fn.DataTable.isDataTable( '#tb-salida-log' ) ) {
+				table.createSimpleTable("tb-salida-log");				
+            }else{
+            	table.cleanTable("tb-salida-log");
+            }
+			
+			var parameter = {entidadId:entidad_id,fechaInicio:fecha_incio,fechaFin:fecha_fin};				
+			$.ajax({
+				url: contextApi + "/transmision/reprocesar/entrada/n8/conerror",			 
+			    dataType: "json",
+			    contentType: "application/json; charset=utf-8",
+			    type: 'PUT',
+			    data: JSON.stringify(parameter),
+			    error:function(e){
+			    	console.log(e);			    	
+			    },
+			    complete : function(){
+			    	$('#modal-reeprocesar-n8').modal('toggle');	
 			    }
 			}).done(function(response) {					
 				$("#tb-salida-log").DataTable().row.add([response.resultadoValor,response.resultadoMensaje]).draw();	
@@ -450,9 +482,36 @@ var api = {
 	          
 	                                       
 	          });
-	      }
-	  
-	  
+	      },
+	      callConfiguracionMonitoreo: function () {				
+	    	     var parameter = {entidadId:null};
+		          $.ajax({
+		              url: contextApi + "/transmision/obtener/configuracion/monitoreo",
+		              dataType: "json",
+					  contentType: "application/json; charset=utf-8",
+					  type: 'PUT',
+					  data: JSON.stringify(parameter),
+					  error:function(e){
+					    console.log(e);			    	
+					  }
+		          }).done(function (data, textStatus, xhr) {
+		             if(xhr.status===200){ 
+		                  var dataSet= [];	
+		                  $.each(data, function (key, value)
+		                  {	   
+	                    	  var row = [];   	                    	
+	                    	  row.push(value.entidad);
+	                    	  row.push(value.valorSla1);
+	                    	  row.push(value.valorSla2);
+	                    	  row.push(value.valorSla3);
+	                    	  row.push(value.valorSla4);	                    	  
+	                    	  row.push(value.valorSla5);
+	                    	  dataSet.push(row);
+		                  });          
+		                  table.update("tb-configurar-sla",dataSet); 	
+		              }                       
+		          });
+		      }
 	  
 };
 

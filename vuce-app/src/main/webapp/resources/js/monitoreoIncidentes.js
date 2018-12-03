@@ -4,7 +4,10 @@ var xmlTransacciones = [];
 var ebXmlTransacciones = [];    
 var xmlNotificaciones = [];                           
 
-
+var dateOption ={
+		 autoclose: true,
+         format: 'dd/mm/yyyy'
+};
 
         $(document).ready(function () {  
         	
@@ -16,37 +19,32 @@ var xmlNotificaciones = [];
         	api.callEstadoVuceCentral();
         	api.callEstadoVuceEntidad();
         	
-            $('#dp-fechadesde-tra-inc').datepicker({
-                autoclose: true,
-                format: 'dd/mm/yyyy'
-            }).on('changeDate',function(e){
+        	
+            $('#dp-fechadesde-tra-inc').datepicker(dateOption).on('changeDate',function(e){
                 api.callTransmisionesConIncidentes();
             });
           
             
-            $('#dp-fechahasta-tra-inc').datepicker({
-                autoclose: true,
-                format: 'dd/mm/yyyy'
-            }).on('changeDate',function(e){
+            $('#dp-fechahasta-tra-inc').datepicker(dateOption).on('changeDate',function(e){
             	api.callTransmisionesConIncidentes();
             });
             
-            $('#dp-fechadesde-tra').datepicker({
-                autoclose: true,
-                format: 'dd/mm/yyyy'
-            });          
+   
             
-            $('#dp-fechahasta-tra').datepicker({
-                autoclose: true,
-                format: 'dd/mm/yyyy'
-            });
+            $('#dp-fechadesde-tra').datepicker(dateOption);  
+            $('#dp-fechahasta-tra').datepicker(dateOption);
+            $('#dp-fechadesde-det').datepicker(dateOption); 
+            $('#dp-fechahasta-det').datepicker(dateOption);
+            $('#dp-fechadesde-reepro').datepicker(dateOption);   
+            $('#dp-fechahasta-reepro').datepicker(dateOption);
             
-                      
             $("#dp-fechadesde-tra-inc").val(util.getDate());
             $("#dp-fechahasta-tra-inc").val(util.getDate());
             $("#dp-fechadesde-tra").val(util.getDate());
             $("#dp-fechahasta-tra").val(util.getDate());
             
+            $("#dp-fechadesde-det").val(util.getDate());
+            $("#dp-fechahasta-det").val(util.getDate());
             
             document.getElementById("btn-filtrar-transmisiones").onclick = function () {
             	api.callTransmisiones();
@@ -78,6 +76,10 @@ var xmlNotificaciones = [];
             	$('#modal-detener-transmisiones').modal('toggle');	
             };
             
+            document.getElementById("btn-reprocesar-n8-con-error").onclick = function () {
+            	$('#modal-reeprocesar-n8').modal('toggle');	
+            };
+            
             
             document.getElementById("btn-reenviar-transmisiones").onclick = function () {
             	var checkboxes = $('input[name="ck-salida"]:checked');
@@ -101,7 +103,14 @@ var xmlNotificaciones = [];
             document.getElementById("btn-execute-detener").onclick = function () {     
             	var r = confirm("Se detendrán todas las transmisiones de la entidad seleccionada en el período indicado");
             	if (r == true) {
-            		api.callTransmisionDetener($('#btn-execute-detener').val());
+            		api.callTransmisionDetener($('#entidades-detener').val(),$('#dp-fechadesde-det').val(),$('#dp-fechahasta-det').val());
+            	}            	            	
+            };
+            
+            document.getElementById("btn-execute-reeprocesar-n8").onclick = function () {     
+            	var r = confirm("Se reeprocesaran todas las transmisiones N8 de la entidad seleccionada en el período indicado");
+            	if (r == true) {
+            		api.callTransmisionReeprocesarN8($('#entidades-reeprocesar-n8').val(),$('#dp-fechadesde-reepro').val(),$('#dp-fechahasta-reepro').val());
             	}            	            	
             };
            
@@ -127,13 +136,13 @@ var xmlNotificaciones = [];
             	}            	
             };
             
-            
-            
-            
-            
-            
+                        
             table.create("tb-transmisiones-salida",true);
-            table.create("tb-transmisiones-entrada",false);
+            table.create("tb-transmisiones-entrada",false);      
+            
+            table.createSimpleTable("tb-configurar-sla");
+            api.callConfiguracionMonitoreo();
+            
             
             $('#ck-transmisiones-salida-error').change(function() {
                 var checkboxes = $('input[name="ck-salida"]');
