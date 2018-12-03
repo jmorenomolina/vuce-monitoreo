@@ -1,5 +1,5 @@
 --------------------------------------------------------
--- Archivo creado  - viernes-noviembre-30-2018   2
+-- Archivo creado  - lunes-diciembre-03-2018   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence ENTIDADMANTENIMIENTO_SEQ
@@ -178,9 +178,9 @@
 --------------------------------------------------------
 
   CREATE TABLE "MTOBJ"."TX_CONFIGURACION_MONI" 
-   (	"CODIGO" NUMBER, 
-	"NOMBRE" VARCHAR2(50 BYTE), 
-	"VALOR" NUMBER
+   (	"ID_ENTIDAD" NUMBER, 
+	"SLA_NOMBRE" VARCHAR2(50 BYTE), 
+	"SLA_VALOR" NUMBER
    ) SEGMENT CREATION IMMEDIATE 
   PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
@@ -447,16 +447,16 @@ Insert into MTOBJ.TRANSMISION_SALIDA (ID_MENSAJE,FECHA_HORA_RESPUESTA,FECHA_HORA
 Insert into MTOBJ.TRANSMISION_SALIDA (ID_MENSAJE,FECHA_HORA_RESPUESTA,FECHA_HORA_SOLICITUD,HAY_FALLA,DESCRIPCION_FALLA,NOMBRE_OPERACION,NOMBRE_USUARIO,VERSION,TIEMPO_RESPUESTA) values ('ID-DESKTOP-SQNUP0V-53894-1540763981458-0-2',to_date('28/10/18','DD/MM/RR'),to_date('28/10/18','DD/MM/RR'),'0','No hay falla','urn:obtenerTransaccionesPendientes','WSAPN','1.0',null);
 REM INSERTING into MTOBJ.TX_CONFIGURACION_MONI
 SET DEFINE OFF;
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('1','SLA1','1');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('2','SLA1','3');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('1','SLA2','2');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('1','SLA3','5');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('1','SLA4','1');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('1','SLA5','3');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('2','SLA2','4');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('2','SLA3','5');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('2','SLA4','2');
-Insert into MTOBJ.TX_CONFIGURACION_MONI (CODIGO,NOMBRE,VALOR) values ('2','SLA5','6');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('1','SLA1','1');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('2','SLA1','3');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('1','SLA2','2');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('1','SLA3','5');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('1','SLA4','1');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('1','SLA5','3');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('2','SLA2','4');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('2','SLA3','5');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('2','SLA4','2');
+Insert into MTOBJ.TX_CONFIGURACION_MONI (ID_ENTIDAD,SLA_NOMBRE,SLA_VALOR) values ('2','SLA5','6');
 REM INSERTING into MTOBJ.TX_CON_INCIDENTE
 SET DEFINE OFF;
 Insert into MTOBJ.TX_CON_INCIDENTE (COD_ENTIDAD,SIGLA_ENTIDAD,CANTIDAD_TRANS_ENTRADA,CANTIDAD_TRANS_SALIDA) values ('1','DIGESA','57','25');
@@ -822,6 +822,16 @@ PROCEDURE anular_tx_entrada_con_error  (
 
   PROCEDURE detener_transmisiones  (
 		entidad_id		IN	NUMBER,
+        fecha_inicio	IN	DATE,
+		fecha_fin		IN	DATE,
+		resultado_valor	OUT NUMBER,
+		resultado_mensaje	OUT VARCHAR2
+  );
+  
+   PROCEDURE REPROC_TX_ENTRADA_N8_CON_ERROR  (
+		entidad_id		IN	NUMBER,
+        fecha_inicio	IN	DATE,
+		fecha_fin		IN	DATE,
 		resultado_valor	OUT NUMBER,
 		resultado_mensaje	OUT VARCHAR2
   );
@@ -834,7 +844,7 @@ PROCEDURE anular_tx_entrada_con_error  (
 
 
    PROCEDURE obtener_config_monitoreo  (
-		entidad_id		IN	NUMBER,
+		entidad_id		IN	NUMBER DEFAULT 0 ,
 		tCursor		OUT cur_Tabla
    );
 
@@ -902,7 +912,7 @@ PROCEDURE REENVIAR_TX_SALIDA_CON_ERROR
 ) AS 
 BEGIN
   RESULTADO_VALOR := 0;
-  RESULTADO_MENSAJE := 'la transmisión <id de la transmisión> fue reenviada correctamente';
+  RESULTADO_MENSAJE := 'la transmisión ' || VC_ID ||  ' fue reenviada correctamente';
 
 END REENVIAR_TX_SALIDA_CON_ERROR;
 
@@ -952,16 +962,35 @@ RESULTADO_VALOR := 'test';
 
 END actualizar_config_monitoreo;
 
-  PROCEDURE detener_transmisiones  (
+      PROCEDURE detener_transmisiones  (
 		entidad_id		IN	NUMBER,
+        fecha_inicio	IN	DATE,
+		fecha_fin		IN	DATE,
 		resultado_valor	OUT NUMBER,
 		resultado_mensaje	OUT VARCHAR2
   )AS 
 BEGIN
   RESULTADO_VALOR := 0;
-  RESULTADO_MENSAJE := 'se detuvo la tramision fue reenviada correctamente';
+  RESULTADO_MENSAJE := 'se detuvo la tramision de la entidad ' || entidad_id || '  correctamente';
 
 END detener_transmisiones;
+
+
+     PROCEDURE REPROC_TX_ENTRADA_N8_CON_ERROR  (
+		entidad_id		IN	NUMBER,
+        fecha_inicio	IN	DATE,
+		fecha_fin		IN	DATE,
+		resultado_valor	OUT NUMBER,
+		resultado_mensaje	OUT VARCHAR2
+  )AS 
+BEGIN
+  RESULTADO_VALOR := 0;
+  RESULTADO_MENSAJE := 'se reproceso la tramision entrada N8 de la entidad ' || entidad_id || '  correctamente';
+
+END REPROC_TX_ENTRADA_N8_CON_ERROR;
+
+
+
 
   PROCEDURE habilitar_transmisiones  (
 		ve_id			IN	NUMBER,
@@ -975,7 +1004,7 @@ END HABILITAR_TRANSMISIONES;
 
 
 PROCEDURE obtener_config_monitoreo  (
-		entidad_id		IN	NUMBER,
+		entidad_id		IN	NUMBER DEFAULT 0 ,
 		tCursor		OUT cur_Tabla
   )
  AS 
