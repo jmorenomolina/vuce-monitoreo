@@ -1,4 +1,9 @@
- var util = {                 
+ var util = {    
+		 resetCanvas : function (canvasId) {
+			    $('#' + canvasId).prev().remove();
+			    $('#' + canvasId).remove();
+			    $('#parent-' + canvasId).html('<canvas id="' + canvasId + '"></canvas>');
+		 },
          getDate: function () {               
             var today = new Date();
             var dd = today.getDate();

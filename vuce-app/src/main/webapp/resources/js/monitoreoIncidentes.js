@@ -6,10 +6,10 @@ var xmlTransacciones = [];
 var ebXmlTransacciones = [];    
 var xmlNotificaciones = [];                           
 
-var dateOption ={
-		 autoclose: true,
-         format: 'dd/mm/yyyy'
-};
+		var dateOption ={
+				 autoclose: true,
+		         format: 'dd/mm/yyyy'
+		};
 
         $(document).ready(function () {  
         	
@@ -20,6 +20,14 @@ var dateOption ={
         	api.callTipoIncidente();
         	api.callEstadoVuceCentral();
         	api.callEstadoVuceEntidad();
+        	
+        	
+         	
+            var timeInterval = api.callIntervalo();      
+           
+            
+        	
+        	
         	
         	
             $('#dp-fechadesde-tra-inc').datepicker(dateOption).on('changeDate',function(e){
@@ -249,7 +257,7 @@ var dateOption ={
         });
         
         
-        
+        /*
         var action = {
                  
                  getDate: function () {               
@@ -591,4 +599,4 @@ var dateOption ={
                 }
                 
 
-        }
+        }**/

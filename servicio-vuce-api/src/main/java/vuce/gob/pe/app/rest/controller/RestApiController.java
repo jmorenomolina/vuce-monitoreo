@@ -60,6 +60,13 @@ public class RestApiController {
 	private final String FORMAT_DATE = "dd/MM/yyyy";
 	
 	
+	private final Integer TIEMPO_MILISEGUNDOS = 10000;
+	@RequestMapping(value = "/intervalo", method = RequestMethod.GET)
+	public ResponseEntity<Integer> intervalo() {
+		return new ResponseEntity<>(TIEMPO_MILISEGUNDOS, HttpStatus.OK);
+	}
+	
+	
 	@RequestMapping(value = "/tipodocumentos", method = RequestMethod.GET)
 	public ResponseEntity<List<Parametro>> tipodocumentos() {
 		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("TIPODOC");
