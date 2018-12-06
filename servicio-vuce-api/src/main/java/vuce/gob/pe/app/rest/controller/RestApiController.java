@@ -60,7 +60,7 @@ public class RestApiController {
 	private final String FORMAT_DATE = "dd/MM/yyyy";
 	
 	
-	private final Integer TIEMPO_MILISEGUNDOS = 10000;
+	private final Integer TIEMPO_MILISEGUNDOS = 30000;
 	@RequestMapping(value = "/intervalo", method = RequestMethod.GET)
 	public ResponseEntity<Integer> intervalo() {
 		return new ResponseEntity<>(TIEMPO_MILISEGUNDOS, HttpStatus.OK);

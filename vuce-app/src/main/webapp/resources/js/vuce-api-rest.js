@@ -485,7 +485,7 @@ var api = {
 	                    	  rowEntrada.push(cantidadEntrada);
 	                    	
 	                    	  
-	                    	  if(value.tieneIncidente===1){
+	                    	  if(value.tipoIncidente===3){
 	                    		  rowEntrada.push("<input type='checkbox' row='"+cantidadEntrada+"' vcid='"+value.vcId+"' vctransaccion='"+value.tipoMensaje+"' veid='"+value.veId+"' vetransaccion='"+value.tipoMensaje+"' name='ck-entrada' />");
 	                    	  }else{
 	                    		  rowEntrada.push("");
