@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author cquevedo
  */
 @Entity
-@Table(name = "TX_ENTIDAD")
+@Table(name = "TX_ENTIDAD", schema="MTOBJ")
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "Entidad.findAll", query = "SELECT e FROM Entidad e"),
 		@NamedQuery(name = "Entidad.findByIdEntidad", query = "SELECT e FROM Entidad e WHERE e.idEntidad = :idEntidad"),		

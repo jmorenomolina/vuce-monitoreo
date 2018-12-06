@@ -49,6 +49,8 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCall;
 	
+	private final String ESQUEMA="MTSRC";
+	
 	private final String PACKAGE="PROYECTO_BUS";
 
 	private final String FUN_OBTENER_TX_CON_INCIDENTE = "OBTENER_TX_CON_INCIDENTES";
@@ -60,6 +62,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName(FUN_OBTENER_TX_CON_INCIDENTE)
+					.withSchemaName(ESQUEMA)
 					.withCatalogName(PACKAGE)
 					.returningResultSet(FUN_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionIncidenteRowMapper());
 			SqlParameterSource in = new MapSqlParameterSource().addValue("fecha_inicio", fechaInicio)
@@ -80,6 +83,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_OBTENER_CONF_MONITOREO)
+					 .withSchemaName(ESQUEMA)
 					 .withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_CONF_MONITOREO_RETURN, new ObtenerConfiguracionMonitoreoRowMapper());
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);				
@@ -100,6 +104,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_FILTRAR_TRANSMISIONES)
+					 .withSchemaName(ESQUEMA)
 					 .withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionRowMapper());
 			SqlParameterSource in = new MapSqlParameterSource().addValue("CODIGO_ENTIDAD", request.getCodigoEntidad())
@@ -128,7 +133,8 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)					 
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VC_ID", vcId)
@@ -154,6 +160,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(HABILITAR_TRANSMISIONES)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID", veId);
@@ -177,6 +184,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(REPROC_TX_ENTRADA_CON_ERROR)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource()
@@ -204,6 +212,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(ANULAR_TX_ENTRADA_CON_ERROR)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID_IN", veId)
@@ -229,6 +238,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
@@ -253,6 +263,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(ACTUALIZAR_CONFIG_MONITOREO)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ID_ENTIDAD", entidadId).addValue("CORREO_SOPORTE", correoSoporte)
@@ -272,6 +283,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+					.withSchemaName(ESQUEMA)
 					.withProcedureName(DETENER_TRANSMISIONES)
 					.withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
