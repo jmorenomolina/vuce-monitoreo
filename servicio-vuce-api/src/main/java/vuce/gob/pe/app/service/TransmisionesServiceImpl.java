@@ -61,7 +61,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName(FUN_OBTENER_TX_CON_INCIDENTE)
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(FUN_OBTENER_TX_CON_INCIDENTE)
 					.withSchemaName(ESQUEMA)
 					.withCatalogName(PACKAGE)
 					.returningResultSet(FUN_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionIncidenteRowMapper());
