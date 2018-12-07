@@ -46,6 +46,7 @@ import vuce.gob.pe.app.util.RestAppException;
 public class RestApiController {
 
 	public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
+	
 
 	@Autowired
 	private final EntidadRepository repositoryEntidad = null;
@@ -138,6 +139,7 @@ public class RestApiController {
 		logger.info("crearMensajeRespuestaError: [{}]",e.getDeveloperMessage());
 		MensajeSalidaDTO response = new MensajeSalidaDTO();
 		response.setResultadoMensaje(e.getDeveloperMessage());
+		response.setErrorNegocio(e.getMessage());
 		response.setResultadoValor(500);
 		return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -161,7 +163,6 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(transmisiones, HttpStatus.OK);
 		} catch (RestAppException e) {
-			//return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
 			return this.crearMensajeRespuestaError(e);
 		}
 
@@ -245,7 +246,6 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			//return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			return this.crearMensajeRespuestaError(e);
 		}
 	}
@@ -361,7 +361,6 @@ public class RestApiController {
 			}
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (RestAppException e) {
-			//return new ResponseEntity<MensajeSalidaDTO>(HttpStatus.NO_CONTENT);
 			return this.crearMensajeRespuestaError(e);
 		}
 	}

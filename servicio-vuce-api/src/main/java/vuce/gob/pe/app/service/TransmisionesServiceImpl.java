@@ -1,7 +1,6 @@
 package vuce.gob.pe.app.service;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +72,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
 	
@@ -93,7 +92,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			return (List) result.get(PC_OBTENER_CONF_MONITOREO_RETURN);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 	}
 	
@@ -120,10 +119,9 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 					.addValue("VE_ID", request.getVeId());
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(PC_OBTENER_TX_CON_INCIDENTE_RETURN);
-		} catch (Exception e) {
-			
+		} catch (Exception e) {			
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 
 	}
@@ -148,15 +146,15 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			if(resultadoValor != null){
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {
-				throw new RestAppException(500, "501","No se proceso mensaje de salida." );
+			}else {	
+				mensaje.setResultadoMensaje("-1");
+				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}				
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
-
 	}
 
 	private final String HABILITAR_TRANSMISIONES = "HABILITAR_TRANSMISIONES";
@@ -172,13 +170,19 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID", veId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
-			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			mensaje.setResultadoValor(resultadoValor.intValueExact());
-			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");			
+			
+			if(resultadoValor != null){
+				mensaje.setResultadoValor(resultadoValor.intValueExact());
+				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			}else {	
+				mensaje.setResultadoMensaje("-1");
+				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
+			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 
 	}
@@ -201,12 +205,17 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			mensaje.setResultadoValor(resultadoValor.intValueExact());
-			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			if(resultadoValor != null){
+				mensaje.setResultadoValor(resultadoValor.intValueExact());
+				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			}else {	
+				mensaje.setResultadoMensaje("-1");
+				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
+			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 	}
 
@@ -227,12 +236,17 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			mensaje.setResultadoValor(resultadoValor.intValueExact());
-			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			if(resultadoValor != null){
+				mensaje.setResultadoValor(resultadoValor.intValueExact());
+				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			}else {	
+				mensaje.setResultadoMensaje("-1");
+				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
+			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 	}
 
@@ -251,13 +265,18 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 					.addValue("FECHA_INICIO", fechaInicio).addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
-			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			mensaje.setResultadoValor(resultadoValor.intValueExact());
-			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");		
+			if(resultadoValor != null){
+				mensaje.setResultadoValor(resultadoValor.intValueExact());
+				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			}else {	
+				mensaje.setResultadoMensaje("-1");
+				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
+			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 	}
 
@@ -277,7 +296,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			simpleJdbcCall.execute(in);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 	}
 	
@@ -296,14 +315,19 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 					.addValue("FECHA_INICIO", fechaInicio)
 					.addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
-			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			mensaje.setResultadoValor(resultadoValor.intValueExact());
-			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
+			if(resultadoValor != null){
+				mensaje.setResultadoValor(resultadoValor.intValueExact());
+				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			}else {	
+				mensaje.setResultadoMensaje("-1");
+				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
+			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
 	}
 
