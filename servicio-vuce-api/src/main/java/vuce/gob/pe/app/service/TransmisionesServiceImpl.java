@@ -143,8 +143,12 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			mensaje.setResultadoValor(resultadoValor.intValueExact());
-			mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			if(resultadoValor != null){
+				mensaje.setResultadoValor(resultadoValor.intValueExact());
+				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
+			}else {
+				throw new RestAppException(500, "501","No se proceso mensaje de salida." );
+			}				
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
