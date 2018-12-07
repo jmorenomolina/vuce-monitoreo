@@ -54,7 +54,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private final String PACKAGE="PROYECTO_BUS";
 
 	private final String FUN_OBTENER_TX_CON_INCIDENTE = "OBTENER_TX_CON_INCIDENTES";
-	private final String FUN_OBTENER_TX_CON_INCIDENTE_RETURN = "resp_cursor";
+	private final String FUN_OBTENER_TX_CON_INCIDENTE_RETURN = "tCursor";
 
 	@Override
 	public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio, Date fechaFin)
