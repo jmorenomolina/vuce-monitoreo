@@ -12,7 +12,7 @@
 
     <groupId>pe.gob.vuce</groupId>
     <artifactId>servicio-consola-ui-vuce</artifactId>
-    <version>1.0</version>
+    <version>C.1.0</version>
     <packaging>war</packaging>
 
     <name>servicio-consola-ui-vuce</name>
