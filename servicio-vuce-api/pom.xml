@@ -6,7 +6,7 @@
 
 	<groupId>vuce.gob.pe</groupId>
 	<artifactId>servicio-vuce-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>C1.0</version>
 	<packaging>jar</packaging>
 
 	<name>servicio-vuce-api</name>
