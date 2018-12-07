@@ -137,8 +137,8 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 					.withSchemaName(ESQUEMA)
 					.withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR)
 					.withCatalogName(PACKAGE);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("VC_ID", vcId)
-					.addValue("VC_TRANSACCION", vcTransaccion).addValue("VE_ID", veId)
+			SqlParameterSource in = new MapSqlParameterSource().addValue("VC_ID_IN", vcId)
+					.addValue("VC_TRANSACCION", vcTransaccion).addValue("VE_ID_IN", veId)
 					.addValue("VE_TRANSACCION", veTransaccion);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
