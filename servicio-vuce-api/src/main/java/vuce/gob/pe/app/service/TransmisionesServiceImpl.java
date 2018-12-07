@@ -1,6 +1,7 @@
 package vuce.gob.pe.app.service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -69,9 +70,10 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 					.addValue("fecha_fin", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(FUN_OBTENER_TX_CON_INCIDENTE_RETURN);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", e.getMessage(), "Error al ejecutar el procedimiento almacenado", e);
+			throw new RestAppException("500", e.getMessage(), e.getMessage(), e);
 		}
 	}
 	
