@@ -9,6 +9,8 @@
 	<version>C.1.0</version>
 	<packaging>jar</packaging>
 
+	 <!--  mvn install -Dmaven.test.skip=true -->
+
 	<name>servicio-vuce-api</name>
 	<description>Servicio Vuce API</description>
 
@@ -25,10 +27,6 @@
 		<java.version>1.8</java.version>		
 		<oracle.version>11.2.0.2.0</oracle.version>
 	</properties>
-	
-	
-	
-
 	
 
 	<dependencies>
