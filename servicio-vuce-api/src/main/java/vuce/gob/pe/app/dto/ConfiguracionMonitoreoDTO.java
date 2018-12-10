@@ -26,6 +26,12 @@ public class ConfiguracionMonitoreoDTO {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
+	@Override
+	public String toString() {
+		return "ConfiguracionMonitoreoDTO [entidadId=" + entidadId + ", sla=" + sla + ", valor=" + valor + "]";
+	}
+	
+	
 	
 	
 	

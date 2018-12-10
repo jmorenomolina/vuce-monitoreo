@@ -345,11 +345,19 @@ public class RestApiController {
 		
 		try {
 			List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAll();
-			if (!entidades.isEmpty()) {
-				logger.info("obtenerConfiguracionMonitoreo paso: [{}] Size[{}]",1,entidades.size());				
+			if (!entidades.isEmpty()) {			
 				List<ConfiguracionMonitoreoDTO> responseConf = repositoryTransmisionesService.obtenerConfiguracionMonitoreo(input.getEntidadId());
 				
-				logger.info("obtenerConfiguracionMonitoreo paso: [{}] Size[{}]",2,responseConf.size());
+				if(Optional.ofNullable(responseConf).isPresent() &&  !responseConf.isEmpty()) {
+					responseConf.forEach(r->{
+						logger.info("obtenerConfiguracionMonitoreo configuracion: [{}]",r.toString());
+					});
+					
+				}else {
+					logger.info("[obtenerConfiguracionMonitoreo]: Lista Vacia o  nulla");
+				}
+				
+				
 				
 				List<ConfiguracionMonitoreoResponseDTO> response = ConverterToConfiguracionMonitoreoResponseDTO.converter(entidades, responseConf);
 				
