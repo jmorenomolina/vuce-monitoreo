@@ -135,5 +135,67 @@ public class EntidadMantenimientoBean implements Serializable {
         FacesMessage message = new FacesMessage(severity, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+	public List<Entidadmantenimiento> getMantenimientos() {
+		return mantenimientos;
+	}
+
+	public void setMantenimientos(List<Entidadmantenimiento> mantenimientos) {
+		this.mantenimientos = mantenimientos;
+	}
+
+	public Entidadmantenimiento getMantenimiento() {
+		return mantenimiento;
+	}
+
+	public void setMantenimiento(Entidadmantenimiento mantenimiento) {
+		this.mantenimiento = mantenimiento;
+	}
+
+	public List<Entidad> getEntidades() {
+		return entidades;
+	}
+
+	public void setEntidades(List<Entidad> entidades) {
+		this.entidades = entidades;
+	}
+
+	public Entidad getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(Entidad entidad) {
+		this.entidad = entidad;
+	}
+
+	public Boolean getDisabledForm() {
+		return disabledForm;
+	}
+
+	public void setDisabledForm(Boolean disabledForm) {
+		this.disabledForm = disabledForm;
+	}
+
+	public Date getCurrentDate() {
+		return currentDate;
+	}
+
+	public void setCurrentDate(Date currentDate) {
+		this.currentDate = currentDate;
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public EntidadMantebimientoRepository getRepositoryEntidadMantenimiento() {
+		return repositoryEntidadMantenimiento;
+	}
+
+	public EntidadRepository getRepositoryEntidad() {
+		return repositoryEntidad;
+	}
+    
+    
     
 }

@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Skinet
  */
 @Entity
-@Table(name = "ENTIDADMANTENIMIENTO")
+@Table(name = "ENTIDADMANTENIMIENTO", schema="MTOBJ")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Entidadmantenimiento.findAll", query = "SELECT e FROM Entidadmantenimiento e")

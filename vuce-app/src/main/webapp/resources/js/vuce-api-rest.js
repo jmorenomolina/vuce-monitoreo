@@ -20,12 +20,48 @@ var api = {
 	                  url: contextApi + "/intervalo",
 	                  dataType: "json",	                 
 	          }).done(function (data) {
-	        	  setInterval(function(){ 
-                      console.log("refresh..");
+	        	  console.log("Intervalo: "+data.valorParametro);
+	        	  /*setInterval(function(){                       
 		               api.callTransmisionesConIncidentes();                    
-		           }, data);
+		           }, data.valorParametro);*/
 	          });
-	  },	
+	  },
+	  callMinFecha: function () {
+          $.ajax({
+                  url: contextApi + "/fechaminima",
+                  dataType: "json",	                 
+          }).done(function (data) {
+        	 
+        	  
+        	  $('#dp-fechadesde-tra-inc').attr('data-date-start-date','-'+data.valorParametro+'d');
+        	  $('#dp-fechadesde-tra').attr('data-date-start-date','-'+data.valorParametro+'d');
+        	  
+        		var dateOption ={
+       				 autoclose: true,
+       		         format: 'dd/mm/yyyy'
+       	  	  };
+        	  $('#dp-fechadesde-tra-inc').datepicker(dateOption).on('changeDate',function(e){
+        			if(util.validateDate('dp-fechadesde-tra-inc','dp-fechahasta-tra-inc')){
+                   		api.callTransmisionesConIncidentes();
+                   	}else{                   		
+                   		alert("La fecha Hasta debe ser mayor a la fecha Desde");
+                   	}
+              });
+        	  
+        	  $('#dp-fechadesde-tra').datepicker(dateOption).on('changeDate',function(e){
+      			if(!util.validateDate('dp-fechadesde-tra','dp-fechahasta-tra')){
+      				alert("La fecha Hasta debe ser mayor a la fecha Desde");
+                }
+              });
+        	  
+        	  
+        	  
+        	  
+        	  
+              $('#dp-fechadesde-tra').datepicker(dateOption);  
+        	
+          });
+	  },
 	 callEntidades: function () {
               $.ajax({
                       url: contextApi + "/entidades",
@@ -71,7 +107,7 @@ var api = {
 	          }).done(function (data) {
 	              var $select = $('#tipomensajes');
 	              $select.find('option').remove();
-	              $select.append('<option value="%" selected="selected">Todas</option>');
+	              $select.append('<option value="%" selected="selected">Todos</option>');
 	              $.each(data, function (key, value)
 	              {
 	                  $select.append('<option value=' + value.valorParametro + '>' + value.valorParametro + '</option>');
@@ -170,7 +206,9 @@ var api = {
 	          });
 	  },
 	  
-	  callTransmisionesConIncidentes : function () {		
+	  callTransmisionesConIncidentes : function () {
+		  if(util.validateDate('dp-fechadesde-tra-inc','dp-fechahasta-tra-inc')){
+      				  
 		    var labels = [];
 		    var dataEntrada =[];
 		    var dataSalida =[];
@@ -193,7 +231,8 @@ var api = {
 					 dataSalida.push(response[j].cantidadTrasmisionSalida);							 
 				 }
 				 chart.transmisionesConIncidencia(labels,dataEntrada,dataSalida)
-			});		    
+			});
+		  }
 		},	
 		handleTransmisionesSalidaConError: function(){			
 			$('#modal-reenviar-transmisiones').modal('toggle');			
@@ -606,7 +645,7 @@ var api = {
 					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA4",sla4);
 					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA5",sla5);
 					
-					$("#sla-mensaje").html("Se actualizo correctamente los registros SLAs");
+					$("#sla-mensaje").html("Se guardaron correctamente los SLAs");
 					
 			 },
 		     callConfiguracionMonitoreoActualizar : function (entidad_id,sla_nombre,sla_valor) {								

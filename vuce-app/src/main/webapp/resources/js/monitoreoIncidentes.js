@@ -19,30 +19,31 @@ var xmlNotificaciones = [];
         	api.callTipoTransmision();
         	api.callTipoIncidente();
         	api.callEstadoVuceCentral();
-        	api.callEstadoVuceEntidad();
+        	api.callEstadoVuceEntidad();        	
         	
-        	
-         	
             var timeInterval = api.callIntervalo();      
-           
+        	
             
-        	
-        	
-        	
-        	
-            $('#dp-fechadesde-tra-inc').datepicker(dateOption).on('changeDate',function(e){
-                api.callTransmisionesConIncidentes();
-            });
+            api.callMinFecha();
           
             
             $('#dp-fechahasta-tra-inc').datepicker(dateOption).on('changeDate',function(e){
-            	api.callTransmisionesConIncidentes();
+            	if(util.validateDate('dp-fechadesde-tra-inc','dp-fechahasta-tra-inc')){
+            		api.callTransmisionesConIncidentes();
+            	}else{
+            		alert("La fecha Hasta debe ser mayor a la fecha Desde");
+            	}
             });
             
-   
+     
+            $('#dp-fechahasta-tra').datepicker(dateOption).on('changeDate',function(e){
+            	if(!util.validateDate('dp-fechadesde-tra','dp-fechahasta-tra')){
+            		alert("La fecha Hasta debe ser mayor a la fecha Desde");
+            	}
+            });
             
-            $('#dp-fechadesde-tra').datepicker(dateOption);  
-            $('#dp-fechahasta-tra').datepicker(dateOption);
+            
+            
             $('#dp-fechadesde-det').datepicker(dateOption); 
             $('#dp-fechahasta-det').datepicker(dateOption);
             $('#dp-fechadesde-reepro').datepicker(dateOption);   
@@ -176,6 +177,7 @@ var xmlNotificaciones = [];
                 lineWrapping: true
             });
             
+            api.callTransmisionesConIncidentes();    
             
             
             /*setInterval(function(){ 

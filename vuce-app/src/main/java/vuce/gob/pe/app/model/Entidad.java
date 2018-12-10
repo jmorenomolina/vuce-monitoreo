@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Skinet
  */
 @Entity
-@Table(name = "ENTIDAD")
+@Table(name = "ENTIDAD", schema="MTOBJ")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Entidad.findAll", query = "SELECT e FROM Entidad e")

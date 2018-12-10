@@ -61,11 +61,29 @@ public class RestApiController {
 	private final String FORMAT_DATE = "dd/MM/yyyy";
 	
 	
-	private final Integer TIEMPO_MILISEGUNDOS = 30000;
+	
 	@RequestMapping(value = "/intervalo", method = RequestMethod.GET)
-	public ResponseEntity<Integer> intervalo() {
-		return new ResponseEntity<>(TIEMPO_MILISEGUNDOS, HttpStatus.OK);
+	public ResponseEntity<Parametro> intervalo() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("INTERVALO");
+		if(Optional.ofNullable(parametros).isPresent() && !parametros.isEmpty()) {
+			Parametro parametro = parametros.get(0);
+			return new ResponseEntity<>(parametro, HttpStatus.OK);
+		}
+		return new ResponseEntity<Parametro>(HttpStatus.NO_CONTENT);
 	}
+	
+
+	@RequestMapping(value = "/fechaminima", method = RequestMethod.GET)
+	public ResponseEntity<Parametro> fechaMinima() {
+		List<Parametro> parametros = (List<Parametro>) repositoryParametro.findByTipoParametro("FECHAMIN");
+		if(Optional.ofNullable(parametros).isPresent() && !parametros.isEmpty()) {
+			Parametro parametro = parametros.get(0);
+			return new ResponseEntity<>(parametro, HttpStatus.OK);
+		}
+		return new ResponseEntity<Parametro>(HttpStatus.NO_CONTENT);
+		
+	}
+	
 	
 	
 	@RequestMapping(value = "/tipodocumentos", method = RequestMethod.GET)

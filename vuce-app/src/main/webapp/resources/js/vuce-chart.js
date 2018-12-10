@@ -22,7 +22,7 @@ var chart={
 				options : {
 					title : {
 						display : true,
-						text : 'Total de Transmisiones con incidentes por entidad'
+						text : 'Total de transmisiones con incidentes por entidad'
 					},
 					tooltips : {
 						mode : 'index',
@@ -71,8 +71,8 @@ var table={
 			        ],
 			        
 		        	'lengthChange': false,
-		            'searching': false,
-		            'ordering': false,
+		            'searching': true,
+		            'ordering': true,
 		            'info': true,
 		            'autoWidth': false,
 		            "scrollX": true,

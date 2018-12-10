@@ -1,4 +1,20 @@
  var util = {    
+		 validateDate(idFechaDesde,idFechaHasta){
+			var fechaDesde = $("#"+idFechaDesde).val();
+         	var partsDesde =fechaDesde.split('/');
+         	
+         	var fechaHasta = $("#"+idFechaHasta).val();
+         	var partsHasta =fechaHasta.split('/');
+         	
+         	var fechaDesdeDate = new Date(partsDesde[2], partsDesde[1], partsDesde[0]); //Year, Month, Date  
+            var fechaHastaDate = new Date(partsHasta[2], partsHasta[1], partsHasta[0]); //Year, Month, Date  
+
+            if(fechaHastaDate>=fechaDesdeDate){
+              return true;
+            }else{
+            	 return false;
+            }
+		 },
 		 resetCanvas : function (canvasId) {
 			    $('#' + canvasId).prev().remove();
 			    $('#' + canvasId).remove();
