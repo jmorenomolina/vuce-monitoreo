@@ -102,12 +102,12 @@ var xmlNotificaciones = [];
             };
             
             document.getElementById("btn-habilitar-transmisiones").onclick = function () {
-            	var checkboxes = $('input[name="ck-salida"]:checked');
-            	if(checkboxes.length>0){
+            	if(listHabilitarTransmisiones.length>0){
             		$('#modal-habilitar-transmisiones').modal('toggle');	
             	}else{
-            		alert("Seleccionar al menos una fila.");
-            	}            	
+            		alert("No existen transmisiones para ser habilitadas.");
+            	}
+            	            	
             };
             
             
@@ -149,6 +149,9 @@ var xmlNotificaciones = [];
             table.create("tb-transmisiones-entrada",false);      
             
             table.createSimpleTable("tb-configurar-sla");
+            table.createSimpleTable("tb-frecuencia-lectura");
+            api.callFrecuenciaLectura();
+            
             api.callConfiguracionMonitoreo();
             
             

@@ -22,8 +22,10 @@ import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 import vuce.gob.pe.app.model.Entidad;
+import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.model.Parametro;
 import vuce.gob.pe.app.repository.EntidadRepository;
+import vuce.gob.pe.app.repository.FrecuenciaLecturaRepository;
 import vuce.gob.pe.app.repository.ParametroRepository;
 import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoInput;
 import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoObtenerInput;
@@ -52,6 +54,10 @@ public class RestApiController {
 	private final EntidadRepository repositoryEntidad = null;
 	
 	@Autowired
+	private final FrecuenciaLecturaRepository frecuenciaLecturaEntidad = null;
+	
+	
+	@Autowired
 	private final ParametroRepository repositoryParametro = null;	
 	
 
@@ -60,6 +66,15 @@ public class RestApiController {
 
 	private final String FORMAT_DATE = "dd/MM/yyyy";
 	
+	
+	@RequestMapping(value = "/frecuencialectura", method = RequestMethod.GET)
+	public ResponseEntity<List<FrecuenciaLectura>> obtenerfrecuencialectura() {
+		List<FrecuenciaLectura> parametros = (List<FrecuenciaLectura>) frecuenciaLecturaEntidad.findAll();
+		if (parametros.isEmpty()) {
+			return new ResponseEntity<List<FrecuenciaLectura>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(parametros, HttpStatus.OK);
+	}
 	
 	
 	@RequestMapping(value = "/intervalo", method = RequestMethod.GET)

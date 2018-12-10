@@ -23,6 +23,7 @@ import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
+import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.repository.TransmisionesRepository;
 import vuce.gob.pe.app.service.mapper.ObtenerConfiguracionMonitoreoRowMapper;
 import vuce.gob.pe.app.service.mapper.TramisionIncidenteRowMapper;
@@ -329,6 +330,11 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
 		}
+	}
+	@Override
+	public List<FrecuenciaLectura> obtenterFrecuenciaLectura() throws RestAppException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

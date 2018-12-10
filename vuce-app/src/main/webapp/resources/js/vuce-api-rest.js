@@ -13,17 +13,69 @@ var ebXmlEntrada = [];
 var errorEntrada = [];  
 
 
+var listHabilitarTransmisiones = [];  
+
+
 
 var api = {	
+	  callFrecuenciaLectura: function () {
+	          $.ajax({
+	                  url: contextApi + "/frecuencialectura",
+	                  dataType: "json",	                 
+	          }).done(function (data, textStatus, xhr) {
+	              
+		             if(xhr.status===200){                            
+		                   
+		                  var dataSet = [];
+		                 
+		                  $.each(data, function (key, value)
+		                  {
+		                	  var row = [];
+		                	  
+		                	  row.push(value.entidad);
+		                	  
+		                	  
+		                	  if(value.enMantenimiento===1){ // rojo
+		                		  row.push("<div class='border-radius tipo-transacciones en-actividad-rojo'></div>");  
+	                    	  }else{
+	                    		  row.push("<div class='border-radius tipo-transacciones en-actividad-verde'></div>"); 
+	                    	  }	   
+		                	  
+		                	  
+		                	  row.push(value.frecuenciaLecturaEsperada+" min");
+		                	  row.push(value.frecuenciaLecturaActual+" min");
+		                	  
+		                	  if(value.cumpleFrecuenciaLectura===1){ // rojo
+		                		  row.push("<div class='border-radius tipo-transacciones en-actividad-rojo'></div>");  
+	                    	  }else{
+	                    		  row.push("<div class='border-radius tipo-transacciones en-actividad-verde'></div>"); 
+	                    	  }	
+		                	  
+		                
+		                	  row.push("");
+		                	  row.push("");
+		                	  row.push("");
+		                      dataSet.push(row)
+		                  });
+		                  
+		           	                  
+		                  table.update("tb-frecuencia-lectura",dataSet); 
+		                  
+		                  
+		              }
+		          
+		                                       
+		          });
+	  },
 	   callIntervalo: function () {
 	          $.ajax({
 	                  url: contextApi + "/intervalo",
 	                  dataType: "json",	                 
 	          }).done(function (data) {
 	        	  console.log("Intervalo: "+data.valorParametro);
-	        	  /*setInterval(function(){                       
+	        	  setInterval(function(){                       
 		               api.callTransmisionesConIncidentes();                    
-		           }, data.valorParametro);*/
+		           }, data.valorParametro);
 	          });
 	  },
 	  callMinFecha: function () {
@@ -53,10 +105,6 @@ var api = {
       				alert("La fecha Hasta debe ser mayor a la fecha Desde");
                 }
               });
-        	  
-        	  
-        	  
-        	  
         	  
               $('#dp-fechadesde-tra').datepicker(dateOption);  
         	
@@ -267,19 +315,26 @@ var api = {
 				});		    
 		},
 		handleTransmisionHabilitar: function(){			
-			$('#modal-habilitar-transmisiones').modal('toggle');			
-			if (!$.fn.DataTable.isDataTable( '#tb-salida-log' ) ) {
-				table.createSimpleTable("tb-salida-log");				
-            }else{
-            	table.cleanTable("tb-salida-log");
-            }			
-			var checkboxes = $('input[name="ck-salida"]');
-			$.each(checkboxes, function()
-            {
-				if ($(this).prop('checked')) {				
-					api.callTransmisionHabilitar($(this).attr("row"),$(this).attr("veid"));
-				}				
-            });			
+					
+			
+			if(listHabilitarTransmisiones.length>0){
+				
+				$('#modal-habilitar-transmisiones').modal('toggle');			
+				
+				if (!$.fn.DataTable.isDataTable( '#tb-salida-log' ) ) {
+					table.createSimpleTable("tb-salida-log");				
+	            }else{
+	            	table.cleanTable("tb-salida-log");
+	            }	
+				
+				$.each(listHabilitarTransmisiones, function(index, element )
+			    {		
+					//console.log(listHabilitarTransmisiones[0]+"========"+listHabilitarTransmisiones[0]);
+					api.callTransmisionHabilitar(element[0],element[1]);									
+	            });	
+				
+			}
+					
 			$('#modal-tb-salida-log').modal('toggle');
 			
 		},
@@ -444,8 +499,17 @@ var api = {
 	                      var rowEntradaEbXml = []; 	  
 	                      var rowEntradaError = []; 
 	                      
+	                      var rowHabilitar =[];
 	                      /*Si tipo es de Salida*/
 	                      if(value.tipo==="2"){
+	                    	  
+	                    	  if(value.estadoVe===10){
+	                    		
+	                    		  rowHabilitar.push(cantidadSalida);
+	                    		  rowHabilitar.push(value.veId);	                    		   
+	                    		  listHabilitarTransmisiones.push(rowHabilitar);
+	                    	  }
+	                    	  
 	                    	  
 	                    	  if(value.tipoIncidente===2){
 	                    		  util.activateReenviarTransmisionesIncorrectamente(true);
@@ -456,7 +520,7 @@ var api = {
 	                    	  
 	                    	  var rowSalida = [];   	                    	
 	                    	  rowSalida.push(cantidadSalida);
-	                    	  if(value.tieneIncidente===1){
+	                    	  if(value.tieneIncidente===1 && value.tipoIncidente===2){
 	                    		  rowSalida.push("<input type='checkbox' row='"+cantidadSalida+"' vcid='"+value.vcId+"' vctransaccion='"+value.tipoMensaje+"' veid='"+value.veId+"' vetransaccion='"+value.tipoMensaje+"' name='ck-salida' />");
 	                    	  }else{
 	                    		  rowSalida.push("");

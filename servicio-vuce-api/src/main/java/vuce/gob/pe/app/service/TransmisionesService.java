@@ -8,6 +8,7 @@ import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
+import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.util.RestAppException;
 
 /**
@@ -35,5 +36,7 @@ public interface TransmisionesService {
     public void actualizarConfiguracionMonitoreo(Integer entidadId,String correoSoporte,String slaNombre, Integer slaValor,String estado)  throws RestAppException;
     
     public MensajeSalidaDTO detenerTrasmision(Integer entidadId,Date fechaInicio,Date fechaFin)  throws RestAppException;   
+    
+    public List<FrecuenciaLectura> obtenterFrecuenciaLectura()  throws RestAppException;
     
 }

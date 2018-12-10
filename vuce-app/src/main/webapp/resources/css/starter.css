@@ -65,15 +65,29 @@ ul.head-list-table li {
 
 
 .tipo-transacciones-3{
-    background-color: #9959ae;
-    border: 2px solid #9959ae;
-}
-
-.tipo-transacciones-4{
-    background-color: #d60451;
+   background-color: #d60451;
     border: 2px solid #d60451;
 }
 
+.tipo-transacciones-4{
+    
+    
+   background-color: #9959ae;
+    border: 2px solid #9959ae;
+}
+
+
+.en-actividad-rojo{
+	background-color: #ff0d0d;
+    border: 2px solid #ff0d0d;
+	
+}
+
+.en-actividad-verde{
+	background-color: #3fb50f;
+    border: 2px solid #3fb50f;
+	
+}
 
 
 
@@ -194,7 +208,7 @@ ul.head-list-table li {
     text-align: center;
 }
 
-
+table#tb-frecuencia-lectura tbody tr td,
 table#tb-configurar-sla tbody tr td,
 table#tb-transmisiones-salida tbody tr td,
 table#tb-transmisiones-entrada tbody tr td{

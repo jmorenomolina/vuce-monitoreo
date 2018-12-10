@@ -82,7 +82,7 @@ var table={
 		            'language': {
 		                'lengthMenu': "Mostrar _MENU_ registros por pagina",
 		                'zeroRecords': "No encontrado.",
-		                'info': "Mostrar pagina _PAGE_ de _PAGES_",
+		                'info': "Total de Tx _MAX_        	|       Mostrar pagina _PAGE_ de _PAGES_ ",
 		                'infoEmpty': " ",
 		                'infoFiltered': "(filtered from _MAX_ total records)",
 		                "paginate": {
