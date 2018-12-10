@@ -41,45 +41,44 @@ public class ConverterToConfiguracionMonitoreoResponseDTO {
 	  return entidades.stream().filter(e->e.getIdEntidad().equals(configuracion.getEntidadId())).findAny().orElse(null);
   }
   
-  private final static String SLA1="SLA1";
-  private final static String SLA1SPACE="SLA 1";  
-  private final static String SLA2="SLA2";
-  private final static String SLA2SPACE="SLA 2";  
-  private final static String SLA3="SLA3";
-  private final static String SLA3SPACE="SLA 3";  
-  private final static String SLA4="SLA4";
-  private final static String SLA4SPACE="SLA 4";  
-  private final static String SLA5="SLA5";
-  private final static String SLA5SPACE="SLA 5";
+  private final static String SLA1="SLA_DISPONIBILIDAD_TRAN_SALIDA";
+  
+  private final static String SLA2="SLA_CONFIRMACION_TRAN_SALIDA";
+  
+  private final static String SLA3="SLA_PROCESAMIENTO_TRAN_ENTRADA";
+  
+  private final static String SLA4="SLA_FRECUENCIA_LECTURA";
+  
+  private final static String SLA5="SLA_MONITOREO_FREC_LECTURA";
   
   private static ConfiguracionMonitoreoResponseDTO createConfigMonitoreo(Entidad entidad,String sla,Integer valor) {
 	  ConfiguracionMonitoreoResponseDTO conf= new ConfiguracionMonitoreoResponseDTO();
 	  conf.setEntidad(entidad.getDescripcion());
 	  conf.setEntidadId(entidad.getIdEntidad());
-	  if(SLA1.equalsIgnoreCase(sla) || SLA1SPACE.equalsIgnoreCase(sla)) {
+	  if(SLA1.equalsIgnoreCase(sla) ) {
 		  conf.setValorSla1(valor);
-	  }else if(SLA2.equalsIgnoreCase(sla) || SLA2SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA2.equalsIgnoreCase(sla)) {
 		  conf.setValorSla2(valor);
-	  }else if(SLA3.equalsIgnoreCase(sla) || SLA3SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA3.equalsIgnoreCase(sla) ) {
 		  conf.setValorSla3(valor);
-	  }else if(SLA4.equalsIgnoreCase(sla) || SLA4SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA4.equalsIgnoreCase(sla)) {
 		  conf.setValorSla4(valor);
-	  }else if(SLA5.equalsIgnoreCase(sla) || SLA5SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA5.equalsIgnoreCase(sla)) {
 		  conf.setValorSla5(valor);
 	  }
 	  return conf;
   }
   
   private static ConfiguracionMonitoreoResponseDTO updateConfigMonitoreo(ConfiguracionMonitoreoResponseDTO conf,String sla,Integer valor) {
-      if(SLA1.equalsIgnoreCase(sla) || SLA1SPACE.equalsIgnoreCase(sla)) {
+      if(SLA1.equalsIgnoreCase(sla)) {
 		  conf.setValorSla1(valor);
-	  }else if(SLA2.equalsIgnoreCase(sla) || SLA2SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA2.equalsIgnoreCase(sla) ) {
 		  conf.setValorSla2(valor);
-	  }else if(SLA3.equalsIgnoreCase(sla) || SLA3SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA3.equalsIgnoreCase(sla)) {
 		  conf.setValorSla3(valor);
-	  }else if(SLA4.equalsIgnoreCase(sla) || SLA4SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA4.equalsIgnoreCase(sla)) {
 		  conf.setValorSla4(valor);
-	  }else if(SLA5.equalsIgnoreCase(sla) || SLA5SPACE.equalsIgnoreCase(sla)) {
+	  }else if(SLA5.equalsIgnoreCase(sla) ) {
 		  conf.setValorSla5(valor);
 	  }
 	  return conf;
