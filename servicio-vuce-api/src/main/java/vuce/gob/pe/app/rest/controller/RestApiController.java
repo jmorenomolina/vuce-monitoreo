@@ -161,7 +161,7 @@ public class RestApiController {
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Entidad>> entidades() {
 
-		List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAll();
+		List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAllByOrderByDescripcionAsc();
 		if (entidades.isEmpty()) {
 			return new ResponseEntity<List<Entidad>>(HttpStatus.NO_CONTENT);
 		}

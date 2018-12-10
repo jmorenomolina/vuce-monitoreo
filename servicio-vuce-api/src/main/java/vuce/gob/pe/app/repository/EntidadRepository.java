@@ -15,6 +15,8 @@
  */
 package vuce.gob.pe.app.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import vuce.gob.pe.app.model.Entidad;
@@ -23,6 +25,7 @@ import vuce.gob.pe.app.model.Entidad;
  * @author cquevedo
  */
 public interface EntidadRepository extends CrudRepository<Entidad, Integer> {
-
+	
+	public List<Entidad> findAllByOrderByDescripcionAsc();
     
 }
