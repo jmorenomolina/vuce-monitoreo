@@ -1,7 +1,10 @@
 package vuce.gob.pe.app.service;
 
+import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +70,62 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			
 			logger.info("[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fecha_inicio: [{}] fecha_fin: [{}]",fechaInicio,fechaFin);
 			
-			dataSource.getConnection().setAutoCommit(false);
+		
 			jdbcTemplate = new JdbcTemplate(dataSource);
+			
+			
+			jdbcTemplate.setDataSource(new DataSource(){
+				  @Override
+				  public Connection getConnection() throws SQLException {
+				    Connection c = dataSource.getConnection();
+				    c.setAutoCommit(false);
+				    return c;
+				  }
+
+				@Override
+				public PrintWriter getLogWriter() throws SQLException {
+					return dataSource.getLogWriter();
+				}
+
+				@Override
+				public void setLogWriter(PrintWriter out) throws SQLException {
+					dataSource.setLogWriter(out);
+					
+				}
+
+				@Override
+				public void setLoginTimeout(int seconds) throws SQLException {
+					dataSource.setLoginTimeout(seconds);
+					
+				}
+
+				@Override
+				public int getLoginTimeout() throws SQLException {
+					return dataSource.getLoginTimeout();
+				}
+
+				@Override
+				public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+					return dataSource.getParentLogger();
+				}
+
+				@Override
+				public <T> T unwrap(Class<T> iface) throws SQLException {
+					return dataSource.unwrap(iface);
+				}
+
+				@Override
+				public boolean isWrapperFor(Class<?> iface) throws SQLException {
+					return dataSource.isWrapperFor(iface);
+				}
+
+				@Override
+				public Connection getConnection(String username, String password) throws SQLException {
+					return dataSource.getConnection(username, password);
+				}
+				});
+			
+			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(FUN_OBTENER_TX_CON_INCIDENTE)
 					.withSchemaName(ESQUEMA)
 					.withCatalogName(PACKAGE)
