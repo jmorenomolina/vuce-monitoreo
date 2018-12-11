@@ -53,34 +53,32 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall simpleJdbcCall;
-	
-	private final String ESQUEMA="MTSRC";
-	
-	private final String PACKAGE="PROYECTO_BUS";
+
+	private final String ESQUEMA = "MTSRC";
+
+	private final String PACKAGE = "PROYECTO_BUS";
 
 	private final String FUN_OBTENER_TX_CON_INCIDENTE = "OBTENER_TX_CON_INCIDENTES";
 	private final String FUN_OBTENER_TX_CON_INCIDENTE_RETURN = "tCursor";
-	
-	
 
 	@Override
 	public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio, Date fechaFin)
 			throws RestAppException {
 		try {
-			
-			logger.info("[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fecha_inicio: [{}] fecha_fin: [{}]",fechaInicio,fechaFin);
-			
-		
+
+			logger.info(
+					"[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fecha_inicio: [{}] fecha_fin: [{}]",
+					fechaInicio, fechaFin);
+
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			
-			
-			jdbcTemplate.setDataSource(new DataSource(){
-				  @Override
-				  public Connection getConnection() throws SQLException {
-				    Connection c = dataSource.getConnection();
-				    c.setAutoCommit(false);
-				    return c;
-				  }
+
+			jdbcTemplate.setDataSource(new DataSource() {
+				@Override
+				public Connection getConnection() throws SQLException {
+					Connection c = dataSource.getConnection();
+					c.setAutoCommit(false);
+					return c;
+				}
 
 				@Override
 				public PrintWriter getLogWriter() throws SQLException {
@@ -90,13 +88,13 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 				@Override
 				public void setLogWriter(PrintWriter out) throws SQLException {
 					dataSource.setLogWriter(out);
-					
+
 				}
 
 				@Override
 				public void setLoginTimeout(int seconds) throws SQLException {
 					dataSource.setLoginTimeout(seconds);
-					
+
 				}
 
 				@Override
@@ -123,22 +121,19 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 				public Connection getConnection(String username, String password) throws SQLException {
 					return dataSource.getConnection(username, password);
 				}
-				});
-			
-			
+			});
+
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(FUN_OBTENER_TX_CON_INCIDENTE)
-					.withSchemaName(ESQUEMA)
-					.withCatalogName(PACKAGE)
+					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
 					.returningResultSet(FUN_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionIncidenteRowMapper());
 			SqlParameterSource in = new MapSqlParameterSource().addValue("fecha_inicio", fechaInicio)
 					.addValue("fecha_fin", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(FUN_OBTENER_TX_CON_INCIDENTE_RETURN);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
-		}finally {
+		} finally {
 			try {
 				dataSource.getConnection().commit();
 			} catch (SQLException e) {
@@ -147,27 +142,26 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			}
 		}
 	}
-	
+
 	private final String PC_OBTENER_CONF_MONITOREO = "OBTENER_CONFIG_MONITOREO";
 	private final String PC_OBTENER_CONF_MONITOREO_RETURN = "TCURSOR";
+
 	@Override
 	public List<ConfiguracionMonitoreoDTO> obtenerConfiguracionMonitoreo(Integer entidadId) throws RestAppException {
 		try {
-		
+
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_OBTENER_CONF_MONITOREO)
-					 .withSchemaName(ESQUEMA)
-					 .withCatalogName(PACKAGE)
+					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_CONF_MONITOREO_RETURN, new ObtenerConfiguracionMonitoreoRowMapper());
-			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);				
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(PC_OBTENER_CONF_MONITOREO_RETURN);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
-	
 
 	private final String PC_FILTRAR_TRANSMISIONES = "FILTRAR_TRANSMISIONES";
 	private final String PC_OBTENER_TX_CON_INCIDENTE_RETURN = "TCURSOR";
@@ -176,9 +170,59 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	public List<TrasmisionDTO> filtrarTransmisiones(RequestFiltrarTransmisionesDTO request) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
+			jdbcTemplate.setDataSource(new DataSource() {
+				@Override
+				public Connection getConnection() throws SQLException {
+					Connection c = dataSource.getConnection();
+					c.setAutoCommit(false);
+					return c;
+				}
+
+				@Override
+				public PrintWriter getLogWriter() throws SQLException {
+					return dataSource.getLogWriter();
+				}
+
+				@Override
+				public void setLogWriter(PrintWriter out) throws SQLException {
+					dataSource.setLogWriter(out);
+
+				}
+
+				@Override
+				public void setLoginTimeout(int seconds) throws SQLException {
+					dataSource.setLoginTimeout(seconds);
+
+				}
+
+				@Override
+				public int getLoginTimeout() throws SQLException {
+					return dataSource.getLoginTimeout();
+				}
+
+				@Override
+				public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+					return dataSource.getParentLogger();
+				}
+
+				@Override
+				public <T> T unwrap(Class<T> iface) throws SQLException {
+					return dataSource.unwrap(iface);
+				}
+
+				@Override
+				public boolean isWrapperFor(Class<?> iface) throws SQLException {
+					return dataSource.isWrapperFor(iface);
+				}
+
+				@Override
+				public Connection getConnection(String username, String password) throws SQLException {
+					return dataSource.getConnection(username, password);
+				}
+			});
+
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_FILTRAR_TRANSMISIONES)
-					 .withSchemaName(ESQUEMA)
-					 .withCatalogName(PACKAGE)
+					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionRowMapper());
 			SqlParameterSource in = new MapSqlParameterSource().addValue("CODIGO_ENTIDAD", request.getCodigoEntidad())
 					.addValue("FECHA_INICIO", request.getFechaFin()).addValue("FECHA_FIN", request.getFechaFin())
@@ -191,9 +235,16 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 					.addValue("VE_ID", request.getVeId());
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			return (List) result.get(PC_OBTENER_TX_CON_INCIDENTE_RETURN);
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
+		}finally {
+			try {
+				dataSource.getConnection().commit();
+			} catch (SQLException e) {
+				logger.error(e.getMessage(), e);
+				throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
+			}
 		}
 
 	}
@@ -205,27 +256,25 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)					 
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR)
-					.withCatalogName(PACKAGE);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR).withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VC_ID_IN", vcId)
 					.addValue("VC_TRANSACCION", vcTransaccion).addValue("VE_ID_IN", veId)
 					.addValue("VE_TRANSACCION", veTransaccion);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			if(resultadoValor != null){
+			if (resultadoValor != null) {
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {	
+			} else {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
-			}				
+			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
 
@@ -235,26 +284,24 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	public MensajeSalidaDTO habilitarTransmision(Integer veId) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(HABILITAR_TRANSMISIONES)
-					.withCatalogName(PACKAGE);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(HABILITAR_TRANSMISIONES).withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID", veId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
-			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");			
-			
-			if(resultadoValor != null){
+			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
+
+			if (resultadoValor != null) {
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {	
+			} else {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 
 	}
@@ -262,32 +309,28 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	private final String REPROC_TX_ENTRADA_CON_ERROR = "REPROC_TX_ENTRADA_CON_ERROR";
 
 	@Override
-	public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer vcId,String vcTransaccion,Integer veId,String veTransaccion) throws RestAppException {
+	public MensajeSalidaDTO reprocesarTransaccionEntradaConError(Integer vcId, String vcTransaccion, Integer veId,
+			String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(REPROC_TX_ENTRADA_CON_ERROR)
-					.withCatalogName(PACKAGE);
-			SqlParameterSource in = new MapSqlParameterSource()
-					.addValue("VC_ID", veId)
-					.addValue("VC_TRANSACCION", veId)
-					.addValue("VE_ID", veId)
-					.addValue("VE_TRANSACCION", vcId);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(REPROC_TX_ENTRADA_CON_ERROR).withCatalogName(PACKAGE);
+			SqlParameterSource in = new MapSqlParameterSource().addValue("VC_ID", veId).addValue("VC_TRANSACCION", veId)
+					.addValue("VE_ID", veId).addValue("VE_TRANSACCION", vcId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			if(resultadoValor != null){
+			if (resultadoValor != null) {
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {	
+			} else {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
 
@@ -298,113 +341,104 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String vcTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(ANULAR_TX_ENTRADA_CON_ERROR)
-					.withCatalogName(PACKAGE);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(ANULAR_TX_ENTRADA_CON_ERROR).withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("VE_ID_IN", veId)
 					.addValue("VE_TRANSACCION", veTransaccion).addValue("VC_ID_IN", vcId)
 					.addValue("VC_TRANSACCION", vcTransaccion);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
-			if(resultadoValor != null){
+			if (resultadoValor != null) {
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {	
+			} else {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
 
 	private final String REPROC_TX_ENTRADA_N8_CON_ERROR = "REPROC_TX_ENTRADA_N8_CON_ERROR";
 
 	@Override
-	public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId, Date fechaInicio,
-			Date fechaFin) throws RestAppException {
+	public MensajeSalidaDTO reporcesarTransaccionEntradaN8ConError(Integer entidadId, Date fechaInicio, Date fechaFin)
+			throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR)
-					.withCatalogName(PACKAGE);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR).withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
 					.addValue("FECHA_INICIO", fechaInicio).addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
-			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");		
-			if(resultadoValor != null){
+			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
+			if (resultadoValor != null) {
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {	
+			} else {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
 
 	private final String ACTUALIZAR_CONFIG_MONITOREO = "ACTUALIZAR_CONFIG_MONITOREO";
 
 	@Override
-	public void actualizarConfiguracionMonitoreo(Integer entidadId,String correoSoporte, String slaNombre, Integer slaValor, String estado)
-			throws RestAppException {
+	public void actualizarConfiguracionMonitoreo(Integer entidadId, String correoSoporte, String slaNombre,
+			Integer slaValor, String estado) throws RestAppException {
 		try {
-			
-			
-			
+
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(ACTUALIZAR_CONFIG_MONITOREO)
-					.withCatalogName(PACKAGE);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("ID_ENTIDAD", entidadId).addValue("CORREO_SOPORTE", correoSoporte)
-					.addValue("SLA_NOMBRE", slaNombre).addValue("SLA_VALOR", slaValor).addValue("ESTADO", estado);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(ACTUALIZAR_CONFIG_MONITOREO).withCatalogName(PACKAGE);
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ID_ENTIDAD", entidadId)
+					.addValue("CORREO_SOPORTE", correoSoporte).addValue("SLA_NOMBRE", slaNombre)
+					.addValue("SLA_VALOR", slaValor).addValue("ESTADO", estado);
 			simpleJdbcCall.execute(in);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
-	
-	
 
 	private final String DETENER_TRANSMISIONES = "DETENER_TRANSMISIONES";
+
 	@Override
-	public MensajeSalidaDTO detenerTrasmision(Integer entidadId,Date fechaInicio,Date fechaFin) throws RestAppException {
+	public MensajeSalidaDTO detenerTrasmision(Integer entidadId, Date fechaInicio, Date fechaFin)
+			throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-					.withSchemaName(ESQUEMA)
-					.withProcedureName(DETENER_TRANSMISIONES)
-					.withCatalogName(PACKAGE);
+			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
+					.withProcedureName(DETENER_TRANSMISIONES).withCatalogName(PACKAGE);
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
-					.addValue("FECHA_INICIO", fechaInicio)
-					.addValue("FECHA_FIN", fechaFin);
+					.addValue("FECHA_INICIO", fechaInicio).addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			BigDecimal resultadoValor = (BigDecimal) result.get("RESULTADO_VALOR");
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
-			if(resultadoValor != null){
+			if (resultadoValor != null) {
 				mensaje.setResultadoValor(resultadoValor.intValueExact());
 				mensaje.setResultadoMensaje((String) result.get("RESULTADO_MENSAJE"));
-			}else {	
+			} else {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado" , e.getMessage(), e);
+			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}
 	}
+
 	@Override
 	public List<FrecuenciaLectura> obtenterFrecuenciaLectura() throws RestAppException {
 		// TODO Auto-generated method stub
