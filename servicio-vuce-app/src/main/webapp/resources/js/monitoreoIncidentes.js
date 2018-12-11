@@ -57,6 +57,9 @@ var xmlNotificaciones = [];
             $("#dp-fechadesde-det").val(util.getDate());
             $("#dp-fechahasta-det").val(util.getDate());
             
+            $('#dp-fechadesde-reepro').val(util.getDate());  
+            $('#dp-fechahasta-reepro').val(util.getDate());
+            
             document.getElementById("btn-filtrar-transmisiones").onclick = function () {
             	api.callTransmisiones();
             };
