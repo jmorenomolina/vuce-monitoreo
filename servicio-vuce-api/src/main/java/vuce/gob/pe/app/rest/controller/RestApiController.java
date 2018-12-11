@@ -382,7 +382,12 @@ public class RestApiController {
 
 		logger.info("actualizarConfiguracionMonitoreo entidadId: [{}]  correoSoporte: [{}]  slaNombre: [{}]  slaValor: [{}]   estado: [{}]",input.getEntidadId(),input.getCorreoSoporte(), input.getSlaNombre(), input.getSlaValor(), input.getEstado());
 		
-		try {
+		try {			
+				
+		    if(!Optional.ofNullable(input.getEstado()).isPresent()  ||  "".equals(input.getEstado()  )){
+		    	input.setEstado("A");
+			}
+			
 			repositoryTransmisionesService.actualizarConfiguracionMonitoreo(input.getEntidadId(),input.getCorreoSoporte(), input.getSlaNombre(), input.getSlaValor(), input.getEstado());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (RestAppException e) {

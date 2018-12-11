@@ -287,6 +287,9 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	public void actualizarConfiguracionMonitoreo(Integer entidadId,String correoSoporte, String slaNombre, Integer slaValor, String estado)
 			throws RestAppException {
 		try {
+			
+			
+			
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
 					.withSchemaName(ESQUEMA)
