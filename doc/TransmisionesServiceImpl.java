@@ -136,7 +136,6 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		} finally {
 			try {
 				dataSource.getConnection().commit();
-				dataSource.getConnection().close();			
 			} catch (SQLException e) {
 				logger.error(e.getMessage(), e);
 				throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
@@ -242,7 +241,6 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		}finally {
 			try {
 				dataSource.getConnection().commit();
-				dataSource.getConnection().close();	
 			} catch (SQLException e) {
 				logger.error(e.getMessage(), e);
 				throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
@@ -374,7 +372,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR).withCatalogName(PACKAGE);
-			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID_IN", entidadId)
+			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId)
 					.addValue("FECHA_INICIO", fechaInicio).addValue("FECHA_FIN", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			MensajeSalidaDTO mensaje = new MensajeSalidaDTO();
