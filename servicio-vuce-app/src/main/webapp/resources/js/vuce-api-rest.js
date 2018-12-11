@@ -52,9 +52,17 @@ var api = {
 	                    	  }	
 		                	  
 		                
-		                	  row.push("");
-		                	  row.push("");
-		                	  row.push("");
+		                	  row.push(value.fechaHoraSolicitud);
+		                	  if(value.hayFalla===1){ // rojo
+		                		  row.push("<div class='border-radius tipo-transacciones en-actividad-rojo'></div>");  
+	                    	  }else{
+	                    		  if(value.hayFalla===0){
+	                    			  row.push("<div class='border-radius tipo-transacciones en-actividad-verde'></div>"); 
+	                    		  }else{
+	                    			  row.push(""); 
+	                    		  }	                    		 
+	                    	  }	
+		                	  row.push(value.descripcionFalla);
 		                      dataSet.push(row)
 		                  });
 		                  

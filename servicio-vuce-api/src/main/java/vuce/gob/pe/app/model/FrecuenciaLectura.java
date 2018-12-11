@@ -1,6 +1,7 @@
 package vuce.gob.pe.app.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,7 +11,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -51,6 +51,16 @@ public class FrecuenciaLectura implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "CUMPLE_FRECUENCIA_LECTURA")
 	private Integer cumpleFrecuenciaLectura;
+		
+	@Column(name = "FECHA_HORA_SOLICITUD")
+	private Date fechaHoraSolicitud;
+		
+	@Column(name = "HAY_FALLA")
+	private Integer hayFalla;
+	
+	@Column(name = "DESCRIPCION_FALLA")
+	private String descripcionFalla;
+	
 
 	public Integer getIdEntidad() {
 		return idEntidad;
@@ -99,7 +109,31 @@ public class FrecuenciaLectura implements Serializable {
 	public void setCumpleFrecuenciaLectura(Integer cumpleFrecuenciaLectura) {
 		this.cumpleFrecuenciaLectura = cumpleFrecuenciaLectura;
 	}
+
+	public Date getFechaHoraSolicitud() {
+		return fechaHoraSolicitud;
+	}
+
+	public void setFechaHoraSolicitud(Date fechaHoraSolicitud) {
+		this.fechaHoraSolicitud = fechaHoraSolicitud;
+	}
+
+	public Integer getHayFalla() {
+		return hayFalla;
+	}
+
+	public void setHayFalla(Integer hayFalla) {
+		this.hayFalla = hayFalla;
+	}
+
+	public String getDescripcionFalla() {
+		return descripcionFalla;
+	}
+
+	public void setDescripcionFalla(String descripcionFalla) {
+		this.descripcionFalla = descripcionFalla;
+	}
 	
-	
+		
 	
 }
