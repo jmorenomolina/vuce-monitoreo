@@ -15,7 +15,7 @@ public class TramisionIncidenteRowMapper  implements RowMapper<TrasmisionInciden
 		transmision.setCodigoEntidad(rs.getInt("ENTIDAD_ID"));
 		transmision.setSiglaEntidad(rs.getString("ENTIDAD_SIGLAS"));
 		transmision.setCantidadTrasmisionEntrada(rs.getInt("TRANSMISIONES_ENTRADA"));
-		transmision.setCantidadTrasmisionSalida(rs.getInt("TRANSAMISIONES_SALIDA"));
+		transmision.setCantidadTrasmisionSalida(rs.getInt("TRANSMISIONES_SALIDA"));
 		return transmision;
 	}
 
