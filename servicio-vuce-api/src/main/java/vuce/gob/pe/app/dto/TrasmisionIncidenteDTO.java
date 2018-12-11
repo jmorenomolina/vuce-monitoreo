@@ -31,6 +31,13 @@ public class TrasmisionIncidenteDTO {
 	public void setCantidadTrasmisionSalida(Integer cantidadTrasmisionSalida) {
 		this.cantidadTrasmisionSalida = cantidadTrasmisionSalida;
 	}
+	@Override
+	public String toString() {
+		return "TrasmisionIncidenteDTO [codigoEntidad=" + codigoEntidad + ", siglaEntidad=" + siglaEntidad
+				+ ", cantidadTrasmisionEntrada=" + cantidadTrasmisionEntrada + ", cantidadTrasmisionSalida="
+				+ cantidadTrasmisionSalida + "]";
+	}
+	
 	
 	
 	

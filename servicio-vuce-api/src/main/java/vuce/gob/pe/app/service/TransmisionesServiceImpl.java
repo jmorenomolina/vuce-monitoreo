@@ -56,11 +56,17 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 
 	private final String FUN_OBTENER_TX_CON_INCIDENTE = "OBTENER_TX_CON_INCIDENTES";
 	private final String FUN_OBTENER_TX_CON_INCIDENTE_RETURN = "tCursor";
+	
+	
 
 	@Override
 	public List<TrasmisionIncidenteDTO> obtenerTransmisionesConIncidente(Date fechaInicio, Date fechaFin)
 			throws RestAppException {
 		try {
+			
+			logger.info("[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fechaIncio: [{}] fechaFin: [{}]",fechaInicio,fechaFin);
+			
+			
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(FUN_OBTENER_TX_CON_INCIDENTE)
 					.withSchemaName(ESQUEMA)

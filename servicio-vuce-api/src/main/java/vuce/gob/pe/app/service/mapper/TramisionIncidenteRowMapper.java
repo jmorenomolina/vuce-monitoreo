@@ -12,10 +12,10 @@ public class TramisionIncidenteRowMapper  implements RowMapper<TrasmisionInciden
 	@Override
 	public TrasmisionIncidenteDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TrasmisionIncidenteDTO transmision = new TrasmisionIncidenteDTO();
-		transmision.setCodigoEntidad(rs.getInt(1));
-		transmision.setSiglaEntidad(rs.getString(2));
-		transmision.setCantidadTrasmisionEntrada(rs.getInt(3));
-		transmision.setCantidadTrasmisionSalida(rs.getInt(4));
+		transmision.setCodigoEntidad(rs.getInt("ENTIDAD_ID"));
+		transmision.setSiglaEntidad(rs.getString("ENTIDAD_SIGLAS"));
+		transmision.setCantidadTrasmisionEntrada(rs.getInt("TRANSMISIONES_ENTRADA"));
+		transmision.setCantidadTrasmisionSalida(rs.getInt("TRANSAMISIONES_SALIDA"));
 		return transmision;
 	}
 

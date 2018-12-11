@@ -184,13 +184,25 @@ public class RestApiController {
 			@RequestParam(required = false, value = "fechaIncio") String fechaIncio,
 			@RequestParam(required = false, value = "fechaFin") String fechaFin) {
 		
-		logger.info("trasmisionesConIncidente  fechaIncio: [{}] fechaFin: [{}]",
-				fechaIncio,fechaFin);
+		logger.info("trasmisionesConIncidente  fechaIncio: [{}] fechaFin: [{}]",fechaIncio,fechaFin);
 		
 		List<TrasmisionIncidenteDTO> transmisiones;
 		try {
 			transmisiones = (List<TrasmisionIncidenteDTO>) repositoryTransmisionesService
 					.obtenerTransmisionesConIncidente(Converter.convertToDate(fechaIncio, FORMAT_DATE), Converter.convertToDate(fechaFin, FORMAT_DATE));
+			
+			
+			if(Optional.ofNullable(transmisiones).isPresent() &&  !transmisiones.isEmpty()) {
+				transmisiones.forEach(r->{
+					logger.info("trasmisionesConIncidente transmision: [{}]",r.toString());
+				});
+				
+			}else {
+				logger.info("[trasmisionesConIncidente]: Lista Vacia o  nulla");
+			}
+			
+			
+			
 			if (transmisiones.isEmpty()) {
 				return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
 			}
