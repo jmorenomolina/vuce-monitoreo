@@ -64,7 +64,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			throws RestAppException {
 		try {
 			
-			logger.info("[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fechaIncio: [{}] fechaFin: [{}]",fechaInicio,fechaFin);
+			logger.info("[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fecha_inicio: [{}] fecha_fin: [{}]",fechaInicio,fechaFin);
 			
 			
 			jdbcTemplate = new JdbcTemplate(dataSource);

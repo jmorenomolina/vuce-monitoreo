@@ -181,15 +181,15 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/transmisionesconincidentes", method = RequestMethod.GET)
 	public ResponseEntity<List<TrasmisionIncidenteDTO>> trasmisionesConIncidente(
-			@RequestParam(required = false, value = "fechaIncio") String fechaIncio,
+			@RequestParam(required = false, value = "fechaInicio") String fechaInicio,
 			@RequestParam(required = false, value = "fechaFin") String fechaFin) {
 		
-		logger.info("trasmisionesConIncidente  fechaIncio: [{}] fechaFin: [{}]",fechaIncio,fechaFin);
+		logger.info("trasmisionesConIncidente  fechaInicio: [{}] fechaFin: [{}]",fechaInicio,fechaFin);
 		
 		List<TrasmisionIncidenteDTO> transmisiones;
 		try {
 			transmisiones = (List<TrasmisionIncidenteDTO>) repositoryTransmisionesService
-					.obtenerTransmisionesConIncidente(Converter.convertToDate(fechaIncio, FORMAT_DATE), Converter.convertToDate(fechaFin, FORMAT_DATE));
+					.obtenerTransmisionesConIncidente(Converter.convertToDate(fechaInicio, FORMAT_DATE), Converter.convertToDate(fechaFin, FORMAT_DATE));
 			
 			
 			if(Optional.ofNullable(transmisiones).isPresent() &&  !transmisiones.isEmpty()) {
