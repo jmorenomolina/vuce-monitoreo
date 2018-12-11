@@ -1,6 +1,7 @@
 package vuce.gob.pe.app.service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			
 			logger.info("[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fecha_inicio: [{}] fecha_fin: [{}]",fechaInicio,fechaFin);
 			
-			
+			dataSource.getConnection().setAutoCommit(false);
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(FUN_OBTENER_TX_CON_INCIDENTE)
 					.withSchemaName(ESQUEMA)
@@ -80,6 +81,13 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
+		}finally {
+			try {
+				dataSource.getConnection().commit();
+			} catch (SQLException e) {
+				logger.error(e.getMessage(), e);
+				throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
+			}
 		}
 	}
 	
