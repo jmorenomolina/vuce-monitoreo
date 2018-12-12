@@ -15,8 +15,8 @@
     <version>C.1.0</version>
     <packaging>war</packaging>
 
-    <name>servicio-consola-ui-vuce</name>
-    <description>Servicio Consola Vuce</description>
+    <name>servicio-vuce-app</name>
+    <description>Servicio Vuce App</description>
 
     <properties>
         <selenium.version>3.12.0</selenium.version>
