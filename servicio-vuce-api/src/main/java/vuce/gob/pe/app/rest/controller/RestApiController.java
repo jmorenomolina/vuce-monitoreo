@@ -188,21 +188,7 @@ public class RestApiController {
 		
 		List<TrasmisionIncidenteDTO> transmisiones;
 		try {
-			transmisiones = (List<TrasmisionIncidenteDTO>) repositoryTransmisionesService
-					.obtenerTransmisionesConIncidente(Converter.convertToDate(fechaInicio, FORMAT_DATE), Converter.convertToDate(fechaFin, FORMAT_DATE));
-			
-			
-			if(Optional.ofNullable(transmisiones).isPresent() &&  !transmisiones.isEmpty()) {
-				transmisiones.forEach(r->{
-					logger.info("trasmisionesConIncidente transmision: [{}]",r.toString());
-				});
-				
-			}else {
-				logger.info("[trasmisionesConIncidente]: Lista Vacia o  nulla");
-			}
-			
-			
-			
+			transmisiones = (List<TrasmisionIncidenteDTO>) repositoryTransmisionesService.obtenerTransmisionesConIncidente(Converter.convertToDate(fechaInicio, FORMAT_DATE), Converter.convertToDate(fechaFin, FORMAT_DATE));
 			if (transmisiones.isEmpty()) {
 				return new ResponseEntity<List<TrasmisionIncidenteDTO>>(HttpStatus.NO_CONTENT);
 			}
@@ -240,8 +226,20 @@ public class RestApiController {
 		request.setNumeroDocumento(numeroDocumento);
 		request.setTipoTransmision(tipoTransmision);
 		request.setTipoIncidente(tipoIncidente);
-		request.setEstadoVc(estadoVc);
-		request.setEstadoVe(estadoVe);
+		
+		
+		if(!Optional.ofNullable(estadoVc).isPresent()  ||  "".equals(estadoVc)){
+			request.setEstadoVc(estadoVc);
+		}else {
+			request.setEstadoVc("%");
+		}
+		
+		if(!Optional.ofNullable(estadoVe).isPresent()  ||  "".equals(estadoVe)){
+			request.setEstadoVe(estadoVe);
+		}else {
+			request.setEstadoVe("%");
+		}
+		
 		request.setVcId(vcId);
 		request.setVeId(veId);
 
@@ -358,23 +356,9 @@ public class RestApiController {
 		try {
 			List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAll();
 			if (!entidades.isEmpty()) {			
-				List<ConfiguracionMonitoreoDTO> responseConf = repositoryTransmisionesService.obtenerConfiguracionMonitoreo(input.getEntidadId());
-				
-				if(Optional.ofNullable(responseConf).isPresent() &&  !responseConf.isEmpty()) {
-					responseConf.forEach(r->{
-						logger.info("obtenerConfiguracionMonitoreo configuracion: [{}]",r.toString());
-					});
-					
-				}else {
-					logger.info("[obtenerConfiguracionMonitoreo]: Lista Vacia o  nulla");
-				}
-				
-				
-				
-				List<ConfiguracionMonitoreoResponseDTO> response = ConverterToConfiguracionMonitoreoResponseDTO.converter(entidades, responseConf);
-				
+				List<ConfiguracionMonitoreoDTO> responseConf = repositoryTransmisionesService.obtenerConfiguracionMonitoreo(input.getEntidadId());				
+				List<ConfiguracionMonitoreoResponseDTO> response = ConverterToConfiguracionMonitoreoResponseDTO.converter(entidades, responseConf);				
 				if (response.isEmpty()) {
-					logger.info("obtenerConfiguracionMonitoreo paso: [{}] ",3);
 					return new ResponseEntity<List<ConfiguracionMonitoreoResponseDTO>>(HttpStatus.NO_CONTENT);
 				}
 				return new ResponseEntity<>(response, HttpStatus.OK);				
