@@ -211,7 +211,9 @@ ul.head-list-table li {
 table#tb-frecuencia-lectura tbody tr td,
 table#tb-configurar-sla tbody tr td,
 table#tb-transmisiones-salida tbody tr td,
-table#tb-transmisiones-entrada tbody tr td{
+table#tb-transmisiones-entrada tbody tr td,
+table#tb-mantenimiento-entidad tbody tr td
+{
 	text-align: center;
 }
 	

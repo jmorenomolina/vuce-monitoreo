@@ -22,8 +22,10 @@ import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 import vuce.gob.pe.app.model.Entidad;
+import vuce.gob.pe.app.model.EntidadMantenimiento;
 import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.model.Parametro;
+import vuce.gob.pe.app.repository.EntidadMantenimientoRepository;
 import vuce.gob.pe.app.repository.EntidadRepository;
 import vuce.gob.pe.app.repository.FrecuenciaLecturaRepository;
 import vuce.gob.pe.app.repository.ParametroRepository;
@@ -31,6 +33,7 @@ import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoInput;
 import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoObtenerInput;
 import vuce.gob.pe.app.rest.parameter.HabilitarInput;
 import vuce.gob.pe.app.rest.parameter.TransmisionDetenerInput;
+import vuce.gob.pe.app.rest.parameter.EntidadMantenimientoInput;
 import vuce.gob.pe.app.rest.parameter.TransmisonEntradaN8Input;
 import vuce.gob.pe.app.rest.parameter.TrasmisionInput;
 import vuce.gob.pe.app.service.TransmisionesService;
@@ -53,6 +56,12 @@ public class RestApiController {
 	@Autowired
 	private final EntidadRepository repositoryEntidad = null;
 	
+	
+
+	@Autowired
+	private final EntidadMantenimientoRepository repositoryEntidadMantenimiento = null;
+	
+	
 	@Autowired
 	private final FrecuenciaLecturaRepository frecuenciaLecturaEntidad = null;
 	
@@ -65,6 +74,49 @@ public class RestApiController {
 	private final TransmisionesService repositoryTransmisionesService = null;
 
 	private final String FORMAT_DATE = "dd/MM/yyyy";
+	
+	
+	
+	
+	@RequestMapping(value = "/entidadMantenimiento", method = RequestMethod.GET)
+	public ResponseEntity<List<EntidadMantenimiento>> obtenerEntidadMantenimiento() {
+		List<EntidadMantenimiento> mantenimientos = (List<EntidadMantenimiento>) repositoryEntidadMantenimiento.findAll();
+		
+		
+		if (mantenimientos.isEmpty()) {
+			return new ResponseEntity<List<EntidadMantenimiento>>(HttpStatus.NO_CONTENT);
+		}
+		
+		mantenimientos.forEach(m->{
+			Optional<Entidad> entidad = repositoryEntidad.findById(m.getIdEntidad());
+			m.setNombreEntidad(entidad.get().getDescripcion());			
+		});
+		
+		
+		return new ResponseEntity<>(mantenimientos, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/entidadMantenimiento", method = RequestMethod.PUT)
+	public ResponseEntity<String> registrarEntidadMantenimiento(@RequestBody EntidadMantenimientoInput entidadInput) {		
+		
+		logger.info("registrarEntidadMantenimiento  EntidadId: [{}]  fechaInicio: [{}] fechaFin: [{}]",entidadInput.getEntidadId(),entidadInput.getFechaInicio(),entidadInput.getFechaFin());
+		
+		EntidadMantenimiento mantenimiento = new EntidadMantenimiento();		
+		mantenimiento.setIdEntidad(entidadInput.getEntidadId());		
+		mantenimiento.setFechaInicio(Converter.convertToDate(entidadInput.getFechaInicio(), FORMAT_DATE));
+		mantenimiento.setFechaFin(Converter.convertToDate(entidadInput.getFechaFin(), FORMAT_DATE));
+		repositoryEntidadMantenimiento.save(mantenimiento);
+		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente", HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "/entidadMantenimiento", method = RequestMethod.DELETE)
+	public ResponseEntity<String> eliminarEntidadMantenimiento(@RequestParam(required = false, value = "id") String id) {		
+		repositoryEntidadMantenimiento.deleteById(Integer.parseInt(id));
+		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente", HttpStatus.OK);
+	}
+	
 	
 	
 	@RequestMapping(value = "/frecuencialectura", method = RequestMethod.GET)

@@ -38,14 +38,19 @@
         }, 
         setTamanoTableSalida:function(){
         	var cantidad = $("#cantidad-filas-mostrar").val();
-        	if(cantidad!==""){
-        	  tableSalida.page.len( cantidad ).draw();        		
-        	}else{
-        	  tableSalida.page.len( 10 ).draw();	
+        	
+        	if (typeof cantidad !== 'undefined'){
+        		console.log("definido....");
+	        	if(cantidad!==""){
+	        	  tableSalida.page.len( cantidad ).draw();        		
+	        	}else{
+	        	  tableSalida.page.len( 10 ).draw();	
+	        	}
         	}
         	
         },
         setTamanoTableEntrada:function(){
+        	
         	var cantidad = $("#cantidad-filas-mostrar-entrada").val();
         	if(cantidad!==""){
         	  tableEntrada.page.len( cantidad ).draw();        		

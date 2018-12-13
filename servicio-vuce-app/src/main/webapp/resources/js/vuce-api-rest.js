@@ -18,6 +18,57 @@ var listHabilitarTransmisiones = [];
 
 
 var api = {	
+		callRegistarMantenimiento : function (id,fecha_inicio,fecha_fin) {
+			var parameter = {entidadId:id,fechaInicio:fecha_inicio,fechaFin:fecha_fin};				
+			$.ajax({
+				url: contextApi + "/entidadMantenimiento",			 
+			    dataType: "json",
+			    contentType: "application/json; charset=utf-8",
+			    type: 'PUT',
+			    data: JSON.stringify(parameter),
+			    error:function(e){
+			    	console.log(e);			    	
+			    },
+			    complete: function(){
+			    	api.callMantenimientoEntidad();
+			    	alert("Se registro exitosamente el mantenimiento de la entidad");
+			    }
+			}).done(function(response) {	
+				console.log("exito");
+			});		    
+		},
+		callMantenimientoEntidad: function () {
+	          $.ajax({
+	                  url: contextApi + "/entidadMantenimiento",
+	                  dataType: "json",	                 
+	          }).done(function (data, textStatus, xhr) {
+	              
+		             if(xhr.status===200){  
+		                  var dataSet = [];
+		                  $.each(data, function (key, value)
+		                  {
+		                	  var row = [];		
+		                	  row.push(value.idEntidadMantenimiento);
+		                	  
+		                	  row.push(value.nombreEntidad);
+		                	  
+		                	  var fechadesde = value.fechaInicio+"";		                		  
+	                		  row.push(fechadesde.substring(8, 10)+"/"+fechadesde.substring(5, 7)+"/"+fechadesde.substring(0, 4));
+	                		  
+	                		  var fechahasta = value.fechaFin+"";		                		  
+	                		  row.push(fechahasta.substring(8, 10)+"/"+fechahasta.substring(5, 7)+"/"+fechahasta.substring(0, 4));
+		                	  
+		                	  row.push(fechadesde);
+		                	  row.push(fechahasta);
+		                      dataSet.push(row)
+		                  });
+		                        
+		                  table.update("tb-mantenimiento-entidad",dataSet); 
+		              }
+		                                       
+		     });
+	   },
+		
 	  callFrecuenciaLectura: function () {
 	          $.ajax({
 	                  url: contextApi + "/frecuencialectura",
@@ -80,7 +131,7 @@ var api = {
 		          
 		                                       
 		          });
-	  },
+	   },
 	   callIntervalo: function () {
 	          $.ajax({
 	                  url: contextApi + "/intervalo",
