@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 
 import vuce.gob.pe.app.dto.ConfiguracionMonitoreoDTO;
@@ -39,7 +40,7 @@ import vuce.gob.pe.app.util.RestAppException;
  * @author cquevedo
  */
 @Service
-public class TransmisionesServiceImpl implements TransmisionesService {
+public class TransmisionesServiceImpl  implements TransmisionesService {
 
 	public static final Logger logger = LoggerFactory.getLogger(TransmisionesServiceImpl.class);
 
@@ -70,9 +71,10 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			logger.info(
 					"[TransmisionesServiceImpl]-> obtenerTransmisionesConIncidente   fecha_inicio: [{}] fecha_fin: [{}]",
 					fechaInicio, fechaFin);
-
+			
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
+		
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(FUN_OBTENER_TX_CON_INCIDENTE)
 					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
@@ -104,7 +106,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_OBTENER_CONF_MONITOREO)
 					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
@@ -134,7 +136,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	public List<TrasmisionDTO> filtrarTransmisiones(RequestFiltrarTransmisionesDTO request) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_FILTRAR_TRANSMISIONES)
 					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
@@ -173,7 +175,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(REENVIAR_TX_SALIDA_CON_ERROR).withCatalogName(PACKAGE);
@@ -213,7 +215,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 	public MensajeSalidaDTO habilitarTransmision(Integer veId) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(HABILITAR_TRANSMISIONES).withCatalogName(PACKAGE);
@@ -252,7 +254,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String veTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(REPROC_TX_ENTRADA_CON_ERROR).withCatalogName(PACKAGE);
@@ -290,7 +292,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			String vcTransaccion) throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(ANULAR_TX_ENTRADA_CON_ERROR).withCatalogName(PACKAGE);
@@ -329,7 +331,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(REPROC_TX_ENTRADA_N8_CON_ERROR).withCatalogName(PACKAGE);
@@ -368,7 +370,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 		try {
 
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(ACTUALIZAR_CONFIG_MONITOREO).withCatalogName(PACKAGE);
@@ -397,7 +399,7 @@ public class TransmisionesServiceImpl implements TransmisionesService {
 			throws RestAppException {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
-			jdbcTemplate.setDataSource(this.getConexion());
+			//jdbcTemplate.setDataSource(this.getConexion());
 			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName(ESQUEMA)
 					.withProcedureName(DETENER_TRANSMISIONES).withCatalogName(PACKAGE);
