@@ -152,7 +152,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 					.addValue("VE_ID", request.getVeId());
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			List<TrasmisionDTO>  response = (List) result.get(PC_OBTENER_TX_CON_INCIDENTE_RETURN);
-			jdbcTemplate.getDataSource().getConnection().commit();			
+			//jdbcTemplate.getDataSource().getConnection().commit();			
 			return response;			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -193,7 +193,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
 			
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			
 			return mensaje;
 		} catch (Exception e) {
@@ -231,7 +231,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -270,7 +270,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -309,7 +309,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -347,7 +347,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -378,7 +378,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 					.addValue("CORREO_SOPORTE", correoSoporte).addValue("SLA_NOMBRE", slaNombre)
 					.addValue("SLA_VALOR", slaValor).addValue("ESTADO", estado);
 			simpleJdbcCall.execute(in);
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
@@ -415,7 +415,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 				mensaje.setResultadoMensaje("-1");
 				mensaje.setResultadoMensaje("No se proceso mensaje de respuesta");
 			}
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return mensaje;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
