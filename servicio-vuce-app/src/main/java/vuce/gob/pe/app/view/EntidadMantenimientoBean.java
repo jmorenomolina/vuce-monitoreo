@@ -16,27 +16,14 @@
 package vuce.gob.pe.app.view;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.Setter;
-import vuce.gob.pe.app.model.Entidad;
-import vuce.gob.pe.app.model.Entidadmantenimiento;
-import vuce.gob.pe.app.repository.EntidadMantebimientoRepository;
-import vuce.gob.pe.app.repository.EntidadRepository;
 
 /**
  *
@@ -50,7 +37,7 @@ public class EntidadMantenimientoBean implements Serializable {
     
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     
-    
+    /*
     @Autowired
     private final EntidadMantebimientoRepository repositoryEntidadMantenimiento = null;
     
@@ -71,33 +58,26 @@ public class EntidadMantenimientoBean implements Serializable {
     
     @Getter
     @Setter
-    private Entidad entidad;
+    private Entidad entidad;*/
     
-    @Getter
-    @Setter
-    private Boolean disabledForm = Boolean.TRUE;
-    
-    @Getter
-    @Setter
-    private Date currentDate = new Date();
+ 
 
   
     
     @PostConstruct
     public void init() {
         logger.info("EntidadMantenimientoBean [{}]", "init");        
-        mantenimientos = (List<Entidadmantenimiento>) repositoryEntidadMantenimiento.findAll();        
-        entidades = (List<Entidad>) repositoryEntidad.findAll(); 
-        mantenimiento = new Entidadmantenimiento();
+       
     }
     
+    /*
     public void activateForm() {
         logger.info("EntidadMantenimientoBean [{}]", "activateForm");        
         disabledForm = Boolean.FALSE;
        /* if(Optional.ofNullable(this.getMantenimiento()).isPresent()){
             Entidad entidadTemp = this.getEntidades().stream().filter(e->Objects.equals(e.getIdEntidad(), this.getMantenimiento().getIdEntidad().getIdEntidad())).findAny().orElse(null);
             this.setEntidad(entidadTemp);
-        }*/
+        }
     }
     
     public void addMantenimiento() {
@@ -195,7 +175,7 @@ public class EntidadMantenimientoBean implements Serializable {
 	public EntidadRepository getRepositoryEntidad() {
 		return repositoryEntidad;
 	}
-    
+    */
     
     
 }

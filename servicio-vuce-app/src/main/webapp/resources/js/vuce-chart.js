@@ -82,7 +82,7 @@ var table={
 		            'language': {
 		                'lengthMenu': "Mostrar _MENU_ registros por pagina",
 		                'zeroRecords': "No encontrado.",
-		                'info': "Total de Tx _MAX_        	|       Mostrar pagina _PAGE_ de _PAGES_ ",
+		                'info': "Total de Tx: _MAX_        	|       Mostrar pagina _PAGE_ de _PAGES_ ",
 		                'infoEmpty': " ",
 		                'infoFiltered': "(filtered from _MAX_ total records)",
 		                "paginate": {
@@ -114,7 +114,18 @@ var table={
 	            'ordering': false,
 	            'info': false,
 	            'autoWidth': false,
-	            "scrollX": false            
+	            "scrollX": false,
+	            'language': {
+	                'lengthMenu': "Mostrar _MENU_ registros por pagina",
+	                'zeroRecords': "No encontrado.",
+	                'info': "Total de Tx: _MAX_        	|       Mostrar pagina _PAGE_ de _PAGES_ ",
+	                'infoEmpty': " ",
+	                'infoFiltered': "(filtered from _MAX_ total records)",
+	                "paginate": {
+	                    "previous": "Anterior",
+	                     "next": "Siguiente"	
+	                  }
+	            }
 	         });	   	
 		   	
 		 },

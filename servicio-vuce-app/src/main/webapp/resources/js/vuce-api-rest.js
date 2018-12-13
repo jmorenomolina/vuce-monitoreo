@@ -51,8 +51,14 @@ var api = {
 	                    		  row.push("<div class='border-radius tipo-transacciones en-actividad-verde'></div>"); 
 	                    	  }	
 		                	  
-		                
-		                	  row.push(value.fechaHoraSolicitud);
+		                	  if(value.fechaHoraSolicitud!==null){
+		                		  var fecha = value.fechaHoraSolicitud+"";		                		  
+		                		  row.push(fecha.substring(8, 10)+"/"+fecha.substring(5, 7)+"/"+fecha.substring(0, 4));
+		                	  }else{
+		                		  row.push("");
+		                	  }
+		                	  
+		                	  
 		                	  if(value.hayFalla===1){ // rojo
 		                		  row.push("<div class='border-radius tipo-transacciones en-actividad-rojo'></div>");  
 	                    	  }else{
@@ -80,7 +86,6 @@ var api = {
 	                  url: contextApi + "/intervalo",
 	                  dataType: "json",	                 
 	          }).done(function (data) {
-	        	  console.log("Intervalo: "+data.valorParametro);
 	        	  setInterval(function(){                       
 		               api.callTransmisionesConIncidentes();                    
 		           }, data.valorParametro);
@@ -108,6 +113,9 @@ var api = {
                    	}
               });
         	  
+        	  
+        	  $('#dp-fechadesde-tra-inc').datepicker("update","13/11/2018");
+        	  
         	  $('#dp-fechadesde-tra').datepicker(dateOption).on('changeDate',function(e){
       			if(!util.validateDate('dp-fechadesde-tra','dp-fechahasta-tra')){
       				alert("La fecha Hasta debe ser mayor a la fecha Desde");
@@ -116,6 +124,12 @@ var api = {
         	  
               $('#dp-fechadesde-tra').datepicker(dateOption);  
         	
+              
+              
+              
+              $('#dp-fechadesde-tra').datepicker("update","13/11/2018");
+              
+              
           });
 	  },
 	 callEntidades: function () {

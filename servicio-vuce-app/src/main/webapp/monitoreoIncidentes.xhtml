@@ -284,10 +284,16 @@
                                 </table>
                             </div>
                             
-                            <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10" style="margin-top: 10px;">Cantidad de filas a mostrar</label>
-                            <div class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
-                                  <input type="text" class="form-control" id="cantidad-filas-mostrar" name="cantidad-filas-mostrar" value="10" onkeyup="util.setTamanoTableSalida();" />
-                            </div> 
+                            
+                            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+	                            
+	                            <label class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10"  for="tipo-documentos"  style="margin-top: 10px;">Cantidad de filas a mostrar</label>
+	                            <div   class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
+	                                  <input type="text" class="form-control" id="cantidad-filas-mostrar" name="cantidad-filas-mostrar" value="10" onkeyup="util.setTamanoTableSalida();" />
+	                            </div> 
+	                            
+                            </div>
+                            
                             
                             <br/>
                             
@@ -447,22 +453,24 @@
                                 </table>
                             </div>
                             
-                            <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10" style="margin-top: 10px;">Cantidad de filas a mostrar</label>
-                            <div class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
-                                  <input type="text" class="form-control" id="cantidad-filas-mostrar-entrada" name="cantidad-filas-mostrar-entrada" value="10" onkeyup="util.setTamanoTableEntrada();" />
+                            <div class="form-group col-sm-12 col-md-12 col-lg-12">
+		                          
+	                            <label for="tipo-documentos" class="col-sm-12 col-md-3 col-lg-2 control-label top-5 padding-bottom-10" style="margin-top: 10px;">Cantidad de filas a mostrar</label>
+	                            <div class="col-sm-12 col-md-3 col-lg-1 padding-bottom-10" style="margin-top: 10px;" >
+	                                  <input type="text" class="form-control" id="cantidad-filas-mostrar-entrada" name="cantidad-filas-mostrar-entrada" value="10" onkeyup="util.setTamanoTableEntrada();" />
+	                            </div> 
                             </div> 
-                            
                             <br/>
                             
                             <div class="form-group col-sm-12 col-md-12 col-lg-12">
                             
-	                            <div class="checkbox col-sm-12 col-md-6 col-lg-4 padding-bottom-10">
+	                            <div class="checkbox col-sm-12 col-md-6 col-lg-5 padding-bottom-10">
 				                  <label class="col-sm-12 col-md-12 col-lg-12" >
-				                    <input disabled="disabled" style="position: relative;top: 0px;cursor:pointer;" type="checkbox" id="ck-transmisiones-entrada-error" name="ck-transmisiones-entrada-error" /> <b>Seleccionar todas las transmisiones con errores</b>
+				                    <input disabled="disabled" style="position: relative;top: 0px;cursor:pointer;" type="checkbox" id="ck-transmisiones-entrada-error" name="ck-transmisiones-entrada-error" /> <b>Seleccionar todas las Tx con errores</b>
 				                  </label>
 				                </div>
 	                                                     
-								<div class="form-group col-sm-12 col-md-12 col-lg-8">								
+								<div class="form-group col-sm-12 col-md-12 col-lg-7">								
 									<button type="button" class="btn btn-primary margin-top-10" id="btn-reeprocesar-transmision" disabled="disabled">Reprocesar transmisiones con errores</button>
 									<button type="button" class="btn btn-primary margin-left-10 margin-top-10" id="btn-anular-transmision" disabled="disabled">Anular trasmisiones con errores</button>
 								</div>
@@ -502,7 +510,7 @@
                             </div>
                             <div style="text-align: right;">
                             	
-                            	<a class="btn btn-primary margin-top-10" href="/entidadMantenimiento.jsf">Programación de Manteminientos</a>
+                            	<a class="btn btn-primary margin-top-10" href="/entidadMantenimiento.jsf">Programación de Mantenimientos</a>
                             </div>
 						</div>
 					</div>

@@ -83,7 +83,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 					.addValue("fecha_fin", fechaFin);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			List<TrasmisionIncidenteDTO> response =  (List) result.get(FUN_OBTENER_TX_CON_INCIDENTE_RETURN);	
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return response;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -114,7 +114,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 			SqlParameterSource in = new MapSqlParameterSource().addValue("ENTIDAD_ID", entidadId);
 			Map<String, Object> result = simpleJdbcCall.execute(in);
 			List<ConfiguracionMonitoreoDTO> response =  (List) result.get(PC_OBTENER_CONF_MONITOREO_RETURN);
-			jdbcTemplate.getDataSource().getConnection().commit();
+			//jdbcTemplate.getDataSource().getConnection().commit();
 			return response;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
