@@ -34,9 +34,6 @@ butterfaces:
 richfaces:
   version: @richfaces.version@
 
-spring:
-  datasource:
-    driverClassName: oracle.jdbc.OracleDriver
 
 server:
   port: 9005 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -117,7 +118,15 @@ public class RestApiController {
 		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente", HttpStatus.OK);
 	}
 	
+	/*
+	@RequestMapping(value = "/entidadMantenimiento/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<String> editarEntidadMantenimiento(@PathVariable("id") Integer id,@RequestBody EntidadMantenimientoInput entidadInput) {		
+		Optional<EntidadMantenimiento> entidadMantenimiento = repositoryEntidadMantenimiento.findById(id);
+		
+		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente" + entidadMantenimiento.get().getIdEntidad(), HttpStatus.OK);
+	}
 	
+	*/
 	
 	@RequestMapping(value = "/frecuencialectura", method = RequestMethod.GET)
 	public ResponseEntity<List<FrecuenciaLectura>> obtenerfrecuencialectura() {
