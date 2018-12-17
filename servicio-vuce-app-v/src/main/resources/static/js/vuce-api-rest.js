@@ -18,6 +18,28 @@ var listHabilitarTransmisiones = [];
 
 
 var api = {	
+		callEditarMantenimiento : function (id,idEntidad,fecha_inicio,fecha_fin) {
+			
+			console.log("callEditarMantenimiento: Id:"+id+"  Fecha Inicio:"+fecha_inicio+" Fecha Fin:"+fecha_fin);
+			
+			var parameter = {entidadId:idEntidad,fechaInicio:fecha_inicio,fechaFin:fecha_fin};				
+			$.ajax({
+				url: contextApi + "/entidadMantenimiento/"+id,			 
+			    dataType: "json",
+			    contentType: "application/json; charset=utf-8",
+			    type: 'PUT',
+			    data: JSON.stringify(parameter),
+			    error:function(e){
+			    	console.log(e);			    	
+			    },
+			    complete: function(){
+			    	api.callMantenimientoEntidad();
+			    	alert("Se actualizo exitosamente el mantenimiento de la entidad");
+			    }
+			}).done(function(response) {	
+				console.log("exito");
+			});		    
+		},
 		callRegistarMantenimiento : function (id,fecha_inicio,fecha_fin) {
 			
 			console.log("callRegistarMantenimiento: Id:"+id+"  Fecha Inicio:"+fecha_inicio+" Fecha Fin:"+fecha_fin);
@@ -55,15 +77,15 @@ var api = {
 		                	  
 		                	  row.push(value.nombreEntidad);
 		                	  
-		                	  var fechadesde = value.fechaInicio+"";		                		  
-	                		  row.push(fechadesde.substring(8, 10)+"/"+fechadesde.substring(5, 7)+"/"+fechadesde.substring(0, 4));
+		                	  var fechadesde = value.fechaInicio+"";		
+		                	  var fechadesdeVuce = fechadesde.substring(8, 10)+"/"+fechadesde.substring(5, 7)+"/"+fechadesde.substring(0, 4);
+	                		  row.push(fechadesdeVuce);
 	                		  
-	                		  var fechahasta = value.fechaFin+"";		                		  
-	                		  row.push(fechahasta.substring(8, 10)+"/"+fechahasta.substring(5, 7)+"/"+fechahasta.substring(0, 4));
+	                		  var fechahasta = value.fechaFin+"";		          
+	                		  var fechahastaVuce = fechahasta.substring(8, 10)+"/"+fechahasta.substring(5, 7)+"/"+fechahasta.substring(0, 4);
+	                		  row.push(fechahastaVuce);
 		                	  
-		                	
-		                	  
-		                	  row.push("<a class='btn btn-app' href='javascript:editarmantenimiento("+value.idEntidadMantenimiento+");'><i class='fa fa-edit'></i></a>  <a class='btn btn-app'><i class='fa fa-trash'></i></a>");
+		                	  row.push("<a id='row"+value.idEntidadMantenimiento+"' min='"+fechadesdeVuce+"' max='"+fechahastaVuce+"' entidad='"+value.idEntidad+"' class='btn btn-app' href='javascript:editarmantenimiento("+value.idEntidadMantenimiento+");'><i class='fa fa-edit'></i></a> ");
 		                	  
 		                	  
 		                      dataSet.push(row)
@@ -180,9 +202,6 @@ var api = {
               });
         	  
               $('#dp-fechadesde-tra').datepicker(dateOption);  
-        	
-              
-              
               
               $('#dp-fechadesde-tra').datepicker("update","17/11/2018");
               
