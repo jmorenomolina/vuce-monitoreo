@@ -26,3 +26,4 @@
 servicio-vuce-api/vuce-api-rest.log
 servicio-vuce-api/vuce-api-rest-error.log
 *.log
+servicio-vuce-app-v/target/

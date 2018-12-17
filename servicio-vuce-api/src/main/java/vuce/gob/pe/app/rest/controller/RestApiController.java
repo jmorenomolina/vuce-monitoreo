@@ -98,7 +98,7 @@ public class RestApiController {
 	}
 	
 	
-	@RequestMapping(value = "/entidadMantenimiento", method = RequestMethod.PUT)
+	@RequestMapping(value = "/entidadMantenimiento/registrar", method = RequestMethod.PUT)
 	public ResponseEntity<String> registrarEntidadMantenimiento(@RequestBody EntidadMantenimientoInput entidadInput) {		
 		
 		logger.info("registrarEntidadMantenimiento  EntidadId: [{}]  fechaInicio: [{}] fechaFin: [{}]",entidadInput.getEntidadId(),entidadInput.getFechaInicio(),entidadInput.getFechaFin());
@@ -118,15 +118,28 @@ public class RestApiController {
 		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente", HttpStatus.OK);
 	}
 	
-	/*
+	
+	
 	@RequestMapping(value = "/entidadMantenimiento/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<String> editarEntidadMantenimiento(@PathVariable("id") Integer id,@RequestBody EntidadMantenimientoInput entidadInput) {		
-		Optional<EntidadMantenimiento> entidadMantenimiento = repositoryEntidadMantenimiento.findById(id);
+	public ResponseEntity<String> editarEntidadMantenimiento(@PathVariable("id") Integer id,@RequestBody EntidadMantenimientoInput entidadInput) {	
 		
-		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente" + entidadMantenimiento.get().getIdEntidad(), HttpStatus.OK);
+		logger.info("registrarEntidadMantenimiento  Id: [{}] , EntidadId: [{}]  fechaInicio: [{}] fechaFin: [{}]",id,entidadInput.getEntidadId(),entidadInput.getFechaInicio(),entidadInput.getFechaFin());
+		
+		EntidadMantenimiento entidadMantenimiento = repositoryEntidadMantenimiento.findById(id).get();
+		if(Optional.ofNullable(entidadMantenimiento).isPresent()) {
+			entidadMantenimiento.setIdEntidad(entidadInput.getEntidadId());		
+			entidadMantenimiento.setFechaInicio(Converter.convertToDate(entidadInput.getFechaInicio(), FORMAT_DATE));
+			entidadMantenimiento.setFechaFin(Converter.convertToDate(entidadInput.getFechaFin(), FORMAT_DATE));
+			repositoryEntidadMantenimiento.save(entidadMantenimiento);
+			return new ResponseEntity<>("Mantenimiento de entidad actualizado correctamente", HttpStatus.OK);
+		}else{
+			return new ResponseEntity<>("Mantenimiento de entidad No encontrado", HttpStatus.NOT_MODIFIED);
+		}
+		
+		
 	}
 	
-	*/
+	
 	
 	@RequestMapping(value = "/frecuencialectura", method = RequestMethod.GET)
 	public ResponseEntity<List<FrecuenciaLectura>> obtenerfrecuencialectura() {
