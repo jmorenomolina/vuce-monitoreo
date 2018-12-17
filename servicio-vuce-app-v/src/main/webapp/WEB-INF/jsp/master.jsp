@@ -76,7 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <header class="main-header">
 
                 <!-- Logo -->
-                <a href="./inicio" class="logo">
+                <a href="./monitoreo" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>VUCE</b></span>
                     <!-- logo for regular state and mobile devices -->
