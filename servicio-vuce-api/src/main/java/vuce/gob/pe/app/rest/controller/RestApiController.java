@@ -93,7 +93,7 @@ public class RestApiController {
 		}
 		
 		mantenimientos.forEach(m->{
-			Optional<Entidad> entidad = repositoryEntidad.findById(m.getIdEntidad());
+			Optional<EntidadMante> entidad = repositoryEntidadMante.findById(m.getIdEntidad());
 			m.setNombreEntidad(entidad.get().getDescripcion());			
 		});
 		
