@@ -23,9 +23,11 @@ import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
 import vuce.gob.pe.app.model.Entidad;
+import vuce.gob.pe.app.model.EntidadMante;
 import vuce.gob.pe.app.model.EntidadMantenimiento;
 import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.model.Parametro;
+import vuce.gob.pe.app.repository.EntidadManteRepository;
 import vuce.gob.pe.app.repository.EntidadMantenimientoRepository;
 import vuce.gob.pe.app.repository.EntidadRepository;
 import vuce.gob.pe.app.repository.FrecuenciaLecturaRepository;
@@ -58,7 +60,9 @@ public class RestApiController {
 	private final EntidadRepository repositoryEntidad = null;
 	
 	
-
+	@Autowired
+	private final EntidadManteRepository repositoryEntidadMante = null;
+	
 	@Autowired
 	private final EntidadMantenimientoRepository repositoryEntidadMantenimiento = null;
 	
@@ -240,6 +244,16 @@ public class RestApiController {
 	}
 	
 		
+	@RequestMapping(value = "/entidadesmantenimiento", method = RequestMethod.GET)
+	public ResponseEntity<List<EntidadMante>> entidadesMantenimiento() {
+
+		List<EntidadMante> entidades = (List<EntidadMante>) repositoryEntidadMante.findAll();
+		if (entidades.isEmpty()) {
+			return new ResponseEntity<List<EntidadMante>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(entidades, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Entidad>> entidades() {
 

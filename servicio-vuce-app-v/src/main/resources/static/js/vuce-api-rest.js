@@ -210,7 +210,7 @@ var api = {
 	  },
 	 callEntidadesMantenimiento: function () {
              $.ajax({
-                     url: contextApi + "/entidades",
+                     url: contextApi + "/entidadesmantenimiento",
                      dataType: "json",
                      complete: function () {
                          var selectDemo = $('#entidades');
