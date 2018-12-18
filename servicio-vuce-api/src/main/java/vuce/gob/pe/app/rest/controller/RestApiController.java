@@ -143,10 +143,18 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/frecuencialectura", method = RequestMethod.GET)
 	public ResponseEntity<List<FrecuenciaLectura>> obtenerfrecuencialectura() {
+		
+		logger.info("obtenerfrecuencialectura [execute]");
+		
 		List<FrecuenciaLectura> parametros = (List<FrecuenciaLectura>) frecuenciaLecturaEntidad.findAll();
 		if (parametros.isEmpty()) {
+			logger.info("obtenerfrecuencialectura [lista vacia]");
+			
 			return new ResponseEntity<List<FrecuenciaLectura>>(HttpStatus.NO_CONTENT);
 		}
+		
+		logger.info("obtenerfrecuencialectura [finish]");
+		
 		return new ResponseEntity<>(parametros, HttpStatus.OK);
 	}
 	
