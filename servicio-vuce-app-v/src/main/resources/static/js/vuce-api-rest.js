@@ -193,7 +193,7 @@ var api = {
               });
         	  
         	  
-        	  $('#dp-fechadesde-tra-inc').datepicker("update","17/11/2018");
+        	  $('#dp-fechadesde-tra-inc').datepicker("update","01/12/2018");
         	  
         	  $('#dp-fechadesde-tra').datepicker(dateOption).on('changeDate',function(e){
       			if(!util.validateDate('dp-fechadesde-tra','dp-fechahasta-tra')){
@@ -203,7 +203,7 @@ var api = {
         	  
               $('#dp-fechadesde-tra').datepicker(dateOption);  
               
-              $('#dp-fechadesde-tra').datepicker("update","17/11/2018");
+              $('#dp-fechadesde-tra').datepicker("update","01/12/2018");
               
               
           });
