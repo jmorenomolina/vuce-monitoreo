@@ -17,12 +17,13 @@ package vuce.gob.pe.app.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import vuce.gob.pe.app.model.Entidad;
+import vuce.gob.pe.app.model.EntidadMante;
+
 /**
  *
  * @author cquevedo
  */
-public interface TransmisionesRepository extends CrudRepository<Entidad, Integer> {
+public interface TransmisionesRepository extends CrudRepository<EntidadMante, Integer> {
 	
     
 }

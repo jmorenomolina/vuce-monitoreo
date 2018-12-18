@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import vuce.gob.pe.app.model.Entidad;
 import vuce.gob.pe.app.model.EntidadMante;
 /**
  *
@@ -27,5 +26,9 @@ import vuce.gob.pe.app.model.EntidadMante;
  */
 public interface EntidadManteRepository extends CrudRepository<EntidadMante, Integer> {
 
+	
+    public List<EntidadMante> findAllByOrderByDescripcionAsc();
+
     
 }
+	

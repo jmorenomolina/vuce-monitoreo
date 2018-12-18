@@ -54,13 +54,13 @@
                             
 	                            <div class="form-group col-sm-12 col-md-4 col-lg-3 " style="padding-top: 30px;">
 	                              
-	                                  <button type="button" class="btn btn-primary" id="btn-execute-registrar-man">Registrar nuevo mantenimiento</button>
+	                                  <button type="button" class="btn btn-primary" id="btn-execute-registrar-man">Grabar</button>
 	                                  
 	                                  
 	                                  <button type="button" class="btn btn-primary" id="btn-execute-editar-man" style="display: none;">Grabar</button>
 	                                  
 	                            
-	                                  <button type="button" class="btn btn-primary" id="btn-execute-limpiar" onclick="limpiar();">Limpiar</button>
+	                                  <button type="button" class="btn btn-primary" id="btn-execute-limpiar" onclick="limpiar();" style="display: none;">Limpiar</button>
 	                                
 	                                
 	                            </div> 

@@ -6,17 +6,13 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,8 +31,6 @@ public class EntidadMantenimiento implements Serializable {
 	@Id
 	@Basic(optional = false)
 	@Column(name = "ID_ENTIDAD_MANTENIMIENTO")
-	@SequenceGenerator(name = "ENTIDADMANTENIMIENTO_SEQ", sequenceName = "MTOBJ.ENTIDADMANTENIMIENTO_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ENTIDADMANTENIMIENTO_SEQ")
 	private Integer idEntidadMantenimiento;		
 	
 	@Column(name = "ID_ENTIDAD")

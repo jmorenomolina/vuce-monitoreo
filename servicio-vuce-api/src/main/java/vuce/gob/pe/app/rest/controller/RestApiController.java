@@ -22,14 +22,12 @@ import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
 import vuce.gob.pe.app.dto.TrasmisionIncidenteDTO;
-import vuce.gob.pe.app.model.Entidad;
 import vuce.gob.pe.app.model.EntidadMante;
 import vuce.gob.pe.app.model.EntidadMantenimiento;
 import vuce.gob.pe.app.model.FrecuenciaLectura;
 import vuce.gob.pe.app.model.Parametro;
 import vuce.gob.pe.app.repository.EntidadManteRepository;
 import vuce.gob.pe.app.repository.EntidadMantenimientoRepository;
-import vuce.gob.pe.app.repository.EntidadRepository;
 import vuce.gob.pe.app.repository.FrecuenciaLecturaRepository;
 import vuce.gob.pe.app.repository.ParametroRepository;
 import vuce.gob.pe.app.rest.parameter.ConfiguracionMonitoreoInput;
@@ -43,7 +41,9 @@ import vuce.gob.pe.app.service.TransmisionesService;
 import vuce.gob.pe.app.service.mapper.ConverterToConfiguracionMonitoreoResponseDTO;
 import vuce.gob.pe.app.util.Converter;
 import vuce.gob.pe.app.util.RestAppException;
-
+import java.util.Comparator;
+import java.util.Map;
+import java.util.NoSuchElementException;
 /**
  *
  * @author cquevedo
@@ -56,9 +56,6 @@ public class RestApiController {
 	public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
 	
 
-	@Autowired
-	private final EntidadRepository repositoryEntidad = null;
-	
 	
 	@Autowired
 	private final EntidadManteRepository repositoryEntidadMante = null;
@@ -107,10 +104,24 @@ public class RestApiController {
 		
 		logger.info("registrarEntidadMantenimiento  EntidadId: [{}]  fechaInicio: [{}] fechaFin: [{}]",entidadInput.getEntidadId(),entidadInput.getFechaInicio(),entidadInput.getFechaFin());
 		
-		EntidadMantenimiento mantenimiento = new EntidadMantenimiento();		
+		List<EntidadMantenimiento> mantenimientos = (List<EntidadMantenimiento>) repositoryEntidadMantenimiento.findAll();
+		int id = 1;
+		if (!mantenimientos.isEmpty()) {
+			id = mantenimientos.stream().max(Comparator.comparing(EntidadMantenimiento::getIdEntidadMantenimiento)).orElseThrow(NoSuchElementException::new).getIdEntidadMantenimiento();
+		}
+		
+		
+		id++;
+		logger.info("registrarEntidadMantenimiento  id generado: [{}] ",id);
+				
+		EntidadMantenimiento mantenimiento = new EntidadMantenimiento();	
+		mantenimiento.setIdEntidadMantenimiento(id);
 		mantenimiento.setIdEntidad(entidadInput.getEntidadId());		
 		mantenimiento.setFechaInicio(Converter.convertToDate(entidadInput.getFechaInicio(), FORMAT_DATE));
 		mantenimiento.setFechaFin(Converter.convertToDate(entidadInput.getFechaFin(), FORMAT_DATE));
+		
+		
+		
 		repositoryEntidadMantenimiento.save(mantenimiento);
 		return new ResponseEntity<>("Mantenimiento de entidad registrado correctamente", HttpStatus.OK);
 	}
@@ -255,11 +266,11 @@ public class RestApiController {
 	}
 	
 	@RequestMapping(value = "/entidades", method = RequestMethod.GET)
-	public ResponseEntity<List<Entidad>> entidades() {
+	public ResponseEntity<List<EntidadMante>> entidades() {
 
-		List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAllByOrderByDescripcionAsc();
+		List<EntidadMante> entidades = (List<EntidadMante>) repositoryEntidadMante.findAllByOrderByDescripcionAsc();
 		if (entidades.isEmpty()) {
-			return new ResponseEntity<List<Entidad>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<EntidadMante>>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(entidades, HttpStatus.OK);
 	}
@@ -450,7 +461,7 @@ public class RestApiController {
 		logger.info("obtenerConfiguracionMonitoreo entidadId: [{}] ",input.getEntidadId());
 		
 		try {
-			List<Entidad> entidades = (List<Entidad>) repositoryEntidad.findAll();
+			List<EntidadMante> entidades = (List<EntidadMante>) repositoryEntidadMante.findAll();
 			if (!entidades.isEmpty()) {			
 				List<ConfiguracionMonitoreoDTO> responseConf = repositoryTransmisionesService.obtenerConfiguracionMonitoreo(input.getEntidadId());				
 				List<ConfiguracionMonitoreoResponseDTO> response = ConverterToConfiguracionMonitoreoResponseDTO.converter(entidades, responseConf);				

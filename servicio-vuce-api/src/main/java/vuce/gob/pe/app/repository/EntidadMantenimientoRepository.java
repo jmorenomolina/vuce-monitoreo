@@ -15,11 +15,8 @@
  */
 package vuce.gob.pe.app.repository;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
 
-import vuce.gob.pe.app.model.Entidad;
 import vuce.gob.pe.app.model.EntidadMantenimiento;
 /**
  *
@@ -31,3 +28,4 @@ public interface EntidadMantenimientoRepository extends CrudRepository<EntidadMa
 	
     
 }
+	
