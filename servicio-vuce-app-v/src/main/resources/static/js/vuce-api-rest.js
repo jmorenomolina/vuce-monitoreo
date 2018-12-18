@@ -379,7 +379,7 @@ var api = {
 				url: contextApi + "/transmisionesconincidentes",			 
 			    dataType: "json",
 			    data: {
-			    	fechaIncio:$("#dp-fechadesde-tra-inc").val(),
+			    	fechaInicio:$("#dp-fechadesde-tra-inc").val(),
 	            	fechaFin:$("#dp-fechahasta-tra-inc").val()
 			    },
 			    error:function(e){
