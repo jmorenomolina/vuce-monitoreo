@@ -1,0 +1,7 @@
+ejecutar los comandos en este orden
+git-pull.bat
+servicio-vuce-api-actualizar.bat
+servicio-vuce-api-iniciar.bat
+servicio-vuce-app-actualizar.bat
+servicio-vuce-app-iniciar.bat
+http://localhost:9005/monitoreoIncidentes.jsf
