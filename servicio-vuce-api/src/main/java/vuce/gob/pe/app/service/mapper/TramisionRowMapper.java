@@ -14,21 +14,24 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 	
 	@Override
 	public TrasmisionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		
+		System.out.print("[TramisionRowMapper] [1]");
+		
 		TrasmisionDTO transmision = new TrasmisionDTO();
 		transmision.setTipo(rs.getString("TIPO"));	
 		transmision.setTieneIncidente(rs.getInt("TIENE_INCIDENTE"));
 		transmision.setTipoIncidente(rs.getInt("TIPO_INCIDENTE"));
 		transmision.setEntidadId(rs.getInt("ENTIDAD_ID"));
-		transmision.setEntidadSigla(rs.getString("SIGLA_ENTIDAD"));
-		transmision.setTipoMensaje(rs.getString("TIPO_MENSAJE"));
-		transmision.setNombreMensaje(rs.getString("NOM_MENSAJE"));
+		transmision.setEntidadSigla(rs.getString("ENTIDAD_SIGLAS"));
+		transmision.setTipoMensaje(rs.getString("MENSAJE_TIPO"));
+		transmision.setNombreMensaje(rs.getString("MENSAJE_NOM"));
 		
-		byte[] requestXmlData = lobHandler.getBlobAsBytes(rs,"XML");
+		byte[] requestXmlData = lobHandler.getBlobAsBytes(rs,"ADJUNTO_MENSAJE");
 		if(requestXmlData!=null) {
 			transmision.setXml(new String(requestXmlData));
 		}
 	
-		byte[] requestEbxmlData = lobHandler.getBlobAsBytes(rs,"EBXML");
+		byte[] requestEbxmlData = lobHandler.getBlobAsBytes(rs,"ADJUNTO_EBXML");
 		if(requestEbxmlData!=null) {
 			transmision.setEbxml(new String(requestEbxmlData));
 		}
@@ -36,17 +39,18 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		transmision.setError(rs.getString("ERROR"));
 		transmision.setVcId(rs.getInt("VC_ID"));
 		transmision.setVeId(rs.getInt("VE_ID"));
-		transmision.setEstadoVc(rs.getInt("ESTADO_VC"));		
-		transmision.setNombreEstadoVc(rs.getString("NOM_ESTADO_VC"));		
-		transmision.setEstadoVe(rs.getInt("ESTADO_VE"));
-		transmision.setNombreEstadoVe(rs.getString("NOM_ESTADO_VE"));
-		transmision.setTipoDocumento(rs.getString("TIPO_DOC"));
-		transmision.setNombreDocumento(rs.getString("NOM_DOC"));
-		transmision.setNumeroDocumento(rs.getString("NUM_DOC"));		
+		transmision.setEstadoVc(rs.getInt("VC_ESTADO"));		
+		transmision.setNombreEstadoVc(rs.getString("VC_ESTADO_NOM"));		
+		transmision.setEstadoVe(rs.getInt("VE_ESTADO"));
+		transmision.setNombreEstadoVe(rs.getString("VE_ESTADO_NOM"));
+		transmision.setTipoDocumento(rs.getString("DOCUMENTO_TIPO"));
+		transmision.setNombreDocumento(rs.getString("DOCUMENTO_NOM"));
+		transmision.setNumeroDocumento(rs.getString("DOCUMENTO_NUM"));		
 		transmision.setFechaRegistroSalida(rs.getDate("FECHA_REGISTRO_SALIDA"));
 		transmision.setFechaActualizacionSalida(rs.getDate("FECHA_ACTUALIZACION_SALIDA"));
 		transmision.setAntiguedadSalida(rs.getInt("ANTIGUEDAD_SALIDA"));
 		transmision.setFormato(rs.getString("FORMATO"));
+		
 		transmision.setFechaRegistroEntrada(rs.getDate("FECHA_REGISTRO_ENTRADA"));
 		transmision.setFechaActualizacionEntrada(rs.getDate("FECHA_ACTUALIZACION_ENTRADA"));
 		transmision.setAntiguedadEntrada(rs.getInt("ANTIGUEDAD_ENTRADA"));		

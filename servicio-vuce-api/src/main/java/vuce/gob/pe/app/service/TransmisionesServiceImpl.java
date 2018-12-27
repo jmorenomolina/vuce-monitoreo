@@ -136,10 +136,12 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 		try {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			//jdbcTemplate.setDataSource(this.getConexion());
-
+			
+			logger.info("[filtrarTransmisiones] [1]");
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_FILTRAR_TRANSMISIONES)
 					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionRowMapper());
+			logger.info("[filtrarTransmisiones] [2]");
 			SqlParameterSource in = new MapSqlParameterSource().addValue("CODIGO_ENTIDAD", request.getCodigoEntidad())
 					.addValue("FECHA_INICIO", request.getFechaFin()).addValue("FECHA_FIN", request.getFechaFin())
 					.addValue("TIPO_MENSAJE", request.getTipoMensaje())
