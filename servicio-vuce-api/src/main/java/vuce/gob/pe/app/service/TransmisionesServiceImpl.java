@@ -143,7 +143,7 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 					.returningResultSet(PC_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionRowMapper());
 			logger.info("[filtrarTransmisiones] [2]");
 			SqlParameterSource in = new MapSqlParameterSource().addValue("CODIGO_ENTIDAD", request.getCodigoEntidad())
-					.addValue("FECHA_INICIO", request.getFechaFin()).addValue("FECHA_FIN", request.getFechaFin())
+					.addValue("FECHA_INICIO", request.getFechaInicio()).addValue("FECHA_FIN", request.getFechaFin())
 					.addValue("TIPO_MENSAJE", request.getTipoMensaje())
 					.addValue("TIPO_DOCUMENTO", request.getTipoDocumento())
 					.addValue("NUMERO_DOCUMENTO", request.getNumeroDocumento())
