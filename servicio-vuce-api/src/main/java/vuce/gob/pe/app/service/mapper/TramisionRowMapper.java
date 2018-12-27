@@ -40,7 +40,7 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		byte[] requestEbxmlData = lobHandler.getBlobAsBytes(rs,"ADJUNTO_EBXML");
 		if(requestEbxmlData!=null) {
 			transmision.setEbxml(new String(requestEbxmlData));
-		}*/
+		}
 		
 		transmision.setError(rs.getString("ERROR"));
 		transmision.setVcId(rs.getInt("VC_ID"));
@@ -59,7 +59,9 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		
 		transmision.setFechaRegistroEntrada(rs.getDate("FECHA_REGISTRO_ENTRADA"));
 		transmision.setFechaActualizacionEntrada(rs.getDate("FECHA_ACTUALIZACION_ENTRADA"));
-		transmision.setAntiguedadEntrada(rs.getInt("ANTIGUEDAD_ENTRADA"));		
+		transmision.setAntiguedadEntrada(rs.getInt("ANTIGUEDAD_ENTRADA"));	
+		
+			*/
 		return transmision;
 	}
 
