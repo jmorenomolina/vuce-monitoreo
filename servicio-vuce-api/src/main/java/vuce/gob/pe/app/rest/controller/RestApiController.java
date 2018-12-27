@@ -336,32 +336,32 @@ public class RestApiController {
 		
 		
 		
-		if(!Optional.ofNullable(numeroDocumento).isPresent()  ||  "".equals(numeroDocumento)){
+		if(!Optional.ofNullable(numeroDocumento).isPresent()  ||  !"".equals(numeroDocumento)){
 			request.setNumeroDocumento(numeroDocumento);
 		}else {
 			request.setNumeroDocumento("%");
 		}
 		
-		if(!Optional.ofNullable(estadoVc).isPresent()  ||  "".equals(estadoVc)){
+		if(!Optional.ofNullable(estadoVc).isPresent()  ||  !"".equals(estadoVc)){
 			request.setEstadoVc(estadoVc);
 		}else {
 			request.setEstadoVc("%");
 		}
 		
-		if(!Optional.ofNullable(estadoVe).isPresent()  ||  "".equals(estadoVe)){
+		if(!Optional.ofNullable(estadoVe).isPresent()  ||  !"".equals(estadoVe)){
 			request.setEstadoVe(estadoVe);
 		}else {
 			request.setEstadoVe("%");
 		}
 		
 		
-		if(!Optional.ofNullable(vcId).isPresent()  ||  "".equals(vcId)){
+		if(!Optional.ofNullable(vcId).isPresent()  ||  !"".equals(vcId)){
 			request.setVcId(vcId);
 		}else {
 			request.setVcId("%");
 		}
 		
-		if(!Optional.ofNullable(veId).isPresent()  ||  "".equals(veId)){
+		if(!Optional.ofNullable(veId).isPresent()  ||  !"".equals(veId)){
 			request.setVeId(veId);
 		}else {
 			request.setVeId("%");
