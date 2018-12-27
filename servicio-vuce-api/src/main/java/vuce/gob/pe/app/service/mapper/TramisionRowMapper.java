@@ -2,20 +2,26 @@ package vuce.gob.pe.app.service.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 
 import vuce.gob.pe.app.dto.TrasmisionDTO;
+import vuce.gob.pe.app.service.TransmisionesServiceImpl;
 
 public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
+	
+	public static final Logger logger = LoggerFactory.getLogger(TransmisionesServiceImpl.class);
 	
 	LobHandler lobHandler = new DefaultLobHandler();
 	
 	@Override
 	public TrasmisionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		System.out.print("[TramisionRowMapper] [1]");
+		logger.info("[TramisionRowMapper] [1]");
 		
 		TrasmisionDTO transmision = new TrasmisionDTO();
 		transmision.setTipo(rs.getString("TIPO"));	
@@ -25,7 +31,7 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		transmision.setEntidadSigla(rs.getString("ENTIDAD_SIGLAS"));
 		transmision.setTipoMensaje(rs.getString("MENSAJE_TIPO"));
 		transmision.setNombreMensaje(rs.getString("MENSAJE_NOM"));
-		
+		/*
 		byte[] requestXmlData = lobHandler.getBlobAsBytes(rs,"ADJUNTO_MENSAJE");
 		if(requestXmlData!=null) {
 			transmision.setXml(new String(requestXmlData));
@@ -34,7 +40,7 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		byte[] requestEbxmlData = lobHandler.getBlobAsBytes(rs,"ADJUNTO_EBXML");
 		if(requestEbxmlData!=null) {
 			transmision.setEbxml(new String(requestEbxmlData));
-		}
+		}*/
 		
 		transmision.setError(rs.getString("ERROR"));
 		transmision.setVcId(rs.getInt("VC_ID"));
