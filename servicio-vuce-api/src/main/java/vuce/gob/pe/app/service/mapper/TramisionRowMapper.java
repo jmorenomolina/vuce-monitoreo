@@ -24,13 +24,15 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 		logger.info("[TramisionRowMapper] [1]");
 		
 		TrasmisionDTO transmision = new TrasmisionDTO();
-		transmision.setTipo(rs.getString("TIPO"));	
+		transmision.setTipo("1");
+		
+		/*transmision.setTipo(rs.getString("TIPO"));	
 		transmision.setTieneIncidente(rs.getInt("TIENE_INCIDENTE"));
 		transmision.setTipoIncidente(rs.getInt("TIPO_INCIDENTE"));
 		transmision.setEntidadId(rs.getInt("ENTIDAD_ID"));
 		transmision.setEntidadSigla(rs.getString("ENTIDAD_SIGLAS"));
 		transmision.setTipoMensaje(rs.getString("MENSAJE_TIPO"));
-		transmision.setNombreMensaje(rs.getString("MENSAJE_NOM"));
+		transmision.setNombreMensaje(rs.getString("MENSAJE_NOM"));*/
 		/*
 		byte[] requestXmlData = lobHandler.getBlobAsBytes(rs,"ADJUNTO_MENSAJE");
 		if(requestXmlData!=null) {

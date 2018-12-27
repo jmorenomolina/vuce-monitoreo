@@ -151,11 +151,15 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 					.addValue("TIPO_INCIDENTE", request.getTipoIncidente()).addValue("ESTADO_VC", request.getEstadoVc())
 					.addValue("ESTADO_VE", request.getEstadoVe()).addValue("VC_ID", request.getVcId())
 					.addValue("VE_ID", request.getVeId());
+			logger.info("[filtrarTransmisiones] [3]");
 			Map<String, Object> result = simpleJdbcCall.execute(in);
+			logger.info("[filtrarTransmisiones] [4]");
 			List<TrasmisionDTO>  response = (List) result.get(PC_OBTENER_TX_CON_INCIDENTE_RETURN);
+			logger.info("[filtrarTransmisiones] [5]");
 			//jdbcTemplate.getDataSource().getConnection().commit();			
 			return response;			
 		} catch (Exception e) {
+			logger.info("[filtrarTransmisiones] [666]");
 			logger.error(e.getMessage(), e);
 			throw new RestAppException("500", "Error al ejecutar el procedimiento almacenado", e.getMessage(), e);
 		}finally {
