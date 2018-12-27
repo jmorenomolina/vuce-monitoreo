@@ -117,7 +117,7 @@ var xmlNotificaciones = [];
             
             
             document.getElementById("btn-execute-detener").onclick = function () {     
-            	var r = confirm("Se detendrán todas las transmisiones de la entidad seleccionada en el período indicado");
+            	var r = confirm("Se detendran todas las transmisiones de la entidad seleccionada en el perodo indicado");
             	if (r == true) {
             		api.callTransmisionDetener($('#entidades-detener').val(),$('#dp-fechadesde-det').val(),$('#dp-fechahasta-det').val());
             	}            	            	

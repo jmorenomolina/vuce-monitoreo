@@ -330,10 +330,17 @@ public class RestApiController {
 		request.setFechaFin(Converter.convertToDate(fechaFin, FORMAT_DATE));
 		request.setTipoMensaje(tipoMensaje);
 		request.setTipoDocumento(tipoDocumento);
-		request.setNumeroDocumento(numeroDocumento);
+		
 		request.setTipoTransmision(tipoTransmision);
 		request.setTipoIncidente(tipoIncidente);
 		
+		
+		
+		if(!Optional.ofNullable(numeroDocumento).isPresent()  ||  "".equals(numeroDocumento)){
+			request.setNumeroDocumento(numeroDocumento);
+		}else {
+			request.setNumeroDocumento("%");
+		}
 		
 		if(!Optional.ofNullable(estadoVc).isPresent()  ||  "".equals(estadoVc)){
 			request.setEstadoVc(estadoVc);
@@ -347,8 +354,19 @@ public class RestApiController {
 			request.setEstadoVe("%");
 		}
 		
-		request.setVcId(vcId);
-		request.setVeId(veId);
+		
+		if(!Optional.ofNullable(vcId).isPresent()  ||  "".equals(vcId)){
+			request.setVcId(vcId);
+		}else {
+			request.setVcId("%");
+		}
+		
+		if(!Optional.ofNullable(veId).isPresent()  ||  "".equals(veId)){
+			request.setVeId(veId);
+		}else {
+			request.setVeId("%");
+		}
+		
 
 		logger.info("Filtrar Transmisiones: " + request.toString());
 

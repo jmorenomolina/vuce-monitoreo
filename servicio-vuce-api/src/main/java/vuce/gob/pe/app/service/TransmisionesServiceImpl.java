@@ -137,11 +137,11 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 			jdbcTemplate = new JdbcTemplate(dataSource);
 			//jdbcTemplate.setDataSource(this.getConexion());
 			
-			logger.info("[filtrarTransmisiones] [1]");
+			
 			simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName(PC_FILTRAR_TRANSMISIONES)
 					.withSchemaName(ESQUEMA).withCatalogName(PACKAGE)
 					.returningResultSet(PC_OBTENER_TX_CON_INCIDENTE_RETURN, new TramisionRowMapper());
-			logger.info("[filtrarTransmisiones] [2]");
+		
 			SqlParameterSource in = new MapSqlParameterSource().addValue("CODIGO_ENTIDAD", request.getCodigoEntidad())
 					.addValue("FECHA_INICIO", request.getFechaInicio()).addValue("FECHA_FIN", request.getFechaFin())
 					.addValue("TIPO_MENSAJE", request.getTipoMensaje())
@@ -151,11 +151,11 @@ public class TransmisionesServiceImpl  implements TransmisionesService {
 					.addValue("TIPO_INCIDENTE", request.getTipoIncidente()).addValue("ESTADO_VC", request.getEstadoVc())
 					.addValue("ESTADO_VE", request.getEstadoVe()).addValue("VC_ID", request.getVcId())
 					.addValue("VE_ID", request.getVeId());
-			logger.info("[filtrarTransmisiones] [3]");
+		
 			Map<String, Object> result = simpleJdbcCall.execute(in);
-			logger.info("[filtrarTransmisiones] [4]");
+	
 			List<TrasmisionDTO>  response = (List) result.get(PC_OBTENER_TX_CON_INCIDENTE_RETURN);
-			logger.info("[filtrarTransmisiones] [5]");
+			
 			//jdbcTemplate.getDataSource().getConnection().commit();			
 			return response;			
 		} catch (Exception e) {
