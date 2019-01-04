@@ -21,7 +21,6 @@ public class TramisionRowMapper  implements RowMapper<TrasmisionDTO> {
 	@Override
 	public TrasmisionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		logger.info("[TramisionRowMapper] [1]");
 		
 		TrasmisionDTO transmision = new TrasmisionDTO();
 		transmision.setTipo(rs.getString("TIPO"));	

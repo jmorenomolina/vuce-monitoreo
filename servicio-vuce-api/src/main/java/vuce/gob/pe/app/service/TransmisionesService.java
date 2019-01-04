@@ -3,7 +3,9 @@ package vuce.gob.pe.app.service;
 import java.util.Date;
 import java.util.List;
 
+import vuce.gob.pe.app.dto.AlertaTipoIncidenteDTO;
 import vuce.gob.pe.app.dto.ConfiguracionMonitoreoDTO;
+import vuce.gob.pe.app.dto.DetalleAlertaIncidente6DTO;
 import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
@@ -37,6 +39,7 @@ public interface TransmisionesService {
     
     public MensajeSalidaDTO detenerTrasmision(Integer entidadId,Date fechaInicio,Date fechaFin)  throws RestAppException;   
     
-    public List<FrecuenciaLectura> obtenterFrecuenciaLectura()  throws RestAppException;
+    public DetalleAlertaIncidente6DTO obtenerDetalleAlertaIncidente6(Integer entidadId)  throws RestAppException;   
     
+    public AlertaTipoIncidenteDTO obtenerDetalleAlertaTipoIncidente(Integer entidadId,Integer tipoIncidente) throws RestAppException;
 }

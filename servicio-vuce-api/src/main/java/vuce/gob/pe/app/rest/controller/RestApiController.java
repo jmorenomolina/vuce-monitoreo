@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import vuce.gob.pe.app.dto.AlertaTipoIncidenteDTO;
 import vuce.gob.pe.app.dto.ConfiguracionMonitoreoDTO;
 import vuce.gob.pe.app.dto.ConfiguracionMonitoreoResponseDTO;
+import vuce.gob.pe.app.dto.DetalleAlertaIncidente6DTO;
 import vuce.gob.pe.app.dto.MensajeSalidaDTO;
 import vuce.gob.pe.app.dto.RequestFiltrarTransmisionesDTO;
 import vuce.gob.pe.app.dto.TrasmisionDTO;
@@ -42,7 +44,6 @@ import vuce.gob.pe.app.service.mapper.ConverterToConfiguracionMonitoreoResponseD
 import vuce.gob.pe.app.util.Converter;
 import vuce.gob.pe.app.util.RestAppException;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.NoSuchElementException;
 /**
  *
@@ -531,5 +532,45 @@ public class RestApiController {
 			return this.crearMensajeRespuestaError(e);
 		}
 	}
+	
+	
+	
+	
+	@RequestMapping(value = "/detalle/alertaincidente", method = RequestMethod.GET)
+	public ResponseEntity<DetalleAlertaIncidente6DTO> detalleAlertaIncidente6(@RequestParam(required = true, value = "entidad") String entidad) {
+
+		logger.info("detalleAlertaIncidente6 entidadId: [{}] ", entidad);
+		try {
+			DetalleAlertaIncidente6DTO response = (DetalleAlertaIncidente6DTO) repositoryTransmisionesService.obtenerDetalleAlertaIncidente6(Integer.parseInt(entidad));
+			if (!Optional.ofNullable(response).isPresent()) {
+				return new ResponseEntity<DetalleAlertaIncidente6DTO>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (RestAppException e) {
+			return this.crearMensajeRespuestaError(e);
+		}
+	}
+	
+	
+	
+	@RequestMapping(value = "/alerta/tipoincidente", method = RequestMethod.GET)
+	public ResponseEntity<AlertaTipoIncidenteDTO> alertaTipoIncident(
+			@RequestParam(required = true, value = "entidadId") String entidadId,
+			@RequestParam(required = true, value = "tipoIncidente") String tipoIncidente
+			) {
+
+		logger.info("alertaTipoIncident entidadId: [{}] tipoIncidente: [{}]", entidadId,tipoIncidente);
+		try {
+			AlertaTipoIncidenteDTO response = (AlertaTipoIncidenteDTO) repositoryTransmisionesService.obtenerDetalleAlertaTipoIncidente(Integer.parseInt(entidadId),Integer.parseInt(tipoIncidente));
+			if (!Optional.ofNullable(response).isPresent()) {
+				return new ResponseEntity<AlertaTipoIncidenteDTO>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (RestAppException e) {
+			return this.crearMensajeRespuestaError(e);
+		}
+	}
+	
+	
 
 }
