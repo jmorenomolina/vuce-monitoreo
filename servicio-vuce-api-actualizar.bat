@@ -1,4 +1,4 @@
 :BEGIN
-cd C:\Proyectos\vuce-monitoreo\proyectos\servicio-vuce-api
+cd D:\proyecto-vuce-monitoreo\vuce-monitoreo
 mvn install -Dmaven.test.skip=true
 :END
