@@ -203,7 +203,7 @@ var api = {
         	  
               $('#dp-fechadesde-tra').datepicker(dateOption);  
               
-              $('#dp-fechadesde-tra').datepicker("update","01/12/2018");
+              $('#dp-fechadesde-tra').datepicker("update","01/01/2019");
               
               
           });
@@ -818,11 +818,11 @@ var api = {
 					var sla4 =  $("#"+entidadId+"-sla4").val();
 					var sla5 =  $("#"+entidadId+"-sla5").val();
 					
-					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA1",sla1);
-					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA2",sla2);
-					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA3",sla3);
-					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA4",sla4);
-					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA5",sla5);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA_DISPONIBILIDAD_TRAN_SALIDA",sla1);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA_CONFIRMACION_TRAN_SALIDA",sla2);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA_PROCESAMIENTO_TRAN_ENTRADA",sla3);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA_FRECUENCIA_LECTURA",sla4);
+					api.callConfiguracionMonitoreoActualizar(entidadId,"SLA_MONITOREO_FREC_LECTURA",sla5);
 					
 					$("#sla-mensaje").html("Se guardaron correctamente los SLAs");
 					
