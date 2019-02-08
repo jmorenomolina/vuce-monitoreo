@@ -20,8 +20,8 @@ import org.apache.camel.Processor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pe.gob.vuce.entidad.SolicitudEntidad;
-import pe.gob.vuce.entidad.Transaccion;
+import pe.gob.vuce.entidad.Operacion;
+import pe.gob.vuce.entidad.TransmisionSalida;
 import pe.gob.vuce.esquema.transaccion.TransaccionType;
 
 public class LogProcessor implements Processor {
@@ -33,20 +33,20 @@ public class LogProcessor implements Processor {
 	@Override
 	public void process(final Exchange exchange) throws Exception {
 
-		SolicitudEntidad solicitud = exchange.getProperty("solicitud", SolicitudEntidad.class);
+		Operacion solicitud = exchange.getProperty("solicitud", Operacion.class);
 		Message in = exchange.getIn();
 		Map<String, DataHandler> adjuntos = in.getAttachments();
 
 		ZipEntry ze = null;
 
-		ArrayList<Transaccion> transacciones = new ArrayList<Transaccion>();
+		ArrayList<TransmisionSalida> transmisionesSalida = new ArrayList<TransmisionSalida>();
 
 		for (Map.Entry<String, DataHandler> entry : adjuntos.entrySet()) {
 
 			DataHandler dataHandler = entry.getValue();
 			ZipInputStream zis = null;
 
-			Transaccion transaccion = new Transaccion();
+			TransmisionSalida transmisionSalida = new TransmisionSalida();
 
 			// Abrir el archivo zip
 
@@ -68,11 +68,11 @@ public class LogProcessor implements Processor {
 						try {
 
 							TransaccionType tx = extraerMensajeXML(mensajeXML);
-							transaccion.setIdTransmision(tx.getIdTransmision());
-							transaccion.setTipoDocumento(tx.getDocumento().getTipo());
-							transaccion.setNumeroDocumento(tx.getDocumento().getNumero());
-							transaccion.setTipoMensaje(tx.getTipoMensaje());
-							transaccion.setMensajeXML(mensajeXML);
+							transmisionSalida.setIdTransmision(tx.getIdTransmision());
+							transmisionSalida.setTipoDocumento(tx.getDocumento().getTipo());
+							transmisionSalida.setNumeroDocumento(tx.getDocumento().getNumero());
+							transmisionSalida.setTipoMensaje(tx.getTipoMensaje());
+							transmisionSalida.setMensajeXML(mensajeXML);
 
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
@@ -83,12 +83,12 @@ public class LogProcessor implements Processor {
 					if (entryName.equals(MENSAJE_EBXML)) {
 
 						String ebXML = extraerXML(zis); // Leer el ebXML
-						transaccion.setEbXML(ebXML);
+						transmisionSalida.setEbXML(ebXML);
 
 					} else
 
 					if (entryName.equals(MENSAJE_ADJUNTOS)) {
-						transaccion.setTamanoAdjuntos(determinarTamanoAdjuntos(zis));
+						transmisionSalida.setTamanoAdjuntos(determinarTamanoAdjuntos(zis));
 					}
 
 					zis.closeEntry();
@@ -99,11 +99,11 @@ public class LogProcessor implements Processor {
 				zis.close();
 			}
 
-			transacciones.add(transaccion);
+			transmisionesSalida.add(transmisionSalida);
 
 		}
 
-		solicitud.setTransacciones(transacciones);
+		solicitud.setTransmisionesSalida(transmisionesSalida);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonSolicitud = mapper.writeValueAsString(solicitud);
 		in.setBody(jsonSolicitud);

@@ -3,7 +3,7 @@ package pe.gob.vuce.processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
-import pe.gob.vuce.entidad.SolicitudEntidad;
+import pe.gob.vuce.entidad.Operacion;
 
 public class InputProcessor implements Processor {
 
@@ -18,7 +18,7 @@ public class InputProcessor implements Processor {
 		final org.apache.camel.Message in = exchange.getIn();
 		final String payload = in.getBody(String.class);
 		final String operacion = (String) in.getHeader(SOAP_ACTION);
-		SolicitudEntidad solicitud = new SolicitudEntidad(payload);
+		Operacion solicitud = new Operacion(payload);
 		solicitud.setIdMensaje(exchange.getExchangeId());
 		solicitud.setNombreOperacion(in.getHeader(SOAP_ACTION, String.class));
 		exchange.setProperty(SOLICITUD, solicitud);

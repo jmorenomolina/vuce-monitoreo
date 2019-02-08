@@ -1,154 +1,94 @@
 package pe.gob.vuce.monitoreo.entity;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedStoredProcedureQueries;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureParameter;
-import javax.persistence.Table;;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "TRANSMISION_SALIDA")
-@NamedStoredProcedureQueries({
-		@NamedStoredProcedureQuery(name = "reenviarTransaccion", procedureName = "REENVIAR_TRANSACCION", parameters = {
-				@StoredProcedureParameter(mode = ParameterMode.IN, name = "id_transmision", type = String.class),
-				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }),
-		@NamedStoredProcedureQuery(name = "anularNotificacion", procedureName = "ANULAR_NOTIFICACION", parameters = {
-				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
-				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }),
-		@NamedStoredProcedureQuery(name = "reprocesarNotificacion", procedureName = "REPROCESAR_NOTIFICACION", parameters = {
-				@StoredProcedureParameter(mode = ParameterMode.IN, name = "vc_id", type = String.class),
-				@StoredProcedureParameter(mode = ParameterMode.OUT, name = "mensaje", type = String.class) }) })
+
 public class TransmisionSalida {
 
 	@Id
-	private String idMensaje;
-	private String descripcionFalla;
-	private Date fechaHoraRespuesta;
-	private Date fechaHoraSolicitud;
-	private int hayFalla = 1;
-	private String nombreOperacion;
-	private String nombreUsuario;
-	private String version;
+	private int idTransmision;
+	private String numeroDocumento;
+	private String tipoDocumento;
+	private String tipoMensaje;
+	private String ebXML;
+	private long tamanoAdjuntos;
+	private String mensajeXML;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_MENSAJE")
+	private Operacion operacion;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
-	private List<TransmisionEntrada> notificaciones;
+	public Operacion getOperacion() {
+		return operacion;
+	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
-	private List<RecepcionTransaccion> recepcionTransacciones;
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "solicitudEntidad")
-	private List<Transaccion> transacciones;
+	public void setOperacion(Operacion operacion) {
+		this.operacion = operacion;
+	}
 
 	public TransmisionSalida() {
 		super();
 	}
 
-	public String getDescripcionFalla() {
-		return descripcionFalla;
+	public int getIdTransmision() {
+		return idTransmision;
 	}
 
-	public Date getFechaHoraRespuesta() {
-		return fechaHoraRespuesta;
+	public String getNumeroDocumento() {
+		return numeroDocumento;
 	}
 
-	public Date getFechaHoraSolicitud() {
-		return fechaHoraSolicitud;
+	public String getTipoDocumento() {
+		return tipoDocumento;
 	}
 
-	public int getHayFalla() {
-		return hayFalla;
+	public String getTipoMensaje() {
+		return tipoMensaje;
 	}
 
-	public String getIdMensaje() {
-		return idMensaje;
+	public void setIdTransmision(int idTransmision) {
+		this.idTransmision = idTransmision;
 	}
 
-	public String getNombreOperacion() {
-		return nombreOperacion;
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
 	}
 
-	public String getNombreUsuario() {
-		return nombreUsuario;
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
-	public List<Transaccion> getTransacciones() {
-		return transacciones;
+	public void setTipoMensaje(String tipoMensaje) {
+		this.tipoMensaje = tipoMensaje;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getEbXML() {
+		return ebXML;
 	}
 
-	public void setDescripcionFalla(String descripcionFalla) {
-		this.descripcionFalla = descripcionFalla;
+	public void setEbXML(String ebXML) {
+		this.ebXML = ebXML;
 	}
 
-	public void setFechaHoraRespuesta(Date fechaHoraRespuesta) {
-		this.fechaHoraRespuesta = fechaHoraRespuesta;
+	public String getMensajeXML() {
+		return mensajeXML;
 	}
 
-	public void setFechaHoraSolicitud(Date fechaHoraSolicitud) {
-		this.fechaHoraSolicitud = fechaHoraSolicitud;
+	public void setMensajeXML(String mensajeXML) {
+		this.mensajeXML = mensajeXML;
 	}
 
-	public void setHayFalla(int hayFalla) {
-		this.hayFalla = hayFalla;
+	public long getTamanoAdjuntos() {
+		return tamanoAdjuntos;
 	}
 
-	public void setIdMensaje(String idMensaje) {
-		this.idMensaje = idMensaje;
-	}
-
-	public void setNombreOperacion(String nombreOperacion) {
-		this.nombreOperacion = nombreOperacion;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	public List<TransmisionEntrada> getNotificaciones() {
-		return notificaciones;
-	}
-
-	public void setNotificaciones(List<TransmisionEntrada> notificaciones) {
-		this.notificaciones = notificaciones;
-		for (Iterator<TransmisionEntrada> iterator = notificaciones.iterator(); iterator.hasNext();) {
-			TransmisionEntrada notificacion = (TransmisionEntrada) iterator.next();
-			notificacion.setSolicitudEntidad(this);
-		}
-	}
-
-	public List<RecepcionTransaccion> getRecepcionTransacciones() {
-		return recepcionTransacciones;
-	}
-
-	public void setRecepcionTransacciones(List<RecepcionTransaccion> recepcionTransacciones) {
-		this.recepcionTransacciones = recepcionTransacciones;
-		for (Iterator<RecepcionTransaccion> iterator = recepcionTransacciones.iterator(); iterator.hasNext();) {
-			RecepcionTransaccion recepcionTransaccion = (RecepcionTransaccion) iterator.next();
-			recepcionTransaccion.setSolicitudEntidad(this);
-		}
-	}
-
-	public void setTransacciones(List<Transaccion> transacciones) {
-		this.transacciones = transacciones;
-		for (Iterator<Transaccion> iterator = transacciones.iterator(); iterator.hasNext();) {
-			Transaccion transaccion = (Transaccion) iterator.next();
-			transaccion.setSolicitudEntidad(this);
-		}
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
+	public void setTamanoAdjuntos(long tamanoAdjuntos) {
+		this.tamanoAdjuntos = tamanoAdjuntos;
 	}
 }

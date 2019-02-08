@@ -1,9 +1,9 @@
 package pe.gob.vuce.monitoreo.entity;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -13,9 +13,10 @@ import javax.persistence.Table;
 @Table(name = "TRANSMISION_ENTRADA")
 public class TransmisionEntrada {
 
-	@EmbeddedId
-	private TransmisionEntradaPK id;
-
+	@Id
+	@Column(name = "ID_MENSAJE")
+	private String idMensaje;
+		
 	@Column(name = "NUMERO_DOCUMENTO")
 	private String numeroDocumento;
 
@@ -29,8 +30,8 @@ public class TransmisionEntrada {
 	private String xml;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_MENSAJE")
-	private TransmisionSalida solicitudEntidad;
+	@JoinColumn(name = "ID_MENSAJE", insertable = false, updatable = false )
+	private Operacion operacion;
 
 	public TransmisionEntrada() {
 	}
@@ -59,12 +60,12 @@ public class TransmisionEntrada {
 		this.tipoMensaje = tipoMensaje;
 	}
 
-	public TransmisionSalida getSolicitudEntidad() {
-		return solicitudEntidad;
+	public Operacion getOperacion() {
+		return operacion;
 	}
 
-	public void setSolicitudEntidad(TransmisionSalida solicitudEntidad) {
-		this.solicitudEntidad = solicitudEntidad;
+	public void setOperacion(Operacion operacion) {
+		this.operacion = operacion;
 	}
 
 	public String getXml() {
@@ -75,12 +76,12 @@ public class TransmisionEntrada {
 		this.xml = xml;
 	}
 
-	public TransmisionEntradaPK getId() {
-		return id;
+	public String getIdMensaje() {
+		return idMensaje;
 	}
 
-	public void setId(TransmisionEntradaPK id) {
-		this.id = id;
+	public void setIdMensaje(String idMensaje) {
+		this.idMensaje = idMensaje;
 	}
 
 }

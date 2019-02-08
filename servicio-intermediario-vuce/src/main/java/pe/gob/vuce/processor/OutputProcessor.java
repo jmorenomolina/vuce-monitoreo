@@ -5,14 +5,14 @@ import java.util.Date;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
-import pe.gob.vuce.entidad.SolicitudEntidad;
+import pe.gob.vuce.entidad.Operacion;
 
 public class OutputProcessor implements Processor {
 
 	@Override
 	public void process(final Exchange exchange) throws Exception {
 
-		SolicitudEntidad solicitud = exchange.getProperty("solicitud", SolicitudEntidad.class);
+		Operacion solicitud = exchange.getProperty("solicitud", Operacion.class);
 		solicitud.setFechaHoraRespuesta(new Date());
 		solicitud.setHayFalla(0);
 		exchange.setProperty("solicitud", solicitud);

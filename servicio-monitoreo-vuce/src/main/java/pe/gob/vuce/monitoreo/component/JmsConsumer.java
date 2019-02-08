@@ -9,30 +9,34 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pe.gob.vuce.monitoreo.entity.TransmisionSalida;
+import pe.gob.vuce.monitoreo.entity.Operacion;
 
 @Component
 public class JmsConsumer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JmsConsumer.class);
 	private final String TRANSACCION_QUEUE = "cola-transacciones-vuce";		
-    private final SolicitudEntidadComponent transaccionComponent;
+    private final MonitoreoComponent component;
     
     @Autowired
-	public JmsConsumer(SolicitudEntidadComponent transaccionComponent) {
+	public JmsConsumer(MonitoreoComponent component) {
 		super();
-		this.transaccionComponent = transaccionComponent;
+		this.component = component;
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@JmsListener(destination = TRANSACCION_QUEUE, containerFactory = "myFactory")
 	public void receiveMessage(Message message) {
 		try {
-		    TransmisionSalida solicitudEntidad = new ObjectMapper().readValue((String) message.getPayload(), TransmisionSalida.class);
-		    transaccionComponent.registrarSolicitud(solicitudEntidad);	
+		    Operacion operacion = new ObjectMapper().readValue((String) message.getPayload(), Operacion.class);
+		    component.registrarOperacion(operacion);	
 		} catch (Exception e) {			
 			logger.error(e.getMessage());
 			throw new RuntimeException();
 		}
+	}
+
+	public MonitoreoComponent getComponent() {
+		return component;
 	}
 }
