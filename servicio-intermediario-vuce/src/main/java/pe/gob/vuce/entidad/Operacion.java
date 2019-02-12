@@ -149,7 +149,6 @@ public class Operacion {
 							notificacion.setNumeroDocumento(notificationType.getDocumento().getNumero());
 							notificacion.setTipoDocumento(notificationType.getDocumento().getTipo());
 							notificacion.setTipoMensaje(notificationType.getTipoMensaje());
-							notificacion.setIdMensaje(idMensaje);
 							notificacion.setXml(new String(decodedBytes));
 							transmisionesEntrada.add(notificacion);
 							break;

@@ -2,8 +2,7 @@ package pe.gob.vuce.entidad;
 
 public class TransmisionEntrada {
 
-    private String idMensaje;
-	private String numeroDocumento;
+   	private String numeroDocumento;
 	private String tipoDocumento;
 	private String tipoMensaje;
 	private String xml;
@@ -13,14 +12,6 @@ public class TransmisionEntrada {
 
 	public String getNumeroDocumento() {
 		return numeroDocumento;
-	}
-
-	public String getIdMensaje() {
-		return idMensaje;
-	}
-
-	public void setIdMensaje(String idMensaje) {
-		this.idMensaje = idMensaje;
 	}
 
 	public String getTipoDocumento() {

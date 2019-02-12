@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.gob.vuce.monitoreo.entity.Operacion;
+import pe.gob.vuce.monitoreo.entity.TransmisionEntrada;
 import pe.gob.vuce.monitoreo.entity.TransmisionSalida;
 import pe.gob.vuce.monitoreo.repository.MonitoreoRepository;
 
@@ -40,6 +41,10 @@ public class MonitoreoComponent {
 			if (transmision.getNumeroDocumento()!=null) {
 				transmisionesSalida.add(transmision);
 			}
+		}
+		for (Iterator<TransmisionEntrada> iterator = operacion.getTransmisionesEntrada().iterator(); iterator.hasNext();) {
+			TransmisionEntrada transmision = (TransmisionEntrada) iterator.next();
+			transmision.setIdMensaje(operacion.getIdMensaje());
 		}
 		operacion.setTransmisionesSalida(transmisionesSalida);
 		return operacion;
