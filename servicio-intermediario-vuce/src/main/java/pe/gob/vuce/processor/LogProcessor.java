@@ -33,7 +33,7 @@ public class LogProcessor implements Processor {
 	@Override
 	public void process(final Exchange exchange) throws Exception {
 
-		Operacion solicitud = exchange.getProperty("solicitud", Operacion.class);
+		Operacion operacion = exchange.getProperty("solicitud", Operacion.class);
 		Message in = exchange.getIn();
 		Map<String, DataHandler> adjuntos = in.getAttachments();
 
@@ -75,7 +75,7 @@ public class LogProcessor implements Processor {
 							transmisionSalida.setMensajeXML(mensajeXML);
 
 						} catch (Exception e) {
-							System.out.println(e.getMessage());
+							System.out.println("Operacion: " + operacion.getNombreOperacion() + " | Usuario: " + operacion.getNombreUsuario() + " | Id de mensaje: " + operacion.getIdMensaje() + " | Error: " + e.getMessage());
 						}
 
 					} else
@@ -103,9 +103,9 @@ public class LogProcessor implements Processor {
 
 		}
 
-		solicitud.setTransmisionesSalida(transmisionesSalida);
+		operacion.setTransmisionesSalida(transmisionesSalida);
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonSolicitud = mapper.writeValueAsString(solicitud);
+		String jsonSolicitud = mapper.writeValueAsString(operacion);
 		in.setBody(jsonSolicitud);
 
 	}

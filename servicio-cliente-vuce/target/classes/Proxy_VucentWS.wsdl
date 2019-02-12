@@ -487,7 +487,7 @@
 	</wsdl:binding>
 	<wsdl:service name="VucentWS">
 		<wsdl:port name="VucentWSHttpSoap11Endpoint" binding="tns:VucentWSSoap11Binding">
-			<soap:address location="http://Lenovo-PC:8280/services/BS_VucentWS.BS_VucentWSHttpEndpoint" />
+			<soap:address location="http://Lenovo-PC:8280/services/proxy_vuce.proxy_vuceHttpSoap11Endpoint" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

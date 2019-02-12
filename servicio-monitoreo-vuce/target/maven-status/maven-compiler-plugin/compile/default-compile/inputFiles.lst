@@ -1,9 +1,7 @@
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\RecepcionTransaccion.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\TransmisionEntradaPK.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\component\SolicitudEntidadComponent.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\TransmisionEntrada.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\Transaccion.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\TransmisionSalida.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\repository\SolicitudEntidadRepository.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\component\JmsConsumer.java
-D:\proyecto-vuce-monitoreo\vuce-monitoreo\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\ServicioMonitoreoVuceApplication.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\TransmisionEntrada.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\ServicioMonitoreoVuceApplication.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\Operacion.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\component\MonitoreoComponent.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\repository\MonitoreoRepository.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\component\JmsConsumer.java
+C:\Proyectos\vuce-monitoreo\proyectos\servicio-monitoreo-vuce\src\main\java\pe\gob\vuce\monitoreo\entity\TransmisionSalida.java
