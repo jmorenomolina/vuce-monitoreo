@@ -6,7 +6,7 @@
 
 	<groupId>vuce.gob.pe</groupId>
 	<artifactId>servicio-vuce-api</artifactId>
-	<version>C.1.0</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	 <!--  mvn install -Dmaven.test.skip=true -->
