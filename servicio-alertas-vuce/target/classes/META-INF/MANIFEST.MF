@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: servicio-alertas-vuce
+Implementation-Version: 1.0
+Built-By: jmoreno
+Implementation-Vendor-Id: pe.gob.vuce
+Build-Jdk: 1.8.0_102
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/servicio-alertas-vuce
+Created-By: Maven Integration for Eclipse
+
